@@ -1,29 +1,15 @@
-# README #
+#Отчет к трекеру дел Daily Planning
 
-This README would normally document whatever steps are necessary to get your application up and running.
+##1. Аналоги
 
-### What is this repository for? ###
+##2. Сценарии использования
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+##3. Планируемые возможности
 
-### How do I get set up? ###
+##4. Логическая архитектура
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+##5. Этапы разработки
 
-### Contribution guidelines ###
+##6. Сроки
 
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+##Статус: формирование основной концепции приложения
