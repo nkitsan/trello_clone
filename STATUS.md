@@ -17,32 +17,38 @@
 
 ##4. Логическая архитектура
 
------------------------------|-------------------------|-------------------------|---------------------|
-class User                   | class List              | class Calendar          | class HabbitTracker |
------------------------------|-------------------------|-------------------------|---------------------|
-string nickname              | string list_name        | Date[] dates            | Habbit[] habbits    |
-int id                       | Task[] tasks            |                         |                     |
-List weekly_task             | int access_availible    |                         |                     |
-List[] task_list             |                         |                         |                     |
-HabbitTracker habbit_tracker |                         |                         |                     |
-Calendar calendar            |                         |                         |                     |
------------------------------|-------------------------|-------------------------|---------------------|
-class Task                   | class WeeklyTask : Task |class PublicTask : Task  | class Habbit        |
------------------------------|-------------------------|-------------------------|---------------------|
-string name                  | int repeater            | int exeutor_id          | string name         |
-DateTime deadline            | string[] comments       | string[] comments       | int timeline        |
-string status                | Task[] subtasks         | DateTime[] remember     | string status       |
-                             | DateTime[] remember     | Task[] subtasks         | DateTime[] Remeber  |
-                             | string[] tags           | string[] tags           |                     |
------------------------------|-------------------------|-------------------------|---------------------|
-class Date                   |                         |                         |                     |
------------------------------|-------------------------|-------------------------|---------------------|
-string Name                  |                         |                         |                     |
-DateTime date                |                         |                         |                     |
-DateTime[] rememberer        |                         |                         |                     |
-string[] comments            |                         |                         |                     |
+	-----------------------------|-------------------------|-------------------------|---------------------|
+	class User                   | class List              | class Calendar          | class HabbitTracker |
+	-----------------------------|-------------------------|-------------------------|---------------------|
+	string nickname              | string list_name        | Date[] dates            | Habbit[] habbits    |
+	int id                       | Task[] tasks            |                         |                     |
+	List weekly_task             | int access_availible    |                         |                     |
+	List[] task_list             |                         |                         |                     |
+	HabbitTracker habbit_tracker |                         |                         |                     |
+	Calendar calendar            |                         |                         |                     |
+	-----------------------------|-------------------------|-------------------------|---------------------|
+	class Task                   | class WeeklyTask : Task |class PublicTask : Task  | class Habbit        |
+	-----------------------------|-------------------------|-------------------------|---------------------|
+	string name                  | int repeater            | int exeutor_id          | string name         |
+	DateTime deadline            | string[] comments       | string[] comments       | int timeline        |
+	string status                | Task[] subtasks         | DateTime[] remember     | string status       |
+	                             | DateTime[] remember     | Task[] subtasks         | DateTime[] Remeber  |
+	                             | string[] tags           | string[] tags           |                     |
+	-----------------------------|-------------------------|-------------------------|---------------------|
+	class Date                   |                         |                         |                     |
+	-----------------------------|-------------------------|-------------------------|---------------------|
+	string Name                  |                         |                         |                     |
+	DateTime date                |                         |                         |                     |
+	DateTime[] rememberer        |                         |                         |                     |
+	string[] comments            |                         |                         |                     |
 
 ##5. Этапы разработки
+1. Подготовить модели классов из логической архитектуры (31 марта)
+2. Расписать функциональные возможности классов из планируемых возможностей (31 марта)
+3. Сделать макет дизайна пользовательского интерфейса (15 апреля)
+4. Сделать верстку пользовательского интерфейса (30 апреля)
+5. Добавить все возможности из пункта 2 (30 апреля)
+6. Объединить модели и представление(20 мая)
 
 ##6. Сроки
 
