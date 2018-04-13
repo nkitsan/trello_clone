@@ -84,7 +84,6 @@
     - Указание названия задачи
     - Добавление к задаче дедлайна
     - Создание списка подзадач
-    - Добавление уведомлений
     - Возможность установления статуса задачи
     - Возможность добавления комментариев
 * Просмотр календаря без возможности добавить мероприятие.
@@ -99,7 +98,6 @@
 * Редактирование приватных задач:
 	- Изменение названия
 	- Изменение и удаление дедлайна
-	- Изменение и удаление уведомлений
 	- Изменение и удаление списка подзадач (как всего списка подзадач и отдельных подзадач)
 	- Удаление комментариев
 	- Удаление задач 
@@ -154,21 +152,21 @@
 	HabbitTracker habbit_tracker |                          |                         |                     |
 	Calendar calendar            |                          |                         |                     |
 	-----------------------------|--------------------------|-------------------------|---------------------|
-	      Task                   |    PrivateTask : Task    |   PublicTask : Task     |       Habbit        |
+	      Task                   |    WeeklyTask : Task     |   PublicTask : Task     |       SubTask       |
 	-----------------------------|--------------------------|-------------------------|---------------------|
 	string name                  | int[] repeater           | int[] exeutor_id        | string name         |
-	string status                | string[] comments        | string[] comments       | int timeline        |
-	                             | Task[] subtasks          | Task[] subtasks         | string status       |
-	                             | DateTime[] remember      | DateTime deadline       | DateTime[] remeber  |
-	                             | DateTime deadline        |                         |                     |
+	string status                | DateTime[] remember      |                         | string status       |
+	string[] comments            |                          |                         |                     |
+	DateTime deadline            |                          |                         |                     |
+	SubTask[] subtasks           |                          |                         |                     |
 	                             |                          |                         |                     |
 	-----------------------------|--------------------------|-------------------------|---------------------|
-	      Date                   |                          |                         |                     |
+	      Habbit                 |        Date              |                         |                     |
 	-----------------------------|--------------------------|-------------------------|---------------------|
-	string Name                  |                          |                         |                     |
-	DateTime date                |                          |                         |                     |
-	DateTime[] remember          |                          |                         |                     |
-	string[] comments            |                          |                         |                     |
+	string name                  | string Name              |                         |                     |
+	int timeline                 | DateTime date            |                         |                     |
+	string status                | DateTime[] remember      |                         |                     |
+	                             | string[] comments        |                         |                     |
 	-----------------------------|--------------------------|-------------------------|---------------------|
 
 ###Сущности
