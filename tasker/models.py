@@ -24,19 +24,19 @@ class Habit(models.Model):
 
 
 class HabitTracker(models.Model):
-    habits = models.Field.one_to_many(Habit)
+    habits = models.ManyToManyField(Habit)
 
 
 class Event(models.Model):
     name = models.CharField(max_length=200, blank=False)
     event_date = models.DateTimeField()
-    remember = models.Field.one_to_many(Remember)
-    repeat = models.OneToOneField(Remember)
-    comments = models.Field.one_to_many(Comment)
+    remember = models.ManyToManyField(Remember)
+    repeat = models.OneToOneField(Remember, related_name='period')
+    comments = models.ManyToManyField(Comment)
 
 
 class Calender(models.Model):
-    events = models.Field.one_to_many(Event)
+    events = models.ManyToManyField(Event)
 
 
 class Subtask(models.Model):
@@ -56,20 +56,20 @@ class Task(models.Model):
     )
     name = models.CharField(max_length=200, blank=False)
     status = models.CharField(max_length=200, choices=STATUS)
-    comments = models.Field.one_to_many(Comment)
-    subtasks = models.Field.one_to_many(Subtask)
+    comments = models.ManyToManyField(Comment)
+    subtasks = models.ManyToManyField(Subtask)
     deadline = models.DateTimeField()
 
 
 class PrivateTask(models.Model):
     task = models.OneToOneField(Task)
-    repeat = models.Field.one_to_many(WeeklyRepeat)
-    remember = models.Field.one_to_many(Remember)
+    repeat = models.ManyToManyField(WeeklyRepeat)
+    remember = models.ManyToManyField(Remember)
 
 
 class WeeklyList(models.Model):
     name = models.CharField(max_length=200, blank=False)
-    tasks = models.Field.one_to_many(PrivateTask)
+    tasks = models.ManyToManyField(PrivateTask)
 
 
 class User(models.Model):
@@ -83,10 +83,10 @@ class User(models.Model):
 
 class PublicTask(models.Model):
     task = models.OneToOneField(Task)
-    executors = models.Field.one_to_many(User)
+    executors = models.ManyToManyField(User)
 
 
 class List(models.Model):
     name = models.CharField(max_length=200, blank=False)
-    tasks = models.Field.one_to_many(PrivateTask)
-    accessors = models.Field.one_to_many(User)
+    tasks = models.ManyToManyField(PrivateTask)
+    accessors = models.ManyToManyField(User)
