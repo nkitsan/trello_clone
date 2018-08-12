@@ -61,11 +61,6 @@ class Task(models.Model):
     deadline = models.DateTimeField()
 
 
-class PublicTask(models.Model):
-    task = models.OneToOneField(Task)
-    #executors = models.Field.one_to_many(User)
-
-
 class PrivateTask(models.Model):
     task = models.OneToOneField(Task)
     repeat = models.Field.one_to_many(WeeklyRepeat)
@@ -77,11 +72,6 @@ class WeeklyList(models.Model):
     tasks = models.Field.one_to_many(PrivateTask)
 
 
-class List(models.Model):
-    name = models.CharField(max_length=200, blank=False)
-    tasks = models.Field.one_to_many(PrivateTask)
-
-
 class User(models.Model):
     email = models.EmailField(unique='True', blank=False)
     username = models.CharField(max_length=30, unique='True', blank=False)
@@ -89,3 +79,14 @@ class User(models.Model):
     week_list = models.OneToOneField(WeeklyList)
     habit_tracker = models.OneToOneField(HabitTracker)
     calendar = models.OneToOneField(Calender)
+
+
+class PublicTask(models.Model):
+    task = models.OneToOneField(Task)
+    executors = models.Field.one_to_many(User)
+
+
+class List(models.Model):
+    name = models.CharField(max_length=200, blank=False)
+    tasks = models.Field.one_to_many(PrivateTask)
+    accessors = models.Field.one_to_many(User)
