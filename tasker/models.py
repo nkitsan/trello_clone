@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.crypto import get_random_string
 
 
 class Comment(models.Model):
@@ -73,12 +74,19 @@ class WeeklyList(models.Model):
 
 
 class User(models.Model):
-    email = models.EmailField(unique='True', blank=False)
-    username = models.CharField(max_length=30, unique='True', blank=False)
+    email = models.EmailField(unique=True, blank=False)
+    api_key = models.CharField(max_length=32, unique=True)
+    username = models.CharField(max_length=30, unique=True, blank=False)
     password_hash = models.CharField(max_length=200, blank=False)
     week_list = models.OneToOneField(WeeklyList)
     habit_tracker = models.OneToOneField(HabitTracker)
     calendar = models.OneToOneField(Calender)
+
+    def generate_api_key(self):
+        self.api_key = get_random_string(length=32)
+
+    def __str__(self):
+        return self.username
 
 
 class PublicTask(models.Model):
