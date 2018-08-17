@@ -46,7 +46,7 @@ class Subtask(models.Model):
         ('F', 'FINISHED')
     )
     name = models.CharField(max_length=200, blank=False)
-    status = models.CharField(max_length=200, choices=STATUS)
+    status = models.CharField(max_length=200, choices=STATUS, default='NS')
 
 
 class Task(models.Model):
@@ -56,10 +56,10 @@ class Task(models.Model):
         ('F', 'FINISHED')
     )
     name = models.CharField(max_length=200, blank=False)
-    status = models.CharField(max_length=200, choices=STATUS)
+    status = models.CharField(max_length=200, choices=STATUS, default='NS')
     comments = models.ManyToManyField(Comment)
     subtasks = models.ManyToManyField(Subtask)
-    deadline = models.DateTimeField()
+    deadline = models.DateTimeField(default=None)
 
 
 class PrivateTask(models.Model):
@@ -79,6 +79,7 @@ class User(models.Model):
     username = models.CharField(max_length=30, unique=True, blank=False)
     password_hash = models.CharField(max_length=200, blank=False)
     week_list = models.OneToOneField(WeeklyList)
+    lists = models.ManyToManyField('List')
     habit_tracker = models.OneToOneField(HabitTracker)
     calendar = models.OneToOneField(Calender)
 
@@ -97,4 +98,3 @@ class PublicTask(models.Model):
 class List(models.Model):
     name = models.CharField(max_length=200, blank=False)
     tasks = models.ManyToManyField(PrivateTask)
-    accessors = models.ManyToManyField(User)
