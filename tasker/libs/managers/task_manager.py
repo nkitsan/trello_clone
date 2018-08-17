@@ -14,6 +14,10 @@ def edit_task_name(task, new_name):
     task.save()
 
 
+def delete_task(task):
+    task.delete()
+
+
 def add_comment(task, text_of_comment):
     task.comments.create(comment=text_of_comment)
 
