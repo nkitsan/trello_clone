@@ -20,7 +20,7 @@ class Habit(models.Model):
         ('F', 'FINISHED')
     )
     name = models.CharField(max_length=200, blank=False)
-    status = models.CharField(max_length=200, choices=STATUS)
+    status = models.CharField(max_length=200, choices=STATUS, default='NS')
     timeline = models.IntegerField()
 
 

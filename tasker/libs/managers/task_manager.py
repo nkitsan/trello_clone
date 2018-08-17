@@ -1,5 +1,5 @@
 """
-This manager control server-side work with a data and responsible for changing tasks in userlists
+This manager controls server-side work with a data and responsible for changing tasks in userlists
 """
 from tasker.models import Task, Subtask, Comment
 

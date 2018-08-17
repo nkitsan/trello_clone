@@ -1,3 +1,8 @@
+"""
+Manager for adding, deleting and changing tasks in weekly tasks list
+"""
+
+
 from tasker.models import User, WeeklyList, PrivateTask
 from .task_manager import *
 
