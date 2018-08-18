@@ -43,9 +43,5 @@ def change_public_list_name(username, list_id, new_name):
 def change_public_task_name(username, list_id, task_id, new_name):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
-    for task in public_list.tasks:
-        if task.id == task_id:
-            edit_task_name(task.task, new_name)
-            break
-
-
+    task = public_list.tasks.get(id=task_id)
+    edit_task_name(task.task, new_name)
