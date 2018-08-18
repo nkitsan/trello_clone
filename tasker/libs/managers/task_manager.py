@@ -22,8 +22,13 @@ def add_comment(task, text_of_comment):
     task.comments.create(comment=text_of_comment)
 
 
-def delete_comment(task, text_of_comment):
-    task.comments.delete(comment=text_of_comment)
+def change_comment(task, comment_id, new_text):
+    comment = task.comments.get(id=comment_id)
+    comment.comment = new_text
+
+
+def delete_comment(task, comment_id):
+    task.comments.delete(id=comment_id)
 
 
 def change_status(task, status):
@@ -35,18 +40,18 @@ def add_subtask(task, name):
     task.subtasks.create(name=name)
 
 
-def change_subtask(task, new_subtask_name, old_subtask_name):
-    subtask = task.subtasks.get(name=old_subtask_name)
+def change_subtask(task, subtask_id, new_subtask_name):
+    subtask = task.subtasks.get(id=subtask_id)
     subtask.name = new_subtask_name
     subtask.save()
 
 
-def delete_subtask(task, subtask_name):
-    task.subtasks.delete(name=subtask_name)
+def delete_subtask(task, subtask_id):
+    task.subtasks.delete(id=subtask_id)
 
 
-def change_subtask_status(task, subtask_name, status):
-    subtask = task.subtasks.get(name=subtask_name)
+def change_subtask_status(task, subtask_id, status):
+    subtask = task.subtasks.get(id=subtask_id)
     subtask.status = status
 
 
