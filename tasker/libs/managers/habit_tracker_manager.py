@@ -13,28 +13,28 @@ def create_habit(username, habit_name):
     habits.create(name=habit_name)
 
 
-def set_habit_timeline(username, habit_name, timeline):
+def set_habit_timeline(username, habit_id, timeline):
     user = User.objects.get(username=username)
-    habit = user.habit_tracker.habits.get(name=habit_name)
+    habit = user.habit_tracker.habits.get(id=habit_id)
     habit.timeline = timeline
     habit.save()
 
 
-def change_habit_status(username, habit_name, status):
+def change_habit_status(username, habit_id, status):
     user = User.objects.get(username=username)
-    habit = user.habit_tracker.habits.get(name=habit_name)
+    habit = user.habit_tracker.habits.get(id=habit_id)
     habit.status = status
     habit.save()
 
 
-def change_habit_name(username, new_name, old_name):
+def change_habit_name(username, habit_id, new_name):
     user = User.objects.get(username=username)
-    habit = user.habit_tracker.habits.get(name=old_name)
+    habit = user.habit_tracker.habits.get(id=habit_id)
     habit.name = new_name
     habit.save()
 
 
-def delete_habit(username, habit_name):
+def delete_habit(username, habit_id):
     user = User.objects.get(username=username)
-    habit = user.habit_tracker.habits.get(name=habit_name)
+    habit = user.habit_tracker.habits.get(id=habit_id)
     habit.delete()
