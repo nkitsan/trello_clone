@@ -9,17 +9,19 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 def signup_user(username, email, password):
-    user = User.objects.create(username=username, email=email, password_hash=make_password(password))
-    user.generate_api_key()
-    user.save()
+    if not User.objects.filter(username=username).exists() and not User.objects.filter(email=email).exists():
+        user = User.objects.create(username=username, email=email, password_hash=make_password(password))
+        user.generate_api_key()
+        user.save()
+        return True
+    return False
 
 
-def login(username, password):
-    try:
+def login_user(username, password):
+    if User.objects.filter(username=username).exists:
         user = User.objects.get(username=username)
-    except ObjectDoesNotExist:
-        return False
-    return check_password(password, user.password_hash)
+        return check_password(password, user.password_hash)
+    return False
 
 
 def get_username(api_key):
