@@ -7,13 +7,13 @@ from tasker.libs.managers.user_manager import *
 
 def login(request):
     if request.session.get('username') is not None:
-        return redirect('user_board', request=request)
+        return redirect('/profile/{}/'.format(request.session.get('username')))
     elif request.method == "GET":
         username = request.GET.get('username')
         password = request.GET.get('password')
         if username is not None and request is not None and login_user(username, password):
             request.session['username'] = username
-            return redirect('user_board', request=request)
+            return redirect('/profile/{}/'.format(username))
         else:
             return render(request, 'tasker/login.html')
     else:
@@ -22,7 +22,7 @@ def login(request):
 
 def signup(request):
     if request.session.get('username') is not None:
-        return redirect('user_board', request=request)
+        return redirect('/profile/{}/'.format(request.session.get('username')))
     elif request.method == "POST":
         username = request.POST.get('username')
         email = request.POST.get('email')
