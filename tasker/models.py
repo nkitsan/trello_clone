@@ -19,16 +19,15 @@ class Habit(models.Model):
         ('NS','NOT STARTED'),
         ('F', 'FINISHED')
     )
-    name = models.CharField(max_length=200, blank=False)
+    name = models.CharField(max_length=200)
     status = models.CharField(max_length=200, choices=STATUS, default='NS')
-    timeline = models.IntegerField()
+    timeline = models.IntegerField(blank=True, null=True)
 
 
 class Event(models.Model):
-    name = models.CharField(max_length=200, blank=False)
+    name = models.CharField(max_length=200)
     event_date = models.DateTimeField()
     remember = models.ManyToManyField(Remember)
-    repeat = models.OneToOneField(Remember, related_name='repeat')
     comments = models.ManyToManyField(Comment)
 
 
@@ -37,7 +36,7 @@ class Subtask(models.Model):
         ('NS','NOT STARTED'),
         ('F', 'FINISHED')
     )
-    name = models.CharField(max_length=200, blank=False)
+    name = models.CharField(max_length=200)
     status = models.CharField(max_length=200, choices=STATUS, default='NS')
 
 
@@ -47,11 +46,11 @@ class Task(models.Model):
         ('IP', 'IN PROCESS'),
         ('F', 'FINISHED')
     )
-    name = models.CharField(max_length=200, blank=False)
+    name = models.CharField(max_length=200)
     status = models.CharField(max_length=200, choices=STATUS, default='NS')
     comments = models.ManyToManyField(Comment)
     subtasks = models.ManyToManyField(Subtask)
-    deadline = models.DateTimeField(default=None)
+    deadline = models.DateTimeField(blank=True, null=True)
 
 
 class PrivateTask(models.Model):
@@ -61,10 +60,10 @@ class PrivateTask(models.Model):
 
 
 class User(models.Model):
-    email = models.EmailField(unique=True, blank=False)
+    email = models.EmailField(unique=True)
     api_key = models.CharField(max_length=32, unique=True)
-    username = models.CharField(max_length=30, unique=True, blank=False)
-    password_hash = models.CharField(max_length=200, blank=False)
+    username = models.CharField(max_length=30, unique=True)
+    password_hash = models.CharField(max_length=200)
     week_list = models.ManyToManyField(PrivateTask)
     lists = models.ManyToManyField('List')
     habit_tracker = models.ManyToManyField(Habit)
@@ -83,5 +82,5 @@ class PublicTask(models.Model):
 
 
 class List(models.Model):
-    name = models.CharField(max_length=200, blank=False)
-    tasks = models.ManyToManyField(PrivateTask)
+    name = models.CharField(max_length=200)
+    tasks = models.ManyToManyField(PublicTask)
