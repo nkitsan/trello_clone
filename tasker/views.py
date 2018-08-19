@@ -6,11 +6,14 @@ from tasker.libs.managers.user_manager import *
 
 
 def login(request):
-    if request.method == "GET":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+    if request.session.get('username') is not None:
+        return redirect('user_board', request=request)
+    elif request.method == "GET":
+        username = request.GET.get('username')
+        password = request.GET.get('password')
         if username is not None and request is not None and login_user(username, password):
-            return redirect('user_board')
+            request.session['username'] = username
+            return redirect('user_board', request=request)
         else:
             return render(request, 'tasker/login.html')
     else:
@@ -18,15 +21,19 @@ def login(request):
 
 
 def signup(request):
-    if request.method == "POST":
+    if request.session.get('username') is not None:
+        return redirect('user_board', request=request)
+    elif request.method == "POST":
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
         if signup_user(username, email, password):
-            return redirect('user_board')
+            request.session['username'] = username
+            return redirect('/profile/{}/'.format(username))
     else:
         return render(request, 'tasker/signup.html')
 
 
-def user_board(request):
-    render(request, 'tasker/index.html')
+def user_board(request, username):
+    user = User.objects.get(username=username)
+    return render(request, 'tasker/index.html', {'api_key': user.api_key})
