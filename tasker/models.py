@@ -24,20 +24,12 @@ class Habit(models.Model):
     timeline = models.IntegerField()
 
 
-class HabitTracker(models.Model):
-    habits = models.ManyToManyField(Habit)
-
-
 class Event(models.Model):
     name = models.CharField(max_length=200, blank=False)
     event_date = models.DateTimeField()
     remember = models.ManyToManyField(Remember)
-    repeat = models.OneToOneField(Remember, related_name='period')
+    repeat = models.OneToOneField(Remember, related_name='repeat')
     comments = models.ManyToManyField(Comment)
-
-
-class Calender(models.Model):
-    events = models.ManyToManyField(Event)
 
 
 class Subtask(models.Model):
@@ -68,20 +60,15 @@ class PrivateTask(models.Model):
     remember = models.ManyToManyField(Remember)
 
 
-class WeeklyList(models.Model):
-    name = models.CharField(max_length=200, blank=False)
-    tasks = models.ManyToManyField(PrivateTask)
-
-
 class User(models.Model):
     email = models.EmailField(unique=True, blank=False)
     api_key = models.CharField(max_length=32, unique=True)
     username = models.CharField(max_length=30, unique=True, blank=False)
     password_hash = models.CharField(max_length=200, blank=False)
-    week_list = models.OneToOneField(WeeklyList)
+    week_list = models.ManyToManyField(PrivateTask)
     lists = models.ManyToManyField('List')
-    habit_tracker = models.OneToOneField(HabitTracker)
-    calendar = models.OneToOneField(Calender)
+    habit_tracker = models.ManyToManyField(Habit)
+    calendar = models.ManyToManyField(Event)
 
     def generate_api_key(self):
         self.api_key = get_random_string(length=32)
