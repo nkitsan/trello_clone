@@ -16,6 +16,5 @@ class TaskManagerTestCase(TestCase):
     def test_add_event_remember(self):
         remember = calendar_manager.add_event_remember(self.user.username, self.event.id,
                                             self.event.event_date - datetime.timedelta(days=1))
-        remembers = [remember.repeat_date for remember in self.event.remember.all()]
         self.assertIsNotNone(remember)
 
