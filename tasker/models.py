@@ -61,7 +61,7 @@ class PrivateTask(models.Model):
 
 class User(models.Model):
     email = models.EmailField(unique=True)
-    api_key = models.CharField(max_length=32, unique=True, blank=True)
+    api_key = models.CharField(max_length=32, blank=True)
     username = models.CharField(max_length=30, unique=True)
     password_hash = models.CharField(max_length=200)
     week_list = models.ManyToManyField(PrivateTask)

@@ -18,7 +18,7 @@ def signup_user(username, email, password):
 
 
 def login_user(username, password):
-    if User.objects.filter(username=username).exists:
+    if User.objects.filter(username=username).exists():
         user = User.objects.get(username=username)
         return check_password(password, user.password_hash)
     return False
