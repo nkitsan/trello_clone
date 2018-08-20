@@ -15,11 +15,11 @@ def edit_task_name(task, new_name):
 
 
 def delete_task(task):
-    task.delete()
+    Task.objects.filter(id=task.id).delete()
 
 
 def add_comment(task, text_of_comment):
-    task.comments.create(comment=text_of_comment)
+    return task.comments.create(comment=text_of_comment)
 
 
 def change_comment(task, comment_id, new_text):
@@ -28,7 +28,7 @@ def change_comment(task, comment_id, new_text):
 
 
 def delete_comment(task, comment_id):
-    task.comments.delete(id=comment_id)
+    task.comments.filter(id=comment_id).delete()
 
 
 def change_status(task, status):
@@ -37,22 +37,24 @@ def change_status(task, status):
 
 
 def add_subtask(task, name):
-    task.subtasks.create(name=name)
+    return task.subtasks.create(name=name)
 
 
 def change_subtask(task, subtask_id, new_subtask_name):
     subtask = task.subtasks.get(id=subtask_id)
     subtask.name = new_subtask_name
     subtask.save()
+    task.save()
 
 
 def delete_subtask(task, subtask_id):
-    task.subtasks.delete(id=subtask_id)
+    task.subtasks.filter(id=subtask_id).delete()
 
 
 def change_subtask_status(task, subtask_id, status):
     subtask = task.subtasks.get(id=subtask_id)
     subtask.status = status
+    subtask.save()
 
 
 def change_deadline(task, deadline):
