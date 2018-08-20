@@ -8,7 +8,7 @@ from tasker.models import User, Habit
 
 def create_habit(username, habit_name):
     user = User.objects.get(username=username)
-    user.habit_tracker.create(name=habit_name)
+    return user.habit_tracker.create(name=habit_name)
 
 
 def set_habit_timeline(username, habit_id, timeline):
@@ -31,7 +31,7 @@ def change_habit_name(username, habit_id, new_name):
 
 def delete_habit(username, habit_id):
     user = User.objects.get(username=username)
-    user.habit_tracker.delete(id=habit_id)
+    user.habit_tracker.filter(id=habit_id).delete()
 
 
 def find_user_habit(username, habit_id):
