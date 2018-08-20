@@ -13,7 +13,7 @@ def create_event(username, event_name, event_date):
 
 def delete_event(username, event_id):
     user = User.objects.get(username=username)
-    user.calendar.delete(id=event_id)
+    user.calendar.filter(id=event_id).delete()
 
 
 def change_event_name(username, event_id, new_event_name):
@@ -30,22 +30,22 @@ def change_event_date(username, event_id, new_event_date):
 
 def add_event_comment(username, event_id, comment):
     event = find_user_event(username, event_id)
-    event.comments.create(comment=comment)
+    return event.comments.create(comment=comment)
 
 
 def delete_event_comment(username, event_id, comment_id):
     event = find_user_event(username, event_id)
-    event.comments.delete(id=comment_id)
+    event.comments.filter(id=comment_id).delete()
 
 
 def add_event_remember(username, event_id, remember):
     event = find_user_event(username, event_id)
-    event.remember.create(repeate_date=remember)
+    return event.remember.create(repeat_date=remember)
 
 
 def delete_event_remember(username, event_id, remember_id):
     event = find_user_event(username, event_id)
-    event.remember.delete(id=remember_id)
+    event.remember.filter(id=remember_id).delete()
 
 
 def find_user_event(username, event_id):

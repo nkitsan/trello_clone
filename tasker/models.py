@@ -7,7 +7,7 @@ class Comment(models.Model):
 
 
 class Remember(models.Model):
-    repeat_date = models.TimeField()
+    repeat_date = models.DateTimeField()
 
 
 class WeeklyRepeat(models.Model):
