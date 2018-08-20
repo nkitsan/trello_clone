@@ -10,7 +10,7 @@ from .task_manager import *
 def add_weeklytask(username, task_name):
     user = User.objects.get(username=username)
     task = create_task(task_name)
-    user.week_list.create(task=task)
+    return user.week_list.create(task=task)
 
 
 def change_weeklytask_name(username, task_id, new_name):
@@ -31,7 +31,7 @@ def change_weeklytask_status(username, task_id, status):
 
 def add_weeklytask_comment(username, task_id, comment):
     task = find_user_task(username, task_id)
-    add_comment(task.task, comment)
+    return add_comment(task.task, comment)
 
 
 def change_weeklytask_comment(username, task_id, comment_id, new_text):
@@ -46,7 +46,7 @@ def delete_weeklytask_comment(username, task_id, comment_id):
 
 def add_weeklytask_subtask(username, task_id, subtask_name):
     task = find_user_task(username, task_id)
-    add_subtask(task.task, subtask_name)
+    return add_subtask(task.task, subtask_name)
 
 
 def change_weeklytask_subtask(username, task_id, subtask_id, new_name):
@@ -76,22 +76,22 @@ def delete_weeklytask_deadline(username, task_id):
 
 def add_weeklytask_repeat(username, task_id, repeat):
     task = find_user_task(username, task_id)
-    task.repeat.create(repeat=repeat)
+    return task.repeat.create(repeat=repeat)
 
 
-def delete_weeklytask_repeat(username, task_id, repeat):
+def delete_weeklytask_repeat(username, task_id, repeat_id):
     task = find_user_task(username, task_id)
-    task.repeat.delete(repeat=repeat)
+    task.repeat.filter(id=repeat_id).delete()
 
 
 def add_weeklytask_remember(username, task_id, remember):
     task = find_user_task(username, task_id)
-    task.remember.create(remember=remember)
+    return task.remember.create(repeat_date=remember)
 
 
-def delete_weeklytask_remember(username, task_id, remember):
+def delete_weeklytask_remember(username, task_id, remember_id):
     task = find_user_task(username, task_id)
-    task.repeat.delete(remember=remember)
+    task.repeat.filter(id=remember_id).delete()
 
 
 def find_user_task(username, task_id):
