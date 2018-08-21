@@ -15,12 +15,12 @@ def create_public_list(username, list_name):
 def create_public_task(username, list_id, task_name):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
-    public_list.tasks.create(task=create_task(task_name))
+    return public_list.tasks.create(task=create_task(task_name))
 
 
 def delete_public_list(username, list_id):
     user = User.objects.get(username=username)
-    user.lists.delete(name=list_id)
+    user.lists.filter(name=list_id).delete()
 
 
 def delete_public_task(username, list_id, task_id):
@@ -56,7 +56,7 @@ def add_public_task_comment(username, list_id, task_id, comment):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    add_comment(task.task, comment)
+    return add_comment(task.task, comment)
 
 
 def delete_public_task_comment(username, list_id, task_id, comment_id):
@@ -77,7 +77,7 @@ def add_public_task_subtask(username, list_id, task_id, subtask):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    add_subtask(task.task, subtask)
+    return add_subtask(task.task, subtask)
 
 
 def delete_public_task_subtask(username, list_id, task_id, subtask_id):
@@ -141,5 +141,5 @@ def delete_task_executor(username, executor_username, list_id, task_id):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    executor_user = User.objects.get(username=executor_username)
-    task.executors.delete(executor_user)
+    remove_user = User.objects.get(username=executor_username)
+    task.executors.remove(remove_user)
