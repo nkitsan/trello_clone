@@ -19,3 +19,11 @@ def post_task(api, task_name):
     username = user_manager.get_username(api)
     task = weekly_task_manager.add_weeklytask(username, task_name)
     return {task.id: {'name': task.task.name}}
+
+
+def delete_task(api, task_id):
+    username = user_manager.get_username(api)
+    task = weekly_task_manager.find_user_task(username, task_id)
+    if task is None:
+        return {'error': 'user does not have the task in weeklytasks'}
+    weekly_task_manager.delete_weeklytask(username, task_id)

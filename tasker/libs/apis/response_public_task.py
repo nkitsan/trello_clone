@@ -19,3 +19,12 @@ def post_public_tasks(api, list_id, task_name):
     username = user_manager.get_username(api)
     public_task = public_task_manager.create_public_task(username, list_id, task_name)
     return {public_task.id: {'name': public_task.task.name}}
+
+
+def delete_public_task(api, list_id, task_id):
+    username = user_manager.get_username(api)
+    task = public_task_manager.get_list_task(username, list_id, task_id)
+    if task is None:
+        return {'error': 'this task was not found'}
+    public_task_manager.delete_public_task(username, list_id, task_id)
+    return {}

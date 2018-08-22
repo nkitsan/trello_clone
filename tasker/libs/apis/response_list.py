@@ -19,3 +19,11 @@ def post_lists(api, list_name):
     username = user_manager.get_username(api)
     public_list = public_task_manager.create_public_list(username, list_name)
     return {public_list.id: {'name': public_list.name}}
+
+
+def delete_list(api, list_id):
+    username = user_manager.get_username(api)
+    lists = public_task_manager.get_user_lists(username)
+    if not lists.filter(id=list_id).exists():
+        return {'error': 'no such list'}
+    public_task_manager.delete_public_list(username, list_id)

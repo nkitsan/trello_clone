@@ -19,3 +19,34 @@ def post_habit(api, habit_name):
     username = user_manager.get_username(api)
     habit = habit_tracker_manager.create_habit(username, habit_name)
     return {habit.id: {'name': habit.name}}
+
+
+def get_habit(api, habit_id):
+    username = user_manager.get_username(api)
+    habit = habit_tracker_manager.find_user_habit(username, habit_id)
+    if habit is None:
+        return {'error': 'user does not have this habit'}
+    return {habit.id: {'name': habit.name, 'status': habit.status, 'timeline': habit.timeline}}
+
+
+def delete_habit(api, habit_id):
+    username = user_manager.get_username(api)
+    habit = habit_tracker_manager.find_user_habit(username, habit_id)
+    if habit is None:
+        return {'error': 'user does not have this habit'}
+    habit_tracker_manager.delete_habit(username, habit_id)
+    return {}
+
+
+def put_habit(api, habit_id, habit_name, status, timeline):
+    username = user_manager.get_username(api)
+    habit = habit_tracker_manager.find_user_habit(username, habit_id)
+    if habit is None:
+        return {'error': 'user does not have this habit'}
+    if habit_name is not None:
+        habit_tracker_manager.change_habit_name(username, habit_id, habit_name)
+    if status is not None:
+        habit_tracker_manager.change_habit_status(username, habit_id, status)
+    if timeline is not None:
+        habit_tracker_manager.change_habit_timeline(username, habit_id, timeline)
+    return get_habit(api, habit_id)

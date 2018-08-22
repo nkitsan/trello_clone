@@ -46,19 +46,43 @@ def user_board(request, username):
 def habit_api(request, api, habit_id):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
+    if request.method == 'GET':
+        return JsonResponse(response_habit.get_habit(api, habit_id))
+    if request.method == 'PUT':
+        habit_name = request.PUT.get('habit_name')
+        status = request.PUT.get('status')
+        timeline = request.PUT.get('timeline')
+        return JsonResponse(response_habit.put_habit(api, habit_id, habit_name, status, timeline))
 
 
 @csrf_exempt
 def event_api(request, api, event_id):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
+    if request.method == 'GET':
+        return JsonResponse(response_event.get_event(api, event_id))
+    if request.method == 'POST':
+        text_comment = request.POST.get('text_comment')
+        remember = request.POST.get('remember')
+        return JsonResponse(response_event.post_event_params(api, event_id, text_comment, remember))
+    if request.method == 'PUT':
+        event_date = request.PUT.get('event_date')
+        event_name = request.PUT.get('event_name')
+        return JsonResponse(response_event.put_event(api, event_id, event_name, event_date))
+    if request.method == 'DELETE':
+        comment_id = request.DELETE.get('comment_id')
+        remember_id = request.DELETE.get('remember_id')
+        return JsonResponse(response_event.delete_event_params(api, event_id, comment_id, remember_id))
 
 
+
+@csrf_exempt
 def private_task_api(request, api, task_id):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
 
 
+@csrf_exempt
 def public_task_api(request, api, list_id, task_id):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
@@ -79,6 +103,9 @@ def habits_api(request, api):
         return JsonResponse(response_habit.post_habit(api, habit_name))
     if request.method == 'GET':
         return JsonResponse(response_habit.get_habits(api))
+    if request.method == 'DELETE':
+        habit_id = request.DELETE.get('habit_id')
+        return JsonResponse(response_habit.delete_habit(api, habit_id))
 
 
 @csrf_exempt
@@ -91,6 +118,9 @@ def events_api(request, api):
         return JsonResponse(response_event.post_event(api, event_name, event_date))
     if request.method == 'GET':
         return JsonResponse(response_event.get_events(api))
+    if request.method == 'DELETE':
+        event_id = request.DELETE.get('event_id')
+        return JsonResponse(response_event.delete_event(api, event_id))
 
 
 @csrf_exempt
@@ -102,6 +132,9 @@ def private_tasks_api(request, api):
         return JsonResponse(response_private_task.post_task(api, task_name))
     if request.method == 'GET':
         return JsonResponse(response_private_task.get_tasks(api))
+    if request.method == 'DELETE':
+        task_id = request.DELETE.get('task_id')
+        return JsonResponse(response_private_task.delete_task(api, task_id))
 
 
 @csrf_exempt
@@ -113,6 +146,9 @@ def public_tasks_api(request, api, list_id):
         return JsonResponse(response_public_task.post_public_tasks(api, list_id, task_name))
     if request.method == 'GET':
         return JsonResponse(response_public_task.get_public_tasks(api, list_id))
+    if request.method == 'DELETE':
+        task_id = request.DELETE.get('task_id')
+        return JsonResponse(response_public_task.delete_public_task(api, list_id, task_id))
 
 
 @csrf_exempt
@@ -124,3 +160,6 @@ def lists_api(request, api):
         return JsonResponse(response_list.post_lists(api, list_name))
     if request.method == 'GET':
         return JsonResponse(response_list.get_lists(api))
+    if request.method == 'DELETE':
+        list_id = request.DELETE.get('list_id')
+        return JsonResponse(response_list.delete_list(api, list_id))
