@@ -9,7 +9,7 @@ from .task_manager import *
 
 def create_public_list(username, list_name):
     user = User.objects.get(username=username)
-    user.lists.create(name=list_name)
+    return user.lists.create(name=list_name)
 
 
 def create_public_task(username, list_id, task_name):
@@ -154,7 +154,7 @@ def get_list_tasks(username, list_id):
     user = User.objects.get(username=username)
     if not user.lists.filter(id=list_id).exists():
         return None
-    list = user.lists.get(list_id)
+    list = user.lists.get(id=list_id)
     return list.tasks.all()
 
 

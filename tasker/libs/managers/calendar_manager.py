@@ -8,7 +8,7 @@ from tasker.models import User, Event
 
 def create_event(username, event_name, event_date):
     user = User.objects.get(username=username)
-    user.calendar.create(name=event_name, event_date=event_date)
+    return user.calendar.create(name=event_name, event_date=event_date)
 
 
 def delete_event(username, event_id):

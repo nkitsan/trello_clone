@@ -8,7 +8,7 @@ def get_events(api):
     username = user_manager.get_username(api)
     events = calendar_manager.get_events(username)
     response_event = {}
-    if events is None:
+    if not events.exists():
         return {'error': 'user have no events'}
     for event in events:
         response_event[event.id] = {'name': event.name, 'date': event.event_date}

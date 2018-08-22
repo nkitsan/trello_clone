@@ -8,14 +8,14 @@ def get_tasks(api):
     username = user_manager.get_username(api)
     tasks = weekly_task_manager.get_weekly_tasks(username)
     response_tasks = {}
-    if tasks is None:
-        return {'error': 'user have no events'}
+    if not tasks.exists():
+        return {'error': 'user have no weekly tasks'}
     for task in tasks:
-        response_tasks[task.id] = {'name': task.name}
+        response_tasks[task.id] = {'name': task.task.name}
     return response_tasks
 
 
 def post_task(api, task_name):
     username = user_manager.get_username(api)
     task = weekly_task_manager.add_weeklytask(username, task_name)
-    return {task.id: {'name': task.name}}
+    return {task.id: {'name': task.task.name}}

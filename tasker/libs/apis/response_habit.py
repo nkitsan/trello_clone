@@ -8,7 +8,7 @@ def get_habits(api):
     username = user_manager.get_username(api)
     habits = habit_tracker_manager.get_user_habits(username)
     response_habits = {}
-    if habits is None:
+    if not habits.exists():
         return {'error': 'user have no habits'}
     for habit in habits:
         response_habits[habit.id] = {'name': habit.name}

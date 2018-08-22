@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import JsonResponse, HttpResponse
-import json
+from django.views.decorators.csrf import csrf_exempt
 from tasker.models import User
 from tasker.libs.apis import response_habit, response_event, response_public_task, response_private_task, response_list
 from tasker.libs.managers import user_manager
@@ -36,16 +36,19 @@ def signup(request):
         return render(request, 'tasker/signup.html')
 
 
+@csrf_exempt
 def user_board(request, username):
     user = User.objects.get(username=username)
     return render(request, 'tasker/index.html', {'api_key': user.api_key})
 
 
+@csrf_exempt
 def habit_api(request, api, habit_id):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
 
 
+@csrf_exempt
 def event_api(request, api, event_id):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
@@ -61,11 +64,13 @@ def public_task_api(request, api, list_id, task_id):
         return JsonResponse({'error': 'wrong api key'})
 
 
+@csrf_exempt
 def list_api(request, api, list_id):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
 
 
+@csrf_exempt
 def habits_api(request, api):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
@@ -76,6 +81,7 @@ def habits_api(request, api):
         return JsonResponse(response_habit.get_habits(api))
 
 
+@csrf_exempt
 def events_api(request, api):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
@@ -87,6 +93,7 @@ def events_api(request, api):
         return JsonResponse(response_event.get_events(api))
 
 
+@csrf_exempt
 def private_tasks_api(request, api):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
@@ -97,6 +104,7 @@ def private_tasks_api(request, api):
         return JsonResponse(response_private_task.get_tasks(api))
 
 
+@csrf_exempt
 def public_tasks_api(request, api, list_id):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
@@ -107,6 +115,7 @@ def public_tasks_api(request, api, list_id):
         return JsonResponse(response_public_task.get_public_tasks(api, list_id))
 
 
+@csrf_exempt
 def lists_api(request, api):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})

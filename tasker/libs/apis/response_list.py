@@ -8,10 +8,10 @@ def get_lists(api):
     username = user_manager.get_username(api)
     lists = public_task_manager.get_user_lists(username)
     response_lists = {}
-    if lists is None:
+    if not lists.exists():
         return {'error': 'user have no lists'}
     for public_list in lists:
-        response_lists[public_list.id] = {'name': public_list.id}
+        response_lists[public_list.id] = {'name': public_list.name}
     return response_lists
 
 
