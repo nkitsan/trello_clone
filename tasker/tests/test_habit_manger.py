@@ -17,7 +17,7 @@ class TaskManagerTestCase(TestCase):
         self.assertEqual(habit.name, 'new habit name')
 
     def test_set_habit_timeline(self):
-        habit_tracker_manager.set_habit_timeline(self.user.username, self.habit.id, 90)
+        habit_tracker_manager.change_habit_timeline(self.user.username, self.habit.id, 90)
         habit = Habit.objects.get(id=self.habit.id)
         self.assertEqual(habit.timeline, 90)
 

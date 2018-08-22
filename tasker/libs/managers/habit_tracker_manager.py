@@ -11,7 +11,7 @@ def create_habit(username, habit_name):
     return user.habit_tracker.create(name=habit_name)
 
 
-def set_habit_timeline(username, habit_id, timeline):
+def change_habit_timeline(username, habit_id, timeline):
     habit = find_user_habit(username, habit_id)
     habit.timeline = timeline
     habit.save()
@@ -36,4 +36,12 @@ def delete_habit(username, habit_id):
 
 def find_user_habit(username, habit_id):
     user = User.objects.get(username=username)
-    return user.habit_tracker.get(id=habit_id)
+    if user.habit_tracker.filter(id=habit_id).exists():
+        return user.habit_tracker.get(id=habit_id)
+    else:
+        return None
+
+
+def get_user_habits(username):
+    user = User.objects.get(username=username)
+    return user.habit_tracker.all()

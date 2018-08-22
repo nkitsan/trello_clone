@@ -50,6 +50,12 @@ def delete_event_remember(username, event_id, remember_id):
 
 def find_user_event(username, event_id):
     user = User.objects.get(username=username)
-    return user.calendar.get(id=event_id)
+    if user.calendar.filter(id=event_id).exists():
+        return user.calendar.get(id=event_id)
+    else:
+        return None
 
 
+def get_events(username):
+    user = User.objects.get(username=username)
+    return user.calendar.all()

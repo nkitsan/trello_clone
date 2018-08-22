@@ -97,3 +97,8 @@ def delete_weeklytask_remember(username, task_id, remember_id):
 def find_user_task(username, task_id):
     user = User.objects.get(username=username)
     return user.week_list.get(id=task_id)
+
+
+def get_weekly_tasks(username):
+    user = User.objects.get(username=username)
+    return user.week_list.all()

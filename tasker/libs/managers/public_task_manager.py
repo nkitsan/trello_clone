@@ -143,3 +143,25 @@ def delete_task_executor(username, executor_username, list_id, task_id):
     task = public_list.tasks.get(id=task_id)
     remove_user = User.objects.get(username=executor_username)
     task.executors.remove(remove_user)
+
+
+def get_user_lists(username):
+    user = User.objects.get(username=username)
+    return user.lists.all()
+
+
+def get_list_tasks(username, list_id):
+    user = User.objects.get(username=username)
+    if not user.lists.filter(id=list_id).exists():
+        return None
+    list = user.lists.get(list_id)
+    return list.tasks.all()
+
+
+def get_list_task(username, list_id, task_id):
+    tasks = get_list_tasks(username, list_id)
+    if tasks is None:
+        return None
+    if not tasks.filter(id=task_id).exists():
+        return None
+    return tasks.get(id=task_id)
