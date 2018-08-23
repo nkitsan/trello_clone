@@ -30,3 +30,7 @@ def get_username(api_key):
     except ObjectDoesNotExist:
         return None
     return user.username
+
+
+def get_user(username):
+    return User.objects.get(username=username)

@@ -27,3 +27,69 @@ def delete_task(api, task_id):
     if task is None:
         return {'error': 'user does not have the task in weeklytasks'}
     weekly_task_manager.delete_weeklytask(username, task_id)
+
+
+def get_task(api, task_id):
+    username = user_manager.get_username(api)
+    task = weekly_task_manager.find_user_task(username, task_id)
+    if task is None:
+        return {'error': 'user does not have the task in weeklytasks'}
+    response_task = {task.id: {'name': task.task.name, 'status': task.task.status, 'deadline': task.task.deadline,
+                               'comments': {}, 'subtasks': {}, 'remember': {}, 'repeat': {}}}
+    for comment in task.task.comments:
+        response_task[task.id]['comments'].update({comment.id: comment.comment})
+    for subtask in task.task.subtasks:
+        response_task[task.id]['subtasks'].update({subtask.id: {'name': subtask.name, 'status': subtask.status}})
+    for remember in task.remember:
+        response_task[task.id]['remeber'].update({remember.id: remember.remeber})
+    for repeat in task.repeat:
+        response_task[task.id]['repeat'].update({repeat.id: repeat.repeat})
+    return response_task
+
+
+def post_task_params(api, task_id, repeat, remeber, subtask, comment):
+    username = user_manager.get_username(api)
+    task = weekly_task_manager.find_user_task(username, task_id)
+    if task is None:
+        return {'error': 'user does not have the task in weeklytasks'}
+    if repeat is not None:
+        weekly_task_manager.add_weeklytask_repeat(username, task_id, repeat)
+    if remeber is not None:
+        weekly_task_manager.add_weeklytask_remember(username, task_id, remeber)
+    if subtask is not None:
+        weekly_task_manager.add_weeklytask_subtask(username, task_id, subtask)
+    if comment is not None:
+        weekly_task_manager.add_weeklytask_comment(username, task_id, comment)
+    return get_task(api, task_id)
+
+
+def put_task(api, task_id, name, status, deadline, subtask_id, subtask_status):
+    username = user_manager.get_username(api)
+    task = weekly_task_manager.find_user_task(username, task_id)
+    if task is None:
+        return {'error': 'user does not have the task in weeklytasks'}
+    if name is not None:
+        weekly_task_manager.change_weeklytask_name(username, task_id, name)
+    if status is not None:
+        weekly_task_manager.change_weeklytask_status(username, task_id, status)
+    if deadline is not None:
+        weekly_task_manager.change_weeklytask_deadline(username, task_id, deadline)
+    if subtask_id is not None and task.task.subtasks.filter(id=subtask_id).exists():
+        weekly_task_manager.change_weeklytask_subtask_status(username, task_id, subtask_id, subtask_status)
+    return get_task(api, task_id)
+
+
+def delete_task_params(api, task_id, comment_id, subtask_id, repeat_id, remember_id):
+    username = user_manager.get_username(api)
+    task = weekly_task_manager.find_user_task(username, task_id)
+    if task is None:
+        return {'error': 'user does not have the task in weeklytasks'}
+    if comment_id is not None:
+        weekly_task_manager.delete_weeklytask_comment(username, task_id, comment_id)
+    if subtask_id is not None:
+        weekly_task_manager.delete_weeklytask_subtask(username, task_id, subtask_id)
+    if repeat_id is not None:
+        weekly_task_manager.delete_weeklytask_repeat(username, task_id, repeat_id)
+    if remember_id is not None:
+        weekly_task_manager.delete_weeklytask_remember(username, task_id, remember_id)
+    return {}

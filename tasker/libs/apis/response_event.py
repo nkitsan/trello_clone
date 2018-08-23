@@ -21,6 +21,15 @@ def post_event(api, event_name, event_date):
     return {event.id: {'name': event.name, 'date': event.event_date}}
 
 
+def delete_event(api, event_id):
+    username = user_manager.get_username(api)
+    event = calendar_manager.find_user_event(username, event_id)
+    if event is None:
+        return {'error': 'user have no event with such id'}
+    calendar_manager.delete_event(username, event_id)
+    return {}
+
+
 def get_event(api, event_id):
     username = user_manager.get_username(api)
     event = calendar_manager.find_user_event(username, event_id)
@@ -44,15 +53,6 @@ def post_event_params(api, event_id, text_comment, remember):
     if remember is not None:
         calendar_manager.add_event_remember(username, event_id, remember)
     return get_event(api, event_id)
-
-
-def delete_event(api, event_id):
-    username = user_manager.get_username(api)
-    event = calendar_manager.find_user_event(username, event_id)
-    if event is None:
-        return {'error': 'user have no event with such id'}
-    calendar_manager.delete_event(username, event_id)
-    return {}
 
 
 def put_event(api, event_id, event_name, event_date):

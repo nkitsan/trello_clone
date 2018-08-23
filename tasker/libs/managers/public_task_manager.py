@@ -150,6 +150,13 @@ def get_user_lists(username):
     return user.lists.all()
 
 
+def get_user_list(username, list_id):
+    user = User.objects.get(username=username)
+    if not user.lists.filter(id=list_id).exists():
+        return None
+    return user.lists.get(id=list_id)
+
+
 def get_list_tasks(username, list_id):
     user = User.objects.get(username=username)
     if not user.lists.filter(id=list_id).exists():

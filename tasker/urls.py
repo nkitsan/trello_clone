@@ -11,7 +11,6 @@ urlpatterns = [
     url(r'^(?P<api>[\w\-]+)/tasks/(?P<task_id>\d+)$', views.private_task_api, name='private_task_api'),
     url(r'^(?P<api>[\w\-]+)/lists/(?P<list_id>\d+)/tasks/(?P<task_id>\d+)$', views.public_task_api,
         name='public_task_api'),
-    url(r'^(?P<api>[\w\-]+)/lists/(?P<list_id>\d+)$', views.list_api, name='list_api'),
     url(r'^(?P<api>[\w\-]+)/habits$', views.habits_api, name='habits_api'),
     url(r'^(?P<api>[\w\-]+)/events$', views.events_api, name='events_api'),
     url(r'^(?P<api>[\w\-]+)/tasks$', views.private_tasks_api, name='private_tasks_api'),

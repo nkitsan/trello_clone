@@ -27,3 +27,25 @@ def delete_list(api, list_id):
     if not lists.filter(id=list_id).exists():
         return {'error': 'no such list'}
     public_task_manager.delete_public_list(username, list_id)
+
+
+def post_list_params(api, list_id, new_user):
+    username = user_manager.get_username(api)
+    user = user_manager.get_user(username)
+    if user.lists.filter(id=list_id).exists():
+        public_task_manager.add_public_list_user(username, new_user, list_id)
+    else:
+        return {'error': 'no access to manage this list'}
+
+
+def put_list(api, list_id, list_name):
+    username = user_manager.get_username(api)
+    public_task_manager.change_public_list_name(username, list_id, list_name)
+    return {list_id: list_name}
+
+
+def delete_list_params(api, list_id, new_user):
+    username = user_manager.get_username(api)
+    user = user_manager.get_user(username)
+    if user.lists.filter(id=list_id).exists():
+        public_task_manager.delete_public_list_user(username, new_user, list_id)

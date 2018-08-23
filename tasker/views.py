@@ -75,23 +75,75 @@ def event_api(request, api, event_id):
         return JsonResponse(response_event.delete_event_params(api, event_id, comment_id, remember_id))
 
 
-
 @csrf_exempt
 def private_task_api(request, api, task_id):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
+    if request.method == 'GET':
+        return JsonResponse(response_private_task.get_task(api, task_id))
+    if request.method == 'POST':
+        repeat = request.POST.get('repeat')
+        remember = request.POST.get('remember')
+        subtask = request.POST.get('subtask')
+        comment = request.POST.get('comment')
+        return JsonResponse(response_private_task.post_task_params(api, task_id, repeat, remember, subtask, comment))
+    if request.method == 'PUT':
+        task_name = request.PUT.get('task_name')
+        status = request.PUT.get('status')
+        deadline = request.PUT.get('deadline')
+        subtask_id = request.PUT.get('subtask_id')
+        subtask_status = request.PUT.get('subtask_status')
+        return JsonResponse(response_private_task.put_task(api, task_id, name, status, deadline, subtask_id,
+                                                           subtask_status))
+    if request.method == 'DELETE':
+        repeat_id = request.DELETE.get('repeat_id')
+        remember_id = request.DELETE.get('remember_id')
+        subtask_id = request.DELETE.get('subtask_id')
+        comment_id = request.DELETE.get('comment_id')
+        return JsonResponse(response_private_task.delete_task_params(api, task_id, comment_id, subtask_id, repeat_id,
+                                                                     remember_id))
 
 
 @csrf_exempt
 def public_task_api(request, api, list_id, task_id):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
+    if request.method == 'GET':
+        return JsonResponse(response_public_task.get_public_task(api, list_id, task_id))
+    if request.method == 'POST':
+        subtask = request.POST.get('subtask')
+        comment = request.POST.get('comment')
+        executor = request.POST.get('executor')
+        return JsonResponse(response_public_task.post_public_task_params(api, task_id, comment, subtask, executor))
+    if request.method == 'PUT':
+        task_name = request.PUT.get('task_name')
+        status = request.PUT.get('status')
+        deadline = request.PUT.get('deadline')
+        subtask_id = request.PUT.get('subtask_id')
+        subtask_status = request.PUT.get('subtask_status')
+        return JsonResponse(response_public_task.put_public_task(api, task_id, name, status, deadline, subtask_id,
+                                                           subtask_status))
+    if request.method == 'DELETE':
+        subtask_id = request.DELETE.get('subtask_id')
+        comment_id = request.DELETE.get('comment_id')
+        executor = request.DELETE.get('executor')
+        return JsonResponse(response_private_task.delete_public_task_params(api, task_id, comment_id, subtask_id,
+                                                                            executor))
 
 
 @csrf_exempt
 def list_api(request, api, list_id):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
+    if request.method == 'P0ST':
+        new_user = request.POST.get('new_user')
+        return JsonResponse(response_private_task.post_list_params(api, list_id, new_user))
+    if request.method == 'PUT':
+        list_name = request.PUT.get('list_name')
+        return JsonResponse(response_private_task.put_list(api, list_id, list_name))
+    if request.method == 'DELETE':
+        new_user = request.DELETE.get('new_user')
+        return JsonResponse(response_private_task.delete_list_params(api, list_id, new_user))
 
 
 @csrf_exempt
