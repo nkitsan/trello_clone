@@ -7,6 +7,7 @@ from tasker.libs.apis import response_habit, response_event, response_public_tas
 from tasker.libs.managers import user_manager
 
 
+
 def login(request):
     if request.session.get('username') is not None:
         return redirect('/profile/{}/'.format(request.session.get('username')))
@@ -114,20 +115,21 @@ def public_task_api(request, api, list_id, task_id):
         subtask = request.POST.get('subtask')
         comment = request.POST.get('comment')
         executor = request.POST.get('executor')
-        return JsonResponse(response_public_task.post_public_task_params(api, task_id, comment, subtask, executor))
+        return JsonResponse(response_public_task.post_public_task_params(api, list_id, task_id, comment, subtask,
+                                                                         executor))
     if request.method == 'PUT':
         task_name = request.PUT.get('task_name')
         status = request.PUT.get('status')
         deadline = request.PUT.get('deadline')
         subtask_id = request.PUT.get('subtask_id')
         subtask_status = request.PUT.get('subtask_status')
-        return JsonResponse(response_public_task.put_public_task(api, task_id, name, status, deadline, subtask_id,
-                                                           subtask_status))
+        return JsonResponse(response_public_task.put_public_task(api, list_id, task_id, task_name, status, deadline,
+                                                                 subtask_id, subtask_status))
     if request.method == 'DELETE':
         subtask_id = request.DELETE.get('subtask_id')
         comment_id = request.DELETE.get('comment_id')
         executor = request.DELETE.get('executor')
-        return JsonResponse(response_private_task.delete_public_task_params(api, task_id, comment_id, subtask_id,
+        return JsonResponse(response_public_task.delete_public_task_params(api, list_id, task_id, comment_id, subtask_id,
                                                                             executor))
 
 

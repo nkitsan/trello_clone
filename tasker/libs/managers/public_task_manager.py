@@ -105,7 +105,7 @@ def change_public_task_deadline(username, list_id, task_id, deadline):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    change_deadline(task.subtasks, deadline)
+    change_deadline(task.task, deadline)
 
 
 def delete_public_task_deadline(username, list_id, task_id):

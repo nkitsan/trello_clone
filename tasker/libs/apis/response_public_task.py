@@ -37,11 +37,11 @@ def get_public_task(api, list_id, task_id):
         return {'error': 'this task was not found'}
     response_task = {task.id: {'name': task.task.name, 'status': task.task.status, 'deadline': task.task.deadline,
                                'comments': {}, 'subtasks': {}, 'executors': []}}
-    for comment in task.task.comments:
+    for comment in task.task.comments.all():
         response_task[task.id]['comments'].update({comment.id: comment.comment})
-    for subtask in task.task.subtasks:
+    for subtask in task.task.subtasks.all():
         response_task[task.id]['subtasks'].update({subtask.id: {'name': subtask.name, 'status': subtask.status}})
-    for executor in task.executors:
+    for executor in task.executors.all():
         response_task[task.id]['executors'].append(executor.username)
     return response_task
 
