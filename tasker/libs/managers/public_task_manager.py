@@ -20,7 +20,7 @@ def create_public_task(username, list_id, task_name):
 
 def delete_public_list(username, list_id):
     user = User.objects.get(username=username)
-    user.lists.filter(name=list_id).delete()
+    user.lists.filter(id=list_id).delete()
 
 
 def delete_public_task(username, list_id, task_id):

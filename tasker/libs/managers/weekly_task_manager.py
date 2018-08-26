@@ -91,11 +91,13 @@ def add_weeklytask_remember(username, task_id, remember):
 
 def delete_weeklytask_remember(username, task_id, remember_id):
     task = find_user_task(username, task_id)
-    task.repeat.filter(id=remember_id).delete()
+    task.remember.filter(id=remember_id).delete()
 
 
 def find_user_task(username, task_id):
     user = User.objects.get(username=username)
+    if not user.week_list.filter(id=task_id).exists():
+        return None
     return user.week_list.get(id=task_id)
 
 

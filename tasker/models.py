@@ -22,6 +22,7 @@ class Habit(models.Model):
     name = models.CharField(max_length=200)
     status = models.CharField(max_length=200, choices=STATUS, default='NS')
     timeline = models.IntegerField(blank=True, null=True)
+    count = models.IntegerField(default=0)
 
 
 class Event(models.Model):
@@ -57,6 +58,7 @@ class PrivateTask(models.Model):
     task = models.OneToOneField(Task)
     repeat = models.ManyToManyField(WeeklyRepeat)
     remember = models.ManyToManyField(Remember)
+    display = models.BooleanField(default=True)
 
 
 class User(models.Model):

@@ -3,7 +3,11 @@ from django.shortcuts import redirect
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from tasker.models import User
-from tasker.libs.apis import response_habit, response_event, response_public_task, response_private_task, response_list
+from tasker.libs.apis import (response_habit,
+                              response_event,
+                              response_public_task,
+                              response_private_task,
+                              response_list)
 from tasker.libs.managers import user_manager
 
 
@@ -51,9 +55,9 @@ def habit_api(request, api, habit_id):
         return JsonResponse(response_habit.get_habit(api, habit_id))
     if request.method == 'PUT':
         habit_name = request.PUT.get('habit_name')
-        status = request.PUT.get('status')
-        timeline = request.PUT.get('timeline')
-        return JsonResponse(response_habit.put_habit(api, habit_id, habit_name, status, timeline))
+        habit_status = request.PUT.get('habit_status')
+        habit_timeline = request.PUT.get('habit_timeline')
+        return JsonResponse(response_habit.put_habit(api, habit_id, habit_name, habit_status, habit_timeline))
 
 
 @csrf_exempt
@@ -63,9 +67,9 @@ def event_api(request, api, event_id):
     if request.method == 'GET':
         return JsonResponse(response_event.get_event(api, event_id))
     if request.method == 'POST':
-        text_comment = request.POST.get('text_comment')
+        comment = request.POST.get('comment')
         remember = request.POST.get('remember')
-        return JsonResponse(response_event.post_event_params(api, event_id, text_comment, remember))
+        return JsonResponse(response_event.post_event_params(api, event_id, comment, remember))
     if request.method == 'PUT':
         event_date = request.PUT.get('event_date')
         event_name = request.PUT.get('event_name')
@@ -90,12 +94,12 @@ def private_task_api(request, api, task_id):
         return JsonResponse(response_private_task.post_task_params(api, task_id, repeat, remember, subtask, comment))
     if request.method == 'PUT':
         task_name = request.PUT.get('task_name')
-        status = request.PUT.get('status')
-        deadline = request.PUT.get('deadline')
+        task_status = request.PUT.get('task_status')
+        task_deadline = request.PUT.get('task_deadline')
         subtask_id = request.PUT.get('subtask_id')
         subtask_status = request.PUT.get('subtask_status')
-        return JsonResponse(response_private_task.put_task(api, task_id, name, status, deadline, subtask_id,
-                                                           subtask_status))
+        return JsonResponse(response_private_task.put_task(api, task_id, task_name, task_status, task_deadline,
+                                                           subtask_id, subtask_status))
     if request.method == 'DELETE':
         repeat_id = request.DELETE.get('repeat_id')
         remember_id = request.DELETE.get('remember_id')
@@ -139,13 +143,13 @@ def list_api(request, api, list_id):
         return JsonResponse({'error': 'wrong api key'})
     if request.method == 'P0ST':
         new_user = request.POST.get('new_user')
-        return JsonResponse(response_private_task.post_list_params(api, list_id, new_user))
+        return JsonResponse(response_list.post_list_params(api, list_id, new_user))
     if request.method == 'PUT':
         list_name = request.PUT.get('list_name')
-        return JsonResponse(response_private_task.put_list(api, list_id, list_name))
+        return JsonResponse(response_list.put_list(api, list_id, list_name))
     if request.method == 'DELETE':
         new_user = request.DELETE.get('new_user')
-        return JsonResponse(response_private_task.delete_list_params(api, list_id, new_user))
+        return JsonResponse(response_list.delete_list_params(api, list_id, new_user))
 
 
 @csrf_exempt

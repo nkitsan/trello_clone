@@ -36,10 +36,10 @@ def get_event(api, event_id):
     if event is None:
         return {'error': 'user have no event with such id'}
     response_event = {event_id: {'name': event.name, 'date': event.event_date, 'remember': {}, 'comment': {}}}
-    for comment in event.comments:
+    for comment in event.comments.all():
         response_event[event_id]['comment'].update({comment.id:comment.comment})
-    for remember in event.remember:
-        response_event[event_id]['remember'].update({remember.id: remember.remember})
+    for remember in event.remember.all():
+        response_event[event_id]['remember'].update({remember.id: remember.repeat_date})
     return response_event
 
 

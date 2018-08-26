@@ -27,6 +27,7 @@ def delete_task(api, task_id):
     if task is None:
         return {'error': 'user does not have the task in weeklytasks'}
     weekly_task_manager.delete_weeklytask(username, task_id)
+    return {}
 
 
 def get_task(api, task_id):
@@ -41,21 +42,21 @@ def get_task(api, task_id):
     for subtask in task.task.subtasks.all():
         response_task[task.id]['subtasks'].update({subtask.id: {'name': subtask.name, 'status': subtask.status}})
     for remember in task.remember.all():
-        response_task[task.id]['remeber'].update({remember.id: remember.remeber})
+        response_task[task.id]['remember'].update({remember.id: remember.repeat_date})
     for repeat in task.repeat.all():
         response_task[task.id]['repeat'].update({repeat.id: repeat.repeat})
     return response_task
 
 
-def post_task_params(api, task_id, repeat, remeber, subtask, comment):
+def post_task_params(api, task_id, repeat, remember, subtask, comment):
     username = user_manager.get_username(api)
     task = weekly_task_manager.find_user_task(username, task_id)
     if task is None:
         return {'error': 'user does not have the task in weeklytasks'}
     if repeat is not None:
         weekly_task_manager.add_weeklytask_repeat(username, task_id, repeat)
-    if remeber is not None:
-        weekly_task_manager.add_weeklytask_remember(username, task_id, remeber)
+    if remember is not None:
+        weekly_task_manager.add_weeklytask_remember(username, task_id, remember)
     if subtask is not None:
         weekly_task_manager.add_weeklytask_subtask(username, task_id, subtask)
     if comment is not None:
@@ -92,4 +93,4 @@ def delete_task_params(api, task_id, comment_id, subtask_id, repeat_id, remember
         weekly_task_manager.delete_weeklytask_repeat(username, task_id, repeat_id)
     if remember_id is not None:
         weekly_task_manager.delete_weeklytask_remember(username, task_id, remember_id)
-    return {}
+    return get_task(api, task_id)
