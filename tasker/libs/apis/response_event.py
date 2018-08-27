@@ -35,11 +35,11 @@ def get_event(api, event_id):
     event = calendar_manager.find_user_event(username, event_id)
     if event is None:
         return {'error': 'user have no event with such id'}
-    response_event = {event_id: {'name': event.name, 'date': event.event_date, 'remember': {}, 'comment': {}}}
+    response_event = {event_id: {'name': event.name, 'date': event.event_date, 'remembers': {}, 'comments': {}}}
     for comment in event.comments.all():
-        response_event[event_id]['comment'].update({comment.id:comment.comment})
+        response_event[event_id]['comments'].update({comment.id:comment.comment})
     for remember in event.remember.all():
-        response_event[event_id]['remember'].update({remember.id: remember.repeat_date})
+        response_event[event_id]['remembers'].update({remember.id: remember.repeat_date})
     return response_event
 
 

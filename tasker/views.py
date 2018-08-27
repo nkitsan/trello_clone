@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from tasker.models import User
@@ -9,7 +8,6 @@ from tasker.libs.apis import (response_habit,
                               response_private_task,
                               response_list)
 from tasker.libs.managers import user_manager
-
 
 
 def login(request):
@@ -123,8 +121,8 @@ def public_task_api(request, api, list_id, task_id):
                                                                          executor))
     if request.method == 'PUT':
         task_name = request.PUT.get('task_name')
-        status = request.PUT.get('status')
-        deadline = request.PUT.get('deadline')
+        status = request.PUT.get('task_status')
+        deadline = request.PUT.get('task_deadline')
         subtask_id = request.PUT.get('subtask_id')
         subtask_status = request.PUT.get('subtask_status')
         return JsonResponse(response_public_task.put_public_task(api, list_id, task_id, task_name, status, deadline,

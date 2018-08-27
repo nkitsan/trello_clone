@@ -36,6 +36,7 @@ def post_list_params(api, list_id, new_user):
     if not user.lists.filter(id=list_id).exists():
         return {'error': 'no access to manage this list'}
     public_task_manager.add_public_list_user(username, new_user, list_id)
+    return {}
 
 
 def put_list(api, list_id, list_name):

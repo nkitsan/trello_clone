@@ -36,15 +36,15 @@ def get_task(api, task_id):
     if task is None:
         return {'error': 'user does not have the task in weeklytasks'}
     response_task = {task.id: {'name': task.task.name, 'status': task.task.status, 'deadline': task.task.deadline,
-                               'comments': {}, 'subtasks': {}, 'remember': {}, 'repeat': {}}}
+                               'comments': {}, 'subtasks': {}, 'remembers': {}, 'repeats': {}}}
     for comment in task.task.comments.all():
         response_task[task.id]['comments'].update({comment.id: comment.comment})
     for subtask in task.task.subtasks.all():
         response_task[task.id]['subtasks'].update({subtask.id: {'name': subtask.name, 'status': subtask.status}})
     for remember in task.remember.all():
-        response_task[task.id]['remember'].update({remember.id: remember.repeat_date})
+        response_task[task.id]['remembers'].update({remember.id: remember.repeat_date})
     for repeat in task.repeat.all():
-        response_task[task.id]['repeat'].update({repeat.id: repeat.repeat})
+        response_task[task.id]['repeats'].update({repeat.id: repeat.repeat})
     return response_task
 
 
