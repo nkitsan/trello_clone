@@ -1,12 +1,12 @@
 import requests
-from .config import host
+from .config import HOST
 
 
 def add_repeat(api, task_id, repeat):
     if repeat > 6 or repeat < 0:
         return 'wrong repeat format'
     data = {'repeat': repeat}
-    url = host + api + '/tasks/' + str(task_id)
+    url = HOST + api + '/tasks/' + str(task_id)
     response_repeat = requests.post(url=url, data=data).json()
     if response_repeat['error'] is not None:
         return response_repeat['error']
@@ -15,7 +15,7 @@ def add_repeat(api, task_id, repeat):
 
 def delete_repeat(api, task_id, repeat_id):
     data = {'repeat_id': repeat_id}
-    url = host + api + '/tasks/' + str(task_id)
+    url = HOST + api + '/tasks/' + str(task_id)
     response_repeat = requests.delete(url=url, data=data).json()
     if response_repeat['error'] is not None:
         return response_repeat['error']
@@ -23,7 +23,7 @@ def delete_repeat(api, task_id, repeat_id):
 
 
 def show_repeats(api, event_id, task_id):
-    url = host + api + '/tasks/' + str(task_id)
+    url = HOST + api + '/tasks/' + str(task_id)
     response_repeat = requests.get(url=url).json()
     if response_repeat['error'] is not None:
         return response_repeat['error']

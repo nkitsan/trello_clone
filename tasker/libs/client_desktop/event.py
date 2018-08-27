@@ -1,9 +1,9 @@
 import requests
-from .config import host
+from .config import HOST
 
 
 def add_event(api, name, date):
-    url = host + api + '/events'
+    url = HOST + api + '/events'
     data = {'event_name': name, 'event_date': date}
     event_response = requests.post(url=url, data=data).json()
     if event_response['error'] is not None:
@@ -13,7 +13,7 @@ def add_event(api, name, date):
 
 
 def change_event(api, event_id, name, date):
-    url = host + api + '/events/' + str(event_id)
+    url = HOST + api + '/events/' + str(event_id)
     data = {}
     if name is not None:
         data.update({'event_name': name})
@@ -26,7 +26,7 @@ def change_event(api, event_id, name, date):
 
 
 def delete_event(api, event_id):
-    url = host + api + '/events'
+    url = HOST + api + '/events'
     data = {'event_id': event_id}
     event_response = requests.delete(url=url, data=data).json()
     if event_response['error'] is not None:
@@ -35,7 +35,7 @@ def delete_event(api, event_id):
 
 
 def show_events(api):
-    url = host + api + '/events'
+    url = HOST + api + '/events'
     event_response = requests.get(url=url).json()
     if event_response['error'] is not None:
         return event_response['error']
@@ -46,7 +46,7 @@ def show_events(api):
 
 
 def show_event(api, event_id):
-    url = host + api + '/events/' + str(event_id)
+    url = HOST + api + '/events/' + str(event_id)
     event_response = requests.get(url=url).json()
     if event_response['error'] is not None:
         return event_response['error']

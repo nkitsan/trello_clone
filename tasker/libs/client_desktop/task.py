@@ -1,14 +1,14 @@
 import requests
-from .config import host
+from .config import HOST
 
 
 def add_task(api, list_id, name):
     data = {'task_name': name}
     if list_id is None:
-        url = host + api + '/tasks'
+        url = HOST + api + '/tasks'
         task_response = requests.post(url=url, data=data).json()
     else:
-        url = host + api + '/lists/' + str(list_id) + '/tasks'
+        url = HOST + api + '/lists/' + str(list_id) + '/tasks'
         task_response = requests.post(url=url, data=data).json()
     if task_response['error'] is not None:
         return task_response['error']
@@ -25,10 +25,10 @@ def change_task(api, list_id, task_id, name, status, deadline):
     if deadline is not None:
         data.update({'task_deadline': deadline})
     if list_id is None:
-        url = host + api + '/tasks/' + str(task_id)
+        url = HOST + api + '/tasks/' + str(task_id)
         task_response = requests.put(url=url, data=data).json()
     else:
-        url = host + api + '/lists/' + str(list_id) + '/tasks/' + str(task_id)
+        url = HOST + api + '/lists/' + str(list_id) + '/tasks/' + str(task_id)
         task_response = requests.put(url=url, data=data).json()
     if task_response['error'] is not None:
         return task_response['error']
@@ -39,10 +39,10 @@ def change_task(api, list_id, task_id, name, status, deadline):
 def delete_task(api, list_id, task_id):
     data = {'task_id': task_id}
     if list_id is None:
-        url = host + api + '/tasks'
+        url = HOST + api + '/tasks'
         task_response = requests.delete(url=url, data=data).json()
     else:
-        url = host + api + '/lists/' + str(list_id) + '/tasks'
+        url = HOST + api + '/lists/' + str(list_id) + '/tasks'
         task_response = requests.delete(url=url, data=data).json()
     if task_response['error'] is not None:
         return task_response['error']
@@ -51,10 +51,10 @@ def delete_task(api, list_id, task_id):
 
 def show_tasks(api, list_id):
     if list_id is None:
-        url = host + api + '/tasks'
+        url = HOST + api + '/tasks'
         task_response = requests.get(url=url).json()
     else:
-        url = host + api + '/lists/' + str(list_id) + '/tasks'
+        url = HOST + api + '/lists/' + str(list_id) + '/tasks'
         task_response = requests.get(url=url).json()
     if task_response['error'] is not None:
         return task_response['error']
@@ -66,10 +66,10 @@ def show_tasks(api, list_id):
 
 def show_task(api, list_id, task_id):
     if list_id is None:
-        url = host + api + '/tasks/' + str(task_id)
+        url = HOST + api + '/tasks/' + str(task_id)
         task_response = requests.get(url=url).json()
     else:
-        url = host + api + '/lists/' + str(list_id) + '/tasks/' + str(task_id)
+        url = HOST + api + '/lists/' + str(list_id) + '/tasks/' + str(task_id)
         task_response = requests.get(url=url).json()
     if task_response['error'] is not None:
         return task_response['error']

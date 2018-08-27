@@ -1,9 +1,9 @@
 import requests
 import datetime
-from .config import host
+from .config import HOST
 
 
-time_pattern = '%Y-%m-%d %H:%M'
+TIME_PATTERN = '%Y-%m-%d %H:%M'
 
 
 def add_remember(api, event_id, task_id, date):
@@ -11,10 +11,10 @@ def add_remember(api, event_id, task_id, date):
         return 'wrong datetime format'
     data = {'remember': date}
     if event_id is not None:
-        url = host + api + '/events/' + str(event_id)
+        url = HOST + api + '/events/' + str(event_id)
         response_remember = requests.post(url=url, data=data).json()
     else:
-        url = host + api + '/tasks/' + str(task_id)
+        url = HOST + api + '/tasks/' + str(task_id)
         response_remember = requests.post(url=url, data=data).json()
     if response_remember['error'] is not None:
         return response_remember['error']
@@ -24,10 +24,10 @@ def add_remember(api, event_id, task_id, date):
 def delete_remember(api, event_id, task_id, remember_id):
     data = {'remember_id': remember_id}
     if event_id is not None:
-        url = host + api + '/events/' + str(event_id)
+        url = HOST + api + '/events/' + str(event_id)
         response_remember = requests.delete(url=url, data=data).json()
     else:
-        url = host + api + '/tasks/' + str(task_id)
+        url = HOST + api + '/tasks/' + str(task_id)
         response_remember = requests.delete(url=url, data=data).json()
     if response_remember['error'] is not None:
         return response_remember['error']
@@ -37,12 +37,12 @@ def delete_remember(api, event_id, task_id, remember_id):
 def show_remembers(api, event_id, task_id):
     remembers = []
     if event_id is not None:
-        url = host + api + '/events/' + str(event_id)
+        url = HOST + api + '/events/' + str(event_id)
         response_remember = requests.get(url=url).json()
         if response_remember['error'] is None:
             remembers = response_remember[event_id]['remember']
     else:
-        url = host + api + '/tasks/' + str(task_id)
+        url = HOST + api + '/tasks/' + str(task_id)
         response_remember = requests.get(url=url).json()
         if response_remember['error'] is None:
             remembers = response_remember[task_id]['remember']
@@ -56,7 +56,7 @@ def show_remembers(api, event_id, task_id):
 
 def _date_validation(date):
     try:
-        datetime.datetime.strptime(date, time_pattern)
+        datetime.datetime.strptime(date, TIME_PATTERN)
     except ValueError:
         return False
     return True

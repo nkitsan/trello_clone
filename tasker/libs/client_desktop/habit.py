@@ -1,9 +1,9 @@
 import requests
-from .config import host
+from .config import HOST
 
 
 def add_habit(api, name):
-    url = host + api + '/habits'
+    url = HOST + api + '/habits'
     data = {'habit_name': name}
     habit_response = requests.post(url=url, data=data).json()
     if habit_response['error'] is not None:
@@ -13,7 +13,7 @@ def add_habit(api, name):
 
 
 def change_habit(api, habit_id, name=None, status=None, timeline=None):
-    url = host + api + '/habits/' + str(habit_id)
+    url = HOST + api + '/habits/' + str(habit_id)
     data = {}
     if name is not None:
         data.update({'habit_name': name})
@@ -30,7 +30,7 @@ def change_habit(api, habit_id, name=None, status=None, timeline=None):
 
 
 def delete_habit(api, habit_id):
-    url = host + api + '/habits'
+    url = HOST + api + '/habits'
     data = {'habit_id': habit_id}
     habit_response = requests.delete(url=url, data=data).json()
     if habit_response['error'] is not None:
@@ -39,7 +39,7 @@ def delete_habit(api, habit_id):
 
 
 def show_habits(api):
-    url = host + api + '/habits'
+    url = HOST + api + '/habits'
     habit_response = requests.get(url=url).json()
     habits = ''
     if habit_response['error'] is not None:
@@ -50,7 +50,7 @@ def show_habits(api):
 
 
 def show_habit(api, habit_id):
-    url = host + api + '/habits/' + str(habit_id)
+    url = HOST + api + '/habits/' + str(habit_id)
     habit_response = requests.get(url=url).json()
     if habit_response['error'] is not None:
         return habit_response['error']

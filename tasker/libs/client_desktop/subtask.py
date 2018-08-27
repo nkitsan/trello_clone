@@ -1,14 +1,14 @@
 import requests
-from .config import host
+from .config import HOST
 
 
 def add_subtask(api, list_id, task_id, subtask):
     data = {'subtask': subtask}
     if list_id is None:
-        url = host + api + '/tasks/' + str(task_id)
+        url = HOST + api + '/tasks/' + str(task_id)
         response_subtask = requests.post(url=url, data=data).json()
     else:
-        url = host + api + '/lists/' + list_id + '/tasks/' + str(task_id)
+        url = HOST + api + '/lists/' + list_id + '/tasks/' + str(task_id)
         response_subtask = requests.post(url=url, data=data).json()
     if response_subtask['error'] is not None:
         return response_subtask['error']
@@ -18,10 +18,10 @@ def add_subtask(api, list_id, task_id, subtask):
 def delete_subtask(api, list_id, task_id, subtask_id):
     data = {'subtask_id': subtask_id}
     if list_id is None:
-        url = host + api + '/tasks/' + str(task_id)
+        url = HOST + api + '/tasks/' + str(task_id)
         response_subtask = requests.delete(url=url, data=data).json()
     else:
-        url = host + api + '/lists/' + list_id + '/tasks/' + str(task_id)
+        url = HOST + api + '/lists/' + list_id + '/tasks/' + str(task_id)
         response_subtask = requests.delete(url=url, data=data).json()
     if response_subtask['error'] is not None:
         return response_subtask['error']
@@ -34,10 +34,10 @@ def change_subtask_status(api, list_id, task_id, subtask_id, status):
     else:
         return 'Incorrect value of status'
     if list_id is None:
-        url = host + api + '/tasks/' + str(task_id)
+        url = HOST + api + '/tasks/' + str(task_id)
         response_subtask = requests.put(url=url, data=data).json()
     else:
-        url = host + api + '/lists/' + list_id + '/tasks/' + str(task_id)
+        url = HOST + api + '/lists/' + list_id + '/tasks/' + str(task_id)
         response_subtask = requests.put(url=url, data=data).json()
     if response_subtask['error'] is not None:
         return response_subtask['error']
@@ -46,10 +46,10 @@ def change_subtask_status(api, list_id, task_id, subtask_id, status):
 
 def show_subtasks(api, list_id, task_id):
     if list_id is None:
-        url = host + api + '/tasks/' + str(task_id)
+        url = HOST + api + '/tasks/' + str(task_id)
         response_subtask = requests.get(url=url).json()
     else:
-        url = host + api + '/lists/' + list_id + '/tasks/' + str(task_id)
+        url = HOST + api + '/lists/' + list_id + '/tasks/' + str(task_id)
         response_subtask = requests.get(url=url).json()
     if response_subtask['error'] is not None:
         return response_subtask['error']
