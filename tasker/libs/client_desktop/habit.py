@@ -1,6 +1,7 @@
 import requests
 import click
-from .helper import HOST, api
+from .helper import HOST
+from .access import read_api
 
 
 @click.group()
@@ -11,6 +12,10 @@ def habit_operations():
 @habit_operations.command(short_help='Create a new habit')
 @click.option('--name', default='', help='Name of a created habit')
 def add_habit(name):
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     url = HOST + api + '/habits'
     data = {'habit_name': name}
     habit_response = requests.post(url=url, data=data).json()
@@ -32,6 +37,10 @@ def add_habit(name):
 def change_habit(habit_id, name, status, timeline):
     if habit_id is None:
         click.echo('Sorry, i am not so smart to predict which habit you want to change')
+        return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
         return
     habit_id = str(habit_id)
     url = HOST + api + '/habits/' + habit_id
@@ -58,6 +67,10 @@ def delete_habit(habit_id):
     if habit_id is None:
         click.echo('Sorry, i am not so smart to predict which habit you want to delete')
         return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     url = HOST + api + '/habits'
     data = {'habit_id': str(habit_id)}
     habit_response = requests.delete(url=url, data=data).json()
@@ -70,6 +83,10 @@ def delete_habit(habit_id):
 
 @habit_operations.command(short_help='Show habits')
 def show_habits():
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     url = HOST + api + '/habits'
     habit_response = requests.get(url=url).json()
     habits = ''
@@ -85,6 +102,10 @@ def show_habits():
 @habit_operations.command(short_help='Show the habit')
 @click.option('--habit_id', default=None, type=click.INT, help='ID of habit which you want to see')
 def show_habit(habit_id):
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     if habit_id is None:
         click.echo('Sorry, i am not so smart to predict which habit you want to see')
         return

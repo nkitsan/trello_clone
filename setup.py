@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='tasker',
-    version='1.0',
+    version='1.1',
     description='''Are you crazy fan of git? Or maybe you fan of geeky stuff, which you can make with your
                 console or terminal? Daily Tracker is thing, which make your dreams come true. 
                 It helps you to plan the most important projects and events of your life in style

@@ -1,6 +1,7 @@
 import requests
 import click
-from .helper import HOST, api
+import string
+from .helper import HOST
 
 
 @click.group()
@@ -20,6 +21,10 @@ def add_user(list_id, task_id, username):
         return
     if username is None:
         click.echo('No username to add user')
+        return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
         return
     if task_id is None:
         url = HOST + api + '/lists/' + str(list_id)
@@ -52,6 +57,10 @@ def delete_user(list_id, task_id, username):
     if username is None:
         click.echo('No username to delete user')
         return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     if task_id is None:
         url = HOST + api + '/lists/' + str(list_id)
         data = {'new_user': username}
@@ -68,3 +77,27 @@ def delete_user(list_id, task_id, username):
         return
     click.echo('executor was successfully deleted')
     return
+
+
+@access_operations.command(short_help='Add api key from account to begin')
+@click.option('--api', default=None, help='Api key from account')
+def login(api):
+    allowed = string.digits + string.ascii_letters
+    if all(c in allowed for c in api):
+        with open("api.txt", "w+") as api_file:
+            api_file.write(api)
+        click.echo('api key was successfully added')
+    else:
+        click.echo('wrong api key')
+    return
+
+
+def read_api():
+    try:
+        api_file = open("api.txt", "r+")
+    except IOError:
+        return None
+    else:
+        api = api_file.readline()
+        api_file.close()
+    return api

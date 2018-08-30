@@ -1,6 +1,7 @@
 import requests
 import click
-from .helper import HOST, date_validation, api
+from .helper import HOST, date_validation
+from .access import read_api
 
 
 @click.group()
@@ -25,6 +26,10 @@ def add_remember(event_id, task_id, remember):
     if not date_validation(remember):
         click.echo('Format of date should be Y-M-D H:M')
         return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     data = {'remember': remember}
     if event_id is not None:
         url = HOST + api + '/events/' + str(event_id)
@@ -48,6 +53,10 @@ def delete_remember(event_id, task_id, remember_id):
     if event_id is None and task_id is None:
         click.echo('You forget to add a task or an event id to delete the remember')
         return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     data = {'remember_id': str(remember_id)}
     if event_id is not None:
         url = HOST + api + '/events/' + str(event_id)
@@ -70,6 +79,10 @@ def delete_remember(event_id, task_id, remember_id):
 def show_remembers(event_id, task_id):
     if event_id is None and task_id is None:
         click.echo('You forget to add a task or an event id to delete the remember')
+        return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
         return
     remembers = []
     if event_id is not None:

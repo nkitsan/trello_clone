@@ -1,6 +1,7 @@
 import requests
 import click
-from .helper import HOST, date_validation, api
+from .helper import HOST, date_validation
+from .access import read_api
 
 
 @click.group()
@@ -13,6 +14,10 @@ def task_operations():
               help='ID of the list in which you want to create a task. Skip: add to the weekly tasks list')
 @click.option('--name', default='', help='Name of a created task')
 def add_task(list_id, name):
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     data = {'task_name': name}
     if list_id is None:
         url = HOST + api + '/tasks'
@@ -40,6 +45,10 @@ def add_task(list_id, name):
 def change_task(list_id, task_id, name, status, deadline):
     if task_id is None:
         click.echo('You missed ID of task, which you want to change')
+        return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
         return
     data = {}
     task_id = str(task_id)
@@ -72,6 +81,10 @@ def delete_task(list_id, task_id):
     if task_id is None:
         click.echo('You missed the ID of the task, which you want to delete')
         return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     task_id = str(task_id)
     data = {'task_id': task_id}
     if list_id is None:
@@ -91,6 +104,10 @@ def delete_task(list_id, task_id):
 @click.option('--list_id', default=None, type=click.INT,
               help='ID of the list, in which you want to see tasks. Skip: see tasks in the weekly tasks list')
 def show_tasks(list_id):
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     if list_id is None:
         url = HOST + api + '/tasks'
         task_response = requests.get(url=url).json()
@@ -114,6 +131,10 @@ def show_tasks(list_id):
 def show_task(list_id, task_id):
     if task_id is None:
         click.echo('You missed the ID of the task, which you want to delete')
+        return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
         return
     task_id = str(task_id)
     if list_id is None:

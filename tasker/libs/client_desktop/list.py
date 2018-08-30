@@ -1,6 +1,7 @@
 import requests
 import click
-from .helper import HOST, api
+from .helper import HOST
+from .access import read_api
 
 
 @click.group()
@@ -11,6 +12,10 @@ def list_operations():
 @list_operations.command(short_help='Create a new list')
 @click.option('--name', default='', help='Name of a created list')
 def add_list(name):
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     data = {'list_name': name}
     url = HOST + api + '/lists'
     list_response = requests.post(url=url, data=data).json()
@@ -31,6 +36,10 @@ def change_list(list_id, name):
     if list_id is None:
         click.echo('Ups! You forget to choose list id')
         return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     list_id = str(list_id)
     data = {'list_name': name}
     url = HOST + api + '/lists/' + list_id
@@ -48,6 +57,10 @@ def delete_list(list_id):
     if list_id is None:
         click.echo('Ups! You forget to choose list id')
         return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     data = {'list_id': str(list_id)}
     url = HOST + api + '/lists'
     list_response = requests.delete(url=url, data=data).json()
@@ -60,6 +73,10 @@ def delete_list(list_id):
 
 @list_operations.command(short_help='Show user public list')
 def show_lists():
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     url = HOST + api + '/lists'
     list_response = requests.get(url=url).json()
     if 'error' in list_response:

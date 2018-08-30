@@ -1,6 +1,7 @@
 import requests
 import click
-from .helper import HOST, date_validation, api
+from .helper import HOST, date_validation
+from .access import read_api
 
 
 @click.group()
@@ -17,6 +18,10 @@ def add_event(name, date):
         return
     if not date_validation(date):
         click.echo('Format of date should be Y-M-D H:M')
+        return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
         return
     url = HOST + api + '/events'
     data = {'event_name': name, 'event_date': date}
@@ -37,6 +42,10 @@ def add_event(name, date):
 def change_event(event_id, name, date):
     if event_id is None:
         click.echo('You missed ID of the event, which you want to change')
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     event_id = str(event_id)
     url = HOST + api + '/events/' + event_id
     data = {}
@@ -58,6 +67,10 @@ def change_event(event_id, name, date):
 def delete_event(event_id):
     if event_id is None:
         click.echo('You missed ID of the event, which you want to delete')
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     url = HOST + api + '/events'
     data = {'event_id': str(event_id)}
     event_response = requests.delete(url=url, data=data).json()
@@ -70,6 +83,10 @@ def delete_event(event_id):
 
 @event_operations.command(short_help='Show events in the calendar')
 def show_events():
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     url = HOST + api + '/events'
     event_response = requests.get(url=url).json()
     if 'error' in event_response:
@@ -88,6 +105,10 @@ def show_events():
 def show_event(event_id):
     if event_id is None:
         click.echo('You missed ID of the event, which you want to see')
+        return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
         return
     event_id = str(event_id)
     url = HOST + api + '/events/' + event_id

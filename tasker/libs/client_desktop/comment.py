@@ -1,6 +1,7 @@
 import requests
 import click
-from .helper import HOST, api
+from .helper import HOST
+from .access import read_api
 
 
 @click.group()
@@ -17,6 +18,10 @@ def comment_operations():
 def add_comment(event_id, list_id, task_id, text):
     if event_id and task_id is None:
         click.echo('You forget to choose event or task id')
+        return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
         return
     data = {'comment': text}
     task_id = str(task_id)
@@ -53,6 +58,10 @@ def delete_comment(event_id, list_id, task_id, comment_id):
     if event_id and task_id is None:
         click.echo('You forget to choose event or task id')
         return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     task_id = str(task_id)
     data = {'comment_id': str(comment_id)}
     if event_id is not None:
@@ -80,6 +89,10 @@ def delete_comment(event_id, list_id, task_id, comment_id):
 def show_comments(event_id, list_id, task_id):
     if event_id and task_id is None:
         click.echo('You forget to choose event or task id')
+        return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
         return
     comments = {}
     task_id = str(task_id)

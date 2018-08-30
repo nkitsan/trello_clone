@@ -1,6 +1,7 @@
 import requests
 import click
-from .helper import HOST, api
+from .helper import HOST
+from .access import read_api
 
 
 @click.group()
@@ -18,6 +19,10 @@ def add_repeat(task_id, repeat):
         return
     if repeat is None:
         click.echo('You forgot repeat. We are not Vanga please add it')
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     data = {'repeat': str(repeat)}
     url = HOST + api + '/tasks/' + str(task_id)
     response_repeat = requests.post(url=url, data=data).json()
@@ -37,6 +42,10 @@ def delete_repeat(task_id, repeat_id):
         return
     if repeat_id is None:
         click.echo('You forgot a repeat ID. We are not Vanga please add it')
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     data = {'repeat_id': str(repeat_id)}
     url = HOST + api + '/tasks/' + str(task_id)
     response_repeat = requests.delete(url=url, data=data).json()
@@ -52,6 +61,10 @@ def delete_repeat(task_id, repeat_id):
 def show_repeats(task_id):
     if task_id is None:
         click.echo('You missed ID of task, in which you want to delete the repeat')
+        return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
         return
     task_id = str(task_id)
     url = HOST + api + '/tasks/' + task_id

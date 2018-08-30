@@ -1,6 +1,7 @@
 import requests
 import click
-from .helper import HOST, api
+from .helper import HOST
+from .access import read_api
 
 
 @click.group()
@@ -17,6 +18,10 @@ def subtask_operations():
 def add_subtask(list_id, task_id, subtask):
     if task_id is None:
         click.echo('You missed ID of task in which you want to add subtask')
+        return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
         return
     data = {'subtask': subtask}
     task_id = str(task_id)
@@ -44,6 +49,10 @@ def delete_subtask(list_id, task_id, subtask_id):
         return
     if subtask_id is None:
         click.echo('You missed the ID of the subtask, which you want to delete')
+        return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
         return
     subtask_id = str(subtask_id)
     task_id = str(task_id)
@@ -77,6 +86,10 @@ def change_subtask(list_id, task_id, subtask_id, status):
     if subtask_id is None:
         click.echo('You missed the ID of the subtask, which you want to change')
         return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
     task_id = str(task_id)
     subtask_id = str(subtask_id)
     data = {'subtask_id': subtask_id, 'subtask_status': status}
@@ -102,6 +115,10 @@ def change_subtask(list_id, task_id, subtask_id, status):
 def show_subtasks(list_id, task_id):
     if task_id is None:
         click.echo('You missed the ID of the task, in which you want to see subtasks')
+        return
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
         return
     task_id = str(task_id)
     if list_id is None:
