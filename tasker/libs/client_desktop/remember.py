@@ -23,7 +23,7 @@ def add_remember(event_id, task_id, remember):
         click.echo('You forget to add a task or an event id to add a remember')
         return
     if not date_validation(remember):
-        click.echo('wrong datetime format')
+        click.echo('Format of date should be Y-M-D H:M')
         return
     data = {'remember': remember}
     if event_id is not None:

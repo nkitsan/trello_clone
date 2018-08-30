@@ -5,8 +5,7 @@ from .helper import HOST, api
 
 @click.group()
 def access_operations():
-    """
-    """
+    """Here is commands which can allow to add access to lists and define executors of tasks"""
 
 
 @access_operations.command(short_help='add user to list or executor to task')
@@ -14,6 +13,7 @@ def access_operations():
               help='ID of the list, in which you are going to add the executor.')
 @click.option('--task_id', default=None, type=click.INT,
               help='ID of the task in which you want to add executor. Skip: add access to list')
+@click.option('--username', default=None, help='Username of user which you want to add')
 def add_user(list_id, task_id, username):
     if list_id is None and list_id is None:
         click.echo('You missed the ID of a task or a list to which you want to add user')

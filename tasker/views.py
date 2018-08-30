@@ -139,8 +139,9 @@ def public_task_api(request, api, list_id, task_id):
 def list_api(request, api, list_id):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
-    if request.method == 'P0ST':
+    if request.method == 'POST':
         new_user = request.POST.get('new_user')
+        print(new_user)
         return JsonResponse(response_list.post_list_params(api, list_id, new_user))
     if request.method == 'PUT':
         list_name = request.PUT.get('list_name')

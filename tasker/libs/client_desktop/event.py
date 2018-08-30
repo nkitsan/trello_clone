@@ -1,11 +1,11 @@
 import requests
 import click
-from .helper import HOST, api
+from .helper import HOST, date_validation, api
 
 
 @click.group()
 def event_operations():
-    """"""
+    """Here is commands which allow to work with calendar events"""
 
 
 @event_operations.command(short_help='Add the event to the calendar')
@@ -14,6 +14,9 @@ def event_operations():
 def add_event(name, date):
     if date is None:
         click.echo('Whoops! Choose date of event')
+        return
+    if not date_validation(date):
+        click.echo('Format of date should be Y-M-D H:M')
         return
     url = HOST + api + '/events'
     data = {'event_name': name, 'event_date': date}
@@ -75,7 +78,7 @@ def show_events():
     events = ''
     for event_id in event_response:
         events += (event_id + ' ' + event_response[event_id]['name'] + '\ndate:' +
-                   ' '.join(event_response[event_id]['date'][0:-1].split('T') + '\n'))
+                   ' '.join(event_response[event_id]['date'][0:-1].split('T')) + '\n')
     click.echo(events.rstrip('\n'))
     return
 
@@ -89,9 +92,9 @@ def show_event(event_id):
     event_id = str(event_id)
     url = HOST + api + '/events/' + event_id
     event_response = requests.get(url=url).json()
-    if event_response['error'] is not None:
+    if 'error' in event_response:
         click.echo(event_response['error'])
         return
-    click.echo(click.echo(event_id + ': ' + event_response[event_id]['name'] + '\ndate: '
-               + ' '.join(event_response[event_id]['date'][0:-1].split('T'))))
+    click.echo(event_id + ': ' + event_response[event_id]['name'] + '\ndate: '
+               + ' '.join(event_response[event_id]['date'][0:-1].split('T')))
     return

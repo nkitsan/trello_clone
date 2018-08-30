@@ -33,4 +33,7 @@ def get_username(api_key):
 
 
 def get_user(username):
-    return User.objects.get(username=username)
+    if User.objects.filter(username=username).exists():
+        return User.objects.get(username=username)
+    else:
+        return None
