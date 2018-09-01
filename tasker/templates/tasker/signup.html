@@ -2,15 +2,15 @@
 
 {% block content %}
     <div>
-        <div>
+        <div class="intro">
             Register your profile
         </div>
         <form method="POST">
             {% csrf_token %}
-            <input type="text" name="username" placeholder="Enter your username">
-            <input type="email" name="email" placeholder="Enter your email">
-            <input type="password" name="password" placeholder="Enter your password">
-            <button type="submit">Register</button>
+            <input class="form-elem" type="text" name="username" placeholder="Enter your username">
+            <input class="form-elem" type="email" name="email" placeholder="Enter your email">
+            <input class="form-elem" type="password" name="password" placeholder="Enter your password">
+            <button class="form-elem" type="submit">Register</button>
         </form>
     </div>
 {% endblock %}

@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     url(r'^login$', views.login, name='login'),
     url(r'^signup$', views.signup, name='signup'),
+    url(r'^logout$', views.logout, name='logout'),
     url(r'^profiles/(?P<username>[\w.@+-]+)$', views.user_board, name='user_board'),
 
     url(r'^(?P<api>[\w\-]+)/habits/(?P<habit_id>\d+)$', views.habit_api, name='habit_api'),

@@ -1,16 +1,20 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Daily Tracker</title>
+    <link rel="stylesheet" href="{% static 'css/start.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
 </head>
 <body>
 <header>
-    <img src="" alt="logo">
-    <div>
+    <div class="logo">
+        Daily Tracker
+    </div>
+    <div class="login">
         <a href="{% url 'login'%}">Log In</a>
     </div>
-    <div>
+    <div class="signup">
         <a href="{% url 'signup'%}">Sign Up</a>
     </div>
 </header>

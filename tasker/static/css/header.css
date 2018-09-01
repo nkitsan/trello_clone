@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC');
+
+header{
+  display: flex;
+  flex-direction: row;
+  margin: 5px;
+}
+
+.logo{
+  margin: 0px 20px;
+  width: 80%;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: "Amatic SC";
+}
+
+.logout {
+  align-self: center;
+  border: #5b80b2;
+  margin-left: 70px;
+}
+
+.login, .signup {
+  margin: 10px;
+}
+
+a {
+    text-decoration: none;
+}

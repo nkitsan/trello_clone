@@ -4,22 +4,25 @@
 	    <meta charset="UTF-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-	    <title>Lists Board</title>
+	    <title>Daily Tracker</title>
 
 	    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
 	          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 	    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
 	    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+		<link rel="stylesheet" href="{% static 'css/header.css' %}">
 	</head>
 	<body>
 		<header>
-	    	<img src="" alt="logo">
-	    	<div>
-	        	<a href="">Log Out</a>
+	    	<div class="logo">
+	    		Daily Tracker
+	    	</div>
+	    	<div class="logout">
+	        	<a href="{% url 'logout' %}">Log Out</a>
 	    	</div>
 		</header>
-	    <div>
-	        Your API-KEY for console app {{ api_key }}
+	    <div class="api-key">
+	        api-key for console app: {{ api_key }}
 	    </div>
 	    <div class="content">
 	    	<div class="list">
@@ -61,7 +64,7 @@
 	      		<div class="list">
 	        		<h2 class="list-title">{{ name }}</h2>
 	        		{% for task in properties.tasks%}
-	          			<a class="card" href="">
+	          			<a class="card" href="{% url 'public_task_info' username properties.id task.id %}">
 	                		<h3 class="card-title">
 	                    		{{ task.task.name }}
 	                		</h3>

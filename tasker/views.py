@@ -42,9 +42,17 @@ def signup(request):
 
 
 @csrf_exempt
+def logout(request):
+    try:
+        del request.session['username']
+    except KeyError:
+        pass
+    return redirect('/signup')
+
+
+@csrf_exempt
 def user_board(request, username):
     user = User.objects.get(username=username)
-    print(public_task_manager.tasks_to_dict(username))
     return render(request, 'tasker/index.html', {'api_key': user.api_key,
                                                  'tasks': user.week_list.all(),
                                                  'lists': user.lists.all(),
@@ -231,7 +239,7 @@ def lists_api(request, api):
 
 @csrf_exempt
 def task_info(request, username, task_id):
-    pass
+    return render(request, 'tasker/task.html')
 
 
 @csrf_exempt
