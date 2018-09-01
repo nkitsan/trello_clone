@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from tasker.models import User
 from tasker.libs.apis import (response_habit,
@@ -7,18 +7,20 @@ from tasker.libs.apis import (response_habit,
                               response_public_task,
                               response_private_task,
                               response_list)
-from tasker.libs.managers import user_manager
+from tasker.libs.managers import (user_manager,
+                                  weekly_task_manager,
+                                  public_task_manager)
 
 
 def login(request):
     if request.session.get('username') is not None:
-        return redirect('/profile/{}/'.format(request.session.get('username')))
+        return redirect('/profiles/{}'.format(request.session.get('username')))
     elif request.method == "GET":
         username = request.GET.get('username')
         password = request.GET.get('password')
         if username is not None and request is not None and user_manager.login_user(username, password):
             request.session['username'] = username
-            return redirect('/profile/{}/'.format(username))
+            return redirect('/profiles/{}'.format(username))
         else:
             return render(request, 'tasker/login.html')
     else:
@@ -27,14 +29,14 @@ def login(request):
 
 def signup(request):
     if request.session.get('username') is not None:
-        return redirect('/profile/{}/'.format(request.session.get('username')))
+        return redirect('/profiles/{}'.format(request.session.get('username')))
     elif request.method == "POST":
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
         if user_manager.signup_user(username, email, password):
             request.session['username'] = username
-            return redirect('/profile/{}/'.format(username))
+            return redirect('/profiles/{}'.format(username))
     else:
         return render(request, 'tasker/signup.html')
 
@@ -42,7 +44,12 @@ def signup(request):
 @csrf_exempt
 def user_board(request, username):
     user = User.objects.get(username=username)
-    return render(request, 'tasker/index.html', {'api_key': user.api_key})
+    print(public_task_manager.tasks_to_dict(username))
+    return render(request, 'tasker/index.html', {'api_key': user.api_key,
+                                                 'tasks': user.week_list.all(),
+                                                 'lists': user.lists.all(),
+                                                 'public_tasks': public_task_manager.tasks_to_dict(username),
+                                                 'username': username})
 
 
 @csrf_exempt
@@ -220,3 +227,37 @@ def lists_api(request, api):
     if request.method == 'DELETE':
         list_id = request.DELETE.get('list_id')
         return JsonResponse(response_list.delete_list(api, list_id))
+
+
+@csrf_exempt
+def task_info(request, username, task_id):
+    pass
+
+
+@csrf_exempt
+def public_task_info(request, username, list_id, task_id):
+    pass
+
+
+@csrf_exempt
+def create_task(request, username):
+    task_name = request.POST.get('title')
+    if request.method == 'POST' and request.session.get('username') == username and task_name is not None:
+        weekly_task_manager.add_weeklytask(username, task_name)
+    return redirect('/profiles/{}'.format(username))
+
+
+@csrf_exempt
+def create_public_task(request, username, list_id):
+    task_name = request.POST.get('title')
+    if request.method == 'POST' and request.session.get('username') == username and task_name is not None:
+        public_task_manager.create_public_task(username, list_id, task_name)
+    return redirect('/profiles/{}'.format(username))
+
+
+@csrf_exempt
+def create_list(request, username):
+    list_name = request.POST.get('title')
+    if request.method == 'POST' and request.session.get('username') == username and list_name is not None:
+        public_task_manager.create_public_list(username, list_name)
+    return redirect('/profiles/{}'.format(username))

@@ -1,18 +1,122 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<header>
-    <img src="" alt="logo">
-    <div>
-        <a href="">Log Out</a>
-    </div>
-</header>
-    <div>
-        Your API-KEY for console app {{api_key}}
-    </div>
-</body>
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <title>Lists Board</title>
+
+	    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+	          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+	    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+	    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+	</head>
+	<body>
+		<header>
+	    	<img src="" alt="logo">
+	    	<div>
+	        	<a href="">Log Out</a>
+	    	</div>
+		</header>
+	    <div>
+	        Your API-KEY for console app {{ api_key }}
+	    </div>
+	    <div class="content">
+	    	<div class="list">
+	        	<h2 class="list-title">Weekly Tasks</h2>
+	          	{%for task in tasks%}
+	            	<a class="card" href="{% url 'task_info' username task.id %}">
+	                	<h3 class="card-title">
+	                    	{{ task.task.name }}
+	                	</h3>
+						<i class="edit-icon fas fa-pen"></i>
+	            	</a>
+	        	{% endfor %}
+
+	        	<div class="new-card-actions">
+	          		<a href="" class="add-card-btn">
+	            		<i class="fas fa-plus"></i>
+	            		<span>Add another card</span>
+	          		</a>
+	          		<form action="{% url 'create_task' username %}" method="POST" class="new-card-form">
+	            		<textarea
+	              			class="new-card-title"
+	              			name="title"
+	              			placeholder="Enter a title for this card..."
+	              			rows="4"
+	            		></textarea>
+						<div class="actions">
+	              			<input
+	               				class="new-card-btn"
+	                			type="submit"
+	                			value="Add Card"
+	              			/>
+							<i class="close-form fas fa-times"></i>
+	            		</div>
+	          		</form>
+	        	</div>
+	      	</div>
+
+	      	{%for name, properties in public_tasks.items %}
+	      		<div class="list">
+	        		<h2 class="list-title">{{ name }}</h2>
+	        		{% for task in properties.tasks%}
+	          			<a class="card" href="">
+	                		<h3 class="card-title">
+	                    		{{ task.task.name }}
+	                		</h3>
+	                		<i class="edit-icon fas fa-pen"></i>
+	            		</a>
+	        		{% endfor %}
+
+	        		<div class="new-card-actions">
+	          			<a href="" class="add-card-btn">
+	            			<i class="fas fa-plus"></i>
+	            			<span>Add another card</span>
+	          			</a>
+	          			<form action="{% url 'create_public_task' username properties.id %}" method="POST" class="new-card-form">
+	            			<textarea
+	              				class="new-card-title"
+	              				name="title"
+	              				placeholder="Enter a title for this card..."
+	              				rows="4"
+	            			></textarea>
+	            			<div class="actions">
+	              				<input
+	                			class="new-card-btn"
+	                			type="submit"
+	                			value="Add Card"
+	              				/>
+								<i class="close-form fas fa-times"></i>
+	            			</div>
+	          			</form>
+	        		</div>
+	      		</div>
+	      	{% endfor %}
+
+	    	<div class="new-list-actions">
+	        	<a href="" class="add-list-btn">
+	          		<i class="fas fa-plus"></i>
+	          		<span>Add another list</span>
+	        	</a>
+	        	<form action="{% url 'create_list' username %}" method="POST" class="new-list-form">
+	          		<textarea
+	            		class="new-card-title"
+	            		name="title"
+	            		placeholder="Enter list title..."
+	            		rows="4"
+	          		></textarea>
+	          		<div class="actions">
+	            		<input
+	              			class="new-card-btn"
+	              			type="submit"
+	              			value="Add List"
+	            		/>
+	            		<i class="close-form fas fa-times"></i>
+	          		</div>
+	        	</form>
+	      	</div>
+	    </div>
+	    <script src="{% static 'js/index.js' %}"></script>
+	</body>
 </html>

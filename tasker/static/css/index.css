@@ -1,0 +1,175 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+}
+
+.content {
+  width: 100vw;
+  height: 100vh;
+  white-space: nowrap;
+  overflow: auto;
+}
+
+.list {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 5px;
+  flex: 1;
+  width: 250px;
+  background: #eee;
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 5px;
+  white-space: normal;
+}
+
+.list-title {
+  color: #333;
+  font-weight: 600;
+  padding: 5px;
+  font-size: 16px;
+  margin: 0;
+}
+
+.card {
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  color: #333;
+  text-decoration: none;
+  border-radius: 4px;
+  margin: 10px 0;
+  padding: 5px 10px;
+}
+
+.card-title {
+  font-size: 14px;
+  margin: 0;
+  font-weight: 400;
+}
+
+.card .edit-icon {
+  visibility: hidden;
+  font-size: 12px;
+  padding: 5px 2px;
+  color: #ccc;
+}
+
+.card:hover .edit-icon {
+  visibility: visible;
+}
+
+.add-card-btn,
+.add-list-btn {
+  display: flex;
+  align-items: center;
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.add-card-btn .fas,
+.add-list-btn .fas {
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.add-card-btn span,
+.add-list-btn span {
+  padding-left: 5px;
+  pointer-events: none;
+}
+
+.add-card-btn:hover span {
+  text-decoration: underline;
+}
+
+.add-list-btn {
+  background: rgba(175,175,175,0.1);
+  flex: 1;
+  width: 250px;
+  box-sizing: border-box;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.new-list-actions {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.add-list-btn:hover {
+  background: rgba(175,175,175,0.3);
+}
+
+.new-card-actions .new-card-form,
+.new-list-actions .new-list-form {
+  display: none;
+}
+
+.new-card-actions.show-form .new-card-form,
+.new-list-actions.show-form .new-list-form {
+  display: block;
+}
+
+.new-card-actions.show-form .add-card-btn,
+.new-list-actions.show-form .add-list-btn {
+  display: none;
+}
+
+.new-card-title {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 0px;
+  resize: none;
+  padding: 5px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.new-card-title::-webkit-input-placeholder {
+  color: #ccc;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.new-card-title:-moz-placeholder {
+  color: #ccc;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.new-card-title::-moz-placeholder {
+  color: #ccc;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.new-card-title:-ms-input-placeholder {
+  color: #ccc;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.new-card-btn {
+  padding: 10px 15px;
+  background: #5aac44;
+  color: #fff;
+  font-weight: 600;
+  border: 0px;
+  border-radius: 4px;
+  cursor: pointer
+}
+
+.new-card-btn:hover {
+  background: #498a37;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.close-form {
+  color: #aaa;
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: 15px;
+}

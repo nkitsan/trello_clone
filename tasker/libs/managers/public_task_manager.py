@@ -172,3 +172,11 @@ def get_list_task(username, list_id, task_id):
     if not tasks.filter(id=task_id).exists():
         return None
     return tasks.get(id=task_id)
+
+
+def tasks_to_dict(username):
+    lists = get_user_lists(username)
+    tasks_dict = {}
+    for li in lists:
+        tasks_dict.update({li.name: {'id': li.id, 'tasks': li.tasks.all()}})
+    return tasks_dict
