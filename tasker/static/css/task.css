@@ -1,0 +1,103 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+  width: 60%;
+  padding: 50px;
+  margin: auto;
+  border-radius: 4px;
+  background-color: #eaeaea;
+}
+
+.task-title {
+  display: flex;
+  flex-direction: row;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 30px;
+}
+
+.change-card-btn {
+  padding: 5px 10px;
+  margin: auto;
+  background-color: #459328;
+  border: 0px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.delete-card-btn {
+  padding: 5px 10px;
+  margin: auto;
+  background-color: #f33636;
+  border: 0px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.card-list-name {
+  color: #7a7a7a;
+  margin-bottom: 20px;
+}
+
+.task-deadline, .task-status, .task-subtasks {
+    margin-top: 10px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.subtask, .subtask > form{
+    margin-left: 15px;
+    display: flex;
+    flex-direction: row;
+}
+
+.delete-comment-btn {
+  margin: 0px 100px;
+  background-color: #f33636;
+  border: 0px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.comment{
+  margin-left: 15px;
+}
+
+.new-subtask-form{
+  display: flex;
+  flex-direction: row;
+}
+
+.new-subtask-btn {
+  padding: 5px 10px;
+  margin: auto;
+  background-color: #459328;
+  border: 0px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.new-comment-btn{
+  padding: 5px 10px;
+  background-color: #459328;
+  border: 0px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+form > input {
+  margin: auto;
+}

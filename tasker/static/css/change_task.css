@@ -1,0 +1,27 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+    margin: 50px;
+}
+
+.task-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.change-task-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.change-btn {
+    margin: 10px 500px;
+    padding: 5px 0px;
+    background-color: #459328;
+    border: 0px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #ffffff;
+}

@@ -239,20 +239,20 @@ def lists_api(request, api):
 
 @csrf_exempt
 def task_info(request, username, task_id):
-    return render(request, 'tasker/task.html')
+    task = weekly_task_manager.find_user_task(username, task_id)
+    return render(request, 'tasker/task.html', {'name': task.task.name,
+                                                'deadline': ' '.join(str(task.task.deadline)[0:-9].split('T')),
+                                                'subtasks': task.task.subtasks.all(),
+                                                'status': task.task.status,
+                                                'task_id': task_id,
+                                                'comments': task.task.comments.all(),
+                                                'username': username})
+
 
 
 @csrf_exempt
 def public_task_info(request, username, list_id, task_id):
     pass
-
-
-@csrf_exempt
-def create_task(request, username):
-    task_name = request.POST.get('title')
-    if request.method == 'POST' and request.session.get('username') == username and task_name is not None:
-        weekly_task_manager.add_weeklytask(username, task_name)
-    return redirect('/profiles/{}'.format(username))
 
 
 @csrf_exempt
@@ -269,3 +269,70 @@ def create_list(request, username):
     if request.method == 'POST' and request.session.get('username') == username and list_name is not None:
         public_task_manager.create_public_list(username, list_name)
     return redirect('/profiles/{}'.format(username))
+
+
+
+@csrf_exempt
+def create_task(request, username):
+    task_name = request.POST.get('title')
+    if request.method == 'POST' and request.session.get('username') == username and task_name is not None:
+        weekly_task_manager.add_weeklytask(username, task_name)
+    return redirect('/profiles/{}'.format(username))
+
+
+@csrf_exempt
+def change_task(request, username, task_id):
+    if request.method == 'GET' and request.session.get('username') == username:
+        task = weekly_task_manager.find_user_task(username, task_id)
+        return render(request, 'tasker/task_change.html', {'username': username,
+                                                           'task_id': task_id,
+                                                           'task_name': task.task.name})
+    return redirect('/profiles/{}/tasks/{}'.format(username, task_id))
+
+
+@csrf_exempt
+def delete_task(request, username, task_id):
+    if request.method == 'POST' and request.session.get('username') == username:
+        weekly_task_manager.delete_weeklytask(username, task_id)
+    return redirect('/profiles/{}'.format(username))
+
+
+@csrf_exempt
+def add_subtask(request, username, task_id):
+    subtask_name = request.POST.get('title')
+    if request.method == 'POST' and request.session.get('username') == username and subtask_name is not None:
+        weekly_task_manager.add_weeklytask_subtask(username, task_id, subtask_name)
+    return redirect('/profiles/{}/tasks/{}'.format(username, task_id))
+
+
+@csrf_exempt
+def change_subtask(request, username, task_id, subtask_id):
+    subtask_status = request.POST.get('subtask_status')
+    if request.method == 'POST' and request.session.get('username') == username:
+        if subtask_status is None:
+            weekly_task_manager.change_weeklytask_subtask_status(username, task_id, subtask_id, 'NS')
+        else:
+            weekly_task_manager.change_weeklytask_subtask_status(username, task_id, subtask_id, 'F')
+    return redirect('/profiles/{}/tasks/{}'.format(username, task_id))
+
+
+@csrf_exempt
+def delete_subtask(request, username, task_id, subtask_id):
+    if request.method == 'POST' and request.session.get('username') == username:
+        weekly_task_manager.delete_weeklytask_subtask(username, task_id, subtask_id)
+    return redirect('/profiles/{}/tasks/{}'.format(username, task_id))
+
+
+@csrf_exempt
+def add_comment(request, username, task_id):
+    comment = request.POST.get('text')
+    if request.method == 'POST' and request.session.get('username') == username and comment is not None:
+        weekly_task_manager.add_weeklytask_comment(username, task_id, comment)
+    return redirect('/profiles/{}/tasks/{}'.format(username, task_id))
+
+
+@csrf_exempt
+def delete_comment(request, username, task_id, comment_id):
+    if request.method == 'POST' and request.session.get('username') == username:
+        weekly_task_manager.delete_weeklytask_comment(username, task_id, comment_id)
+    return redirect('/profiles/{}/tasks/{}'.format(username, task_id))

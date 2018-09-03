@@ -1,295 +1,127 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-	<div class="window" style="display: block;">
-          <a class="focus-dummy" href="#"></a>
-          <div class="window-wrapper js-tab-parent">
-          	<a class="icon-lg icon-close dialog-close-button js-close-window" href="#"></a>
-          	<div class="card-detail-window u-clearfix"><div class="window-cover hide js-card-cover-box js-open-card-cover-in-viewer">
-          		<div class="window-cover-stickers js-display-stickers"></div>
-          	</div>
-          	<div class="window-archive-banner hide js-archive-banner">
-          		<span class="icon-lg icon-archive window-archive-banner-icon"></span>
-          		<p class="window-archive-banner-text">Архивная карточка.</p>
-          	</div>
-          	<div class="window-archive-banner hide js-archived-list-banner">
-          		<span class="icon-lg icon-archive window-archive-banner-icon"></span>
-          		<p class="window-archive-banner-text">Карточка в архивном списке.</p>
-          	</div>
-          	<div class="window-header mod-card-detail-icons-smaller">
-          		<span class="window-header-icon icon-lg icon-card"></span>
-          		<div class="window-title">
-          			<h2 class="card-detail-title-assist js-title-helper" dir="auto">Color theme of game</h2>
-          			<textarea class="mod-card-back-title js-card-detail-title-input" dir="auto" style="overflow: hidden; word-wrap: break-word; height: 26px;">
-          			</textarea>
-          		</div>
-          		<div class="window-header-inline-content quiet js-current-list">
-          			<p class="u-inline-block u-bottom">
-          				в колонке 
-          				<a href="#" class="js-open-move-from-header">Doing</a>
-          			</p>
-          		</div>
-          		<div class="window-header-inline-content js-subscribed-indicator-header">
-          			<span class="icon-sm icon-subscribe"></span>
-          		</div>
-          	</div>
-          	<div class="window-main-col mod-card-detail-icons-smaller">
-          		<div class="card-detail-data u-gutter">
-          			<div class="card-detail-item u-clearfix js-card-detail-members">
-          				<h3 class="card-detail-item-header mod-no-top-margin">Участники</h3>
-          				<div class="js-card-detail-members-list">
-          					<div class="member js-member-on-card-menu" data-idmem="58b07efa11da6c1350215f23">
-          						<img class="member-avatar" height="30" width="30" src="https://trello-avatars.s3.amazonaws.com/347d2e533bbbf00811a0d21e30cb6063/30.png" srcset="https://trello-avatars.s3.amazonaws.com/347d2e533bbbf00811a0d21e30cb6063/30.png 1x, https://trello-avatars.s3.amazonaws.com/347d2e533bbbf00811a0d21e30cb6063/50.png 2x" alt="Nastik Kitsan (nkitsan)" title="Nastik Kitsan (nkitsan)">
-          						<span class="member-gold-badge" title="Участник с Trello Gold."></span>
-          					</div>
-          					<a class="card-detail-item-add-button dark-hover js-details-edit-members">
-          						<span class="icon-sm icon-add"></span>
-          					</a>
-          				</div>
-          			</div>
-          			<div class="card-detail-item card-detail-item-labels u-clearfix hide js-card-detail-labels">
-          				<h3 class="card-detail-item-header">Метки</h3>
-          				<div class="u-clearfix js-card-detail-labels-list js-edit-label">
-          					<a class="card-detail-item-add-button dark-hover js-details-edit-labels">
-          						<span class="icon-sm icon-add"></span>
-          					</a>
-          				</div>
-          			</div>
-          			<div class="card-detail-item hide js-card-detail-due-date">
-          				<h3 class="card-detail-item-header">Срок</h3>
-          				<span class="card-detail-badge card-detail-due-date-badge js-card-detail-due-date-badge">
-          					<span class="card-detail-badge-due-date-complete-box js-card-detail-due-date-badge-complete">
-          						<span class="icon-sm icon-check card-detail-badge-due-date-complete-icon"></span>
-          					</span>
-          					<span class="js-date-text card-detail-due-date-text"></span>
-          				</span>
-          			</div>
-          			<div class="card-detail-item hide js-card-detail-votes">
-          				<h3 class="card-detail-item-header">Голоса</h3>
-          				<a class="card-detail-badge is-clickable js-card-detail-votes-badge js-show-votes" href="#"></a>
-          			</div>
-          			<div class="card-detail-item hide js-card-detail-age">
-          				<h3 class="card-detail-item-header">Последнее обновление</h3>
-          				<div class="card-detail-badge date mod-last-updated js-card-detail-age-badge"></div>
-          			</div>
-          			<div class="js-custom-field-detail-badges custom-field-detail-badges">
-          				<div></div>
-          			</div>
-          			<div class="plugin-detail-badges js-plugin-badges">
-          				<div></div>
-          			</div>
-          			<div class="u-clearfix"></div>
-          		</div>
-          		<div class="window-module">
-          			<div class="window-module-title window-module-title-no-divider">
-          				<span class="icon-description icon-lg window-module-title-icon"></span>
-          				<h3 class="u-inline-block">Описание</h3>
-          				<a class="card-detail-item-header-edit hide-on-edit js-show-with-desc js-edit-desc hide" href="#">Изменить</a>
-          			</div>
-          			<div class="u-gutter js-hide-on-minimize-desc">
-          				<div class="editable" attr="desc">
-          					<div class="description-content js-desc-content">
-          						<div class="description-content-fade-button">
-          							<span class="description-content-fade-button-text">Показать полное описание.</span>
-          						</div>
-          						<div class="current markeddown hide-on-edit js-card-desc js-show-with-desc hide" dir="auto"></div>
-          						<p class="u-bottom js-hide-on-edit js-hide-with-desc">
-          							<a class="card-detail-fake-text-area hide-on-edit js-edit-desc js-hide-with-draft" href="#">Добавить более подробное описание…</a>
-          						</p>
-          						<div class="card-detail-edit edit">
-          							<a class="helper js-format-help" href="#">Помощь по форматированию</a>
-          							<textarea class="field js-description-draft" placeholder="Добавить более подробное описание…"></textarea>
-          						</div>
-          						<p class="edits-warning quiet">В этом поле есть несохранённые изменения. 
-          							<a class="js-view-edits" href="#">Посмотреть изменения</a> - <a class="js-discard-edits" href="#">Отменить</a>
-          						</p>
-          						<p class="edits-error error">Изменения не сохранены.</p>
-          					</div>
-          				</div>
-          			</div>
-          		</div>
-          		<div class="js-plugin-card-back-sections"></div>
-          		<div class="js-plugin-sections"></div><div class="window-module js-trello-attachments-section trello-attachments-section u-clearfix hide">
-          			<div class="window-module-title window-module-title-no-divider">
-          				<span class="window-module-title-icon icon-lg icon-board"></span>
-          				<h3 class="u-inline-block">Вложения Trello</h3>
-          			</div>
-          			<div class="u-gutter">
-          				<div class="u-clearfix js-trello-attachments-list"></div>
-          				<p class="js-show-fewer-trello-attachments hide">
-          					<a class="quiet-button js-view-some-trello-attachments" href="#">Показать меньше вложений Trello.</a>
-          				</p>
-          				<p class="js-show-more-trello-attachments hide">
-          					<a class="quiet-button js-view-all-trello-attachments" href="#"></a>
-          				</p>
-          				<p>
-          					<a class="quiet-button js-attach-trello-attachment" href="#">Добавить вложение Trello…</a>
-          				</p>
-          			</div>
-          		</div>
-          		<div class="window-module js-attachments-section u-clearfix mod-card-detail-icons-smaller hide"><div class="window-module-title window-module-title-no-divider">
-          			<span class="window-module-title-icon icon-lg icon-attachment"></span>
-          			<h3 class="u-inline-block">Вложения</h3>
-          		</div>
-          		<div class="u-gutter">
-          			<div class="u-clearfix js-attachment-list ui-sortable"></div>
-          			<p class="js-show-fewer-attachments hide">
-          				<a class="quiet-button js-view-some-attachments" href="#">Показать меньше вложений.</a>
-          			</p>
-          			<p class="js-show-more-attachments hide">
-          				<a class="quiet-button js-view-all-attachments" href="#">Посмотреть все вложения (скрыто -4)</a>
-          			</p>
-          			<p class="js-show-with-attachments hide">
-          				<a class="quiet-button js-attach" href="#">Добавить вложение…</a>
-          			</p>
-          		</div>
-          	</div>
-          	<div class="checklist-list window-module js-checklist-list js-no-higher-edits ui-sortable" style=""></div>
-          	<div class="window-module add-comment-section">
-          		<div class="window-module-title window-module-title-no-divider">
-          			<span class="window-module-title-icon icon-lg icon-comment"></span>
-          			<h3>Добавление комментария</h3>
-          			<span class="editing-members js-editing-members hide"></span>
-          		</div>
-          		<div class="new-comment js-new-comment mod-card-back">
-          			<div class="member member-no-menu">
-          				<img class="member-avatar" height="30" width="30" src="https://trello-avatars.s3.amazonaws.com/347d2e533bbbf00811a0d21e30cb6063/30.png" srcset="https://trello-avatars.s3.amazonaws.com/347d2e533bbbf00811a0d21e30cb6063/30.png 1x, https://trello-avatars.s3.amazonaws.com/347d2e533bbbf00811a0d21e30cb6063/50.png 2x" alt="Nastik Kitsan (nkitsan)" title="Nastik Kitsan (nkitsan)">
-          				<span class="member-gold-badge" title="Участник с Trello Gold."></span>
-          			</div>
-          			<form>
-          				<div class="comment-frame">
-          					<div class="comment-box">
-          						<textarea class="comment-box-input js-new-comment-input" placeholder="Напишите комментарий…" tabindex="1" dir="auto" style="overflow: hidden; word-wrap: break-word; height: 79px;"></textarea>
-          						<div class="comment-box-options">
-          							<a class="comment-box-options-item js-comment-add-attachment" href="#" title="Добавить вложение…">
-          								<span class="icon-sm icon-attachment"></span>
-          							</a>
-          							<a class="comment-box-options-item js-comment-mention-member" href="#" title="Упомянуть участника…">
-          								<span class="icon-sm icon-mention"></span>
-          							</a>
-          							<a class="comment-box-options-item js-comment-add-emoji" href="#" title="Добавить эмодзи…">
-          								<span class="icon-sm icon-emoji"></span>
-          							</a>
-          							<a class="comment-box-options-item js-comment-add-card" href="#" title="Добавить карточку…">
-          								<span class="icon-sm icon-card"></span>
-          							</a>
-          						</div>
-          					</div>
-          				</div>
-          				<div class="comment-controls u-clearfix">
-          					<input class="primary confirm mod-no-top-bottom-margin js-add-comment" disabled="" tabindex="3" type="submit" value="Сохранить">
-          					<span class="comment-subscribe is-clickable is-subscribed mod-left js-comment-subscribe">
-          						<span class="comment-subscribe-box">
-          							<span class="icon-sm icon-check comment-subscribe-icon"></span>
-          						</span>
-          						<div class="comment-subscribe-description">Подпишитесь на карточку, чтобы получать информацию о ее обновлениях</div>
-          					</span>
-          				</div>
-          			</form>
-          			<div class="comment-too-long-warning">
-          				<p>Комментарий слишком длинный! Прикрепите его как текстовое вложение или сократите.</p>
-          				<input class="primary js-attach-comment" type="submit" value="Добавить как вложение" tabindex="4">
-          				<input class="js-truncate-comment" type="submit" value="Сократить" tabindex="5">
-          			</div>
-          		</div>
-          	</div>
-          	<div class="window-module mod-card-detail-icons-smaller">
-          		<div class="window-module-title window-module-title-no-divider">
-          			<span class="window-module-title-icon icon-lg icon-activity"></span>
-          			<h3>Действия</h3>
-          			<div class="window-module-title-options">
-          				<a class="quiet js-show-details" href="#">Показать подробности</a>
-          				<a class="quiet hide js-hide-details" href="#">Скрыть подробности</a>
-          			</div>
-          		</div>
-          		<div class="js-list-actions mod-card-back"></div>
-          		<div class="spinner loading js-loading-card-actions" style="display: none;"></div>
-          		<p class="u-bottom">
-          			<a class="show-more hide js-show-all-actions" href="#">Показать все действия…</a>
-          		</p>
-          	</div>
-          </div>
-          <div class="window-sidebar">
-          	<div class="window-module u-clearfix">
-          		<h3 class="mod-no-top-margin">Добавить на карточку</h3>
-          		<div class="u-clearfix card-detail-section-mini-buttons">
-          			<a class="button-link card-detail-section-mini-button js-change-card-members" href="#" title="Участники">
-          				<span class="icon-sm icon-member"></span>
-          				<span class="card-detail-section-mini-button-text">Участники</span>
-          			</a>
-          			<a class="button-link card-detail-section-mini-button js-edit-labels" href="#" title="Метки">
-          				<span class="icon-sm icon-label"></span>
-          				<span class="card-detail-section-mini-button-text">Метки</span>
-          			</a>
-          			<a class="button-link card-detail-section-mini-button js-add-checklist-menu" href="#" title="Чек-лист">
-          				<span class="icon-sm icon-checklist"></span>
-          				<span class="card-detail-section-mini-button-text">Чек-лист</span>
-          			</a>
-          			<a class="button-link card-detail-section-mini-button js-add-due-date" href="#" title="Срок">
-          				<span class="icon-sm icon-clock"></span>
-          				<span class="card-detail-section-mini-button-text">Срок</span>
-          			</a>
-          			<a class="button-link card-detail-section-mini-button js-attach" href="#" title="Вложение">
-          				<span class="icon-sm icon-attachment"></span>
-          				<span class="card-detail-section-mini-button-text">Вложение</span>
-          			</a>
-          		</div>
-          	</div>
-          	<div class="js-plugin-buttons">
-          		<div class="window-module u-clearfix hide">
-          			<h3 class="">Улучшения</h3>
-          			<div class="u-clearfix js-button-list card-detail-section-mini-buttons"></div>
-          		</div>
-          	</div>
-          	<div class="window-module other-actions u-clearfix">
-          		<h3 class="mod-no-top-margin">Действия</h3>
-          		<div class="u-clearfix card-detail-section-mini-buttons">
-          			<a class="button-link card-detail-section-mini-button js-move-card" href="#" title="Перемещение">
-          				<span class="icon-sm icon-move"></span>
-          				<span class="card-detail-section-mini-button-text">Перемещение</span>
-          			</a>
-          			<a class="button-link card-detail-section-mini-button js-copy-card" href="#" title="Копирование"><span class="icon-sm icon-card"></span>
-          				<span class="card-detail-section-mini-button-text">Копирование</span>
-          			</a>
-          			<span class="js-subscribe-sidebar-button hide"></span>
-          			<a class="button-link toggle-button is-on js-unsubscribe" title="Подпишитесь на эту карточку, чтобы получать уведомления об изменениях." href="#">
-          				<span class="icon-sm icon-subscribe"></span>&nbsp;Подписаться
-          				<span class="on">
-          					<span class="icon-sm icon-check light"></span>
-          				</span>
-          			</a>
-          			<span class="js-vote-sidebar-button hide"></span>
-          			<hr>
-          			<a class="button-link card-detail-section-mini-button js-archive-card" href="#" title="Архивация">
-          				<span class="icon-sm icon-archive"></span>
-          				<span class="card-detail-section-mini-button-text">Архивация</span>
-          			</a>
-          			<a class="button-link card-detail-section-mini-button js-unarchive-card hide" href="#" title="Вернуть">
-          				<span class="icon-sm icon-refresh"></span>
-          				<span class="card-detail-section-mini-button-text">Вернуть</span>
-          			</a>
-          			<a class="button-link card-detail-section-mini-button js-delete-card hide negate" href="#" title="Удалить">
-          				<span class="icon-sm icon-remove"></span>
-          				<span class="card-detail-section-mini-button-text">Удалить</span>
-          			</a>
-          		</div>
-          	</div>
-          	<div class="window-module u-clearfix">
-          		<p class="quiet u-bottom">
-          			<a class="quiet-button js-more-menu" href="#">Поделиться и прочее…</a>
-          		</p>
-          	</div>
-          </div>
-          <p class="dropzone">Перетяните файлы, чтобы загрузить.</p>
-          <p class="dropzone-limited attachments-per-card">На этой карточке слишком много вложений.</p>
-          <p class="dropzone-limited attachments-per-board">На этой доске слишком много вложений.</p>
-          <p class="dropzone-restricted attachments-restricted">Не разрешено вашей организацией.</p>
-      </div>
-  </div>
-</div>
-</body>
+{% load static %}
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <title>Daily Tracker</title>
+
+	    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+	          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+	    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+	    <link rel="stylesheet" href="{% static 'css/task.css' %}">
+		<link rel="stylesheet" href="{% static 'css/header.css' %}">
+	</head>
+  	<body>
+		<header>
+	    	<div class="logo">
+	    		Daily Tracker
+	    	</div>
+	    	<div class="logout">
+	        	<a href="{% url 'logout' %}">Log Out</a>
+	    	</div>
+		</header>
+    	<div class="container">
+      		<div class="task-title">
+        		<div class="title">
+          			{{ name }}
+        		</div>
+				<form action="{% url 'change_task' username task_id %}" method="GET">
+					<input
+							class="change-card-btn"
+							type="submit"
+							value="Change"
+					/>
+				</form>
+                <form action="{% url 'delete_task' username task_id %}" method="POST">
+					<input
+							class="delete-card-btn"
+							type="submit"
+							value="Delete"
+					/>
+	           	</form>
+        	</div>
+        	<div class="card-list-name">
+				{% if list %}
+					{{ list.name }}
+				{% else %}
+					In List Weekly Tasks
+				{% endif %}
+			</div>
+			<div class="task-info">
+				{%if deadline%}
+					<div class="task-deadline">Deadline: {{ deadline }}</div>
+				{% endif %}
+				<div class="task-status">Status: {{ status }}</div>
+				<div class="task-subtasks">
+					<div>Subtasks: </div>
+					{% for subtask in subtasks %}
+						<div class="subtask">
+							<form action="{% url 'change_subtask' username task_id subtask.id %}" method="POST">
+								{% if subtask.status == 'NS' %}
+									<input name="subtask_status" type="checkbox" value="F"/>
+									{% else %}
+									<input name="subtask_status" type="checkbox" value="F" checked/>
+								{% endif %}
+								<span>{{ subtask.name }}</span>
+								<input
+										class="change-card-btn"
+										type="submit"
+										value="Change"
+								/>
+							</form>
+							<form action="{% url 'delete_subtask' username task_id subtask.id %}" method="POST">
+								<input
+										class="delete-card-btn"
+										type="submit"
+										value="Delete"
+									/>
+							</form>
+						</div>
+					{% endfor %}
+					<form action="{% url 'add_subtask' username task_id %}" method="POST" class="new-subtask-form">
+	            		<textarea
+	              			class="new-subtask-title"
+	              			name="title"
+	              			placeholder="Enter a title for new subtask..."
+	              			rows="1"
+							cols="60"
+	            		></textarea>
+						<input
+	               				class="new-subtask-btn"
+	                			type="submit"
+	                			value="Add"
+						/>
+	          		</form>
+				</div>
+				<div class="task-comments">
+					<div>Comments: </div>
+					{% for comment in comments%}
+						<div class="comment">{{ comment.comment }}</div>
+						<form action="{% url 'delete_comment' username task_id comment.id %}" method="POST">
+							<input
+									class="delete-comment-btn"
+									type="submit"
+									value="Delete"
+							/>
+						</form>
+					{% endfor %}
+				</div>
+				<form action="{% url 'add_comment' username task_id %}" method="POST" class="new-comment-form">
+					<textarea
+	              			class="new-comment"
+	              			name="text"
+	              			placeholder="Enter a comment for task..."
+	              			rows="5"
+							cols="60"
+					></textarea>
+					<input
+							class="new-comment-btn"
+							type="submit"
+							value="Add"
+					/>
+	          		</form>
+			</div>
+      	</div>
+	</body>
 </html>

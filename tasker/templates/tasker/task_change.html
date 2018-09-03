@@ -1,0 +1,43 @@
+{% load static %}
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <title>Daily Tracker</title>
+
+	    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+	          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+	    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+	    <link rel="stylesheet" href="{% static 'css/change_task.css' %}">
+		<link rel="stylesheet" href="{% static 'css/header.css' %}">
+	</head>
+  	<body>
+		<header>
+	    	<div class="logo">
+	    		Daily Tracker
+	    	</div>
+	    	<div class="logout">
+	        	<a href="{% url 'logout' %}">Log Out</a>
+	    	</div>
+		</header>
+    	<div class="container">
+			<span class="task-name">Changing task {{ task_name }} in Weekly List</span>
+            <form action="{% url 'change_task' username task_id %}" method="POST" class="change-task-form">
+                <textarea
+                        class="new-title"
+                        name="title"
+                        placeholder="Enter a new title for task..."
+                        rows="1"
+                        cols="100"
+                ></textarea>
+
+                <input
+                        class="change-btn"
+                        type="submit"
+                        value="Change"
+                />
+            </form>
+      	</div>
+	</body>
+</html>
