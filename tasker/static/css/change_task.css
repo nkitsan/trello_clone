@@ -3,12 +3,27 @@ body {
 }
 
 .container {
-    margin: 50px;
+    margin: 50px 100px;
 }
 
 .task-name {
     font-size: 24px;
     font-weight: bold;
+}
+
+.list {
+    display: flex;
+    flex-direction: row;
+}
+
+.list > form > input {
+    padding: 5px 10px;
+    margin: 5px 10px 0px 10px;
+    background-color: #f33636;
+    border: 0px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #ffffff;
 }
 
 .change-task-form {
@@ -17,11 +32,41 @@ body {
 }
 
 .change-btn {
-    margin: 10px 500px;
+    margin: 10px 450px;
     padding: 5px 0px;
     background-color: #459328;
     border: 0px;
     border-radius: 4px;
     cursor: pointer;
     color: #ffffff;
+}
+
+.change-task-form {
+    margin: 10px 20px;
+}
+
+.change-task-form > textarea {
+    margin: 5px 20px;
+    padding: 4px 0px;
+    width: 80%;
+}
+
+.new-user {
+    margin: 5px 20px;
+    padding: 4px 0px;
+    width: 80%;
+}
+
+.change-task-form > select {
+    margin: 0px 0px 20px 20px;
+    padding: 4px 0px;
+    width: 50%;
+}
+
+.deadline {
+    margin-left: 20px;
+}
+
+.change-task-form > span {
+    margin-top: 10px;
 }

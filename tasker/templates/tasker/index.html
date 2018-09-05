@@ -62,7 +62,7 @@
 
 	      	{%for name, properties in public_tasks.items %}
 	      		<div class="list">
-	        		<h2 class="list-title">{{ name }}</h2>
+	        		<h2 class="list-title"><a href="{% url 'change_list' username properties.id %}">{{ name }}</a></h2>
 	        		{% for task in properties.tasks%}
 	          			<a class="card" href="{% url 'public_task_info' username properties.id task.id %}">
 	                		<h3 class="card-title">

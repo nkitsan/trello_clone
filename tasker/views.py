@@ -264,6 +264,20 @@ def change_task(request, username, task_id):
         return render(request, 'tasker/task_change.html', {'username': username,
                                                            'task_id': task_id,
                                                            'task_name': task.task.name})
+    if request.method == 'POST' and request.session.get('username') == username:
+        name = request.POST.get('title')
+        date = request.POST.get('date')
+        time = request.POST.get('time')
+        status = request.POST.get('status')
+        if name != '':
+            weekly_task_manager.change_weeklytask_name(username, task_id, name)
+        if date != '':
+            if time == '':
+                time = "00:00"
+            deadline = date + ' ' + time
+            weekly_task_manager.change_weeklytask_deadline(username, task_id, deadline)
+        if status != '':
+            weekly_task_manager.change_weeklytask_status(username, task_id, status)
     return redirect('/profiles/{}/tasks/{}'.format(username, task_id))
 
 
@@ -324,6 +338,28 @@ def create_list(request, username):
 
 
 @csrf_exempt
+def change_list(request, username, list_id):
+    if request.method == 'GET':
+        public_list = public_task_manager.get_user_list(username, list_id)
+        return render(request, 'tasker/list_change.html', {'public_list': public_list, 'username': username})
+    if request.method == 'POST' and request.session.get('username') == username:
+        title = request.POST.get('title')
+        new_user = request.POST.get('new_user')
+        if title != '':
+            public_task_manager.change_public_list_name(username, list_id, title)
+        if new_user != '':
+            public_task_manager.add_public_list_user(username, new_user, list_id)
+    return redirect('/profiles/{}'.format(username))
+
+
+@csrf_exempt
+def delete_list(request, username, list_id):
+    if request.method == 'POST' and request.session.get('username') == username:
+        public_task_manager.delete_public_list(username, list_id)
+    return redirect('/profiles/{}'.format(username))
+
+
+@csrf_exempt
 def create_public_task(request, username, list_id):
     task_name = request.POST.get('title')
     if request.method == 'POST' and request.session.get('username') == username and task_name is not None:
@@ -345,24 +381,41 @@ def public_task_info(request, username, list_id, task_id):
 
 
 @csrf_exempt
-def change_task(request, username, list_id, task_id):
+def change_public_task(request, username, list_id, task_id):
     if request.method == 'GET' and request.session.get('username') == username:
         task = public_task_manager.get_list_task(username, list_id, task_id)
-        return render(request, 'tasker/task_change.html', {'username': username,
-                                                           'task_id': task_id,
-                                                           'task_name': task.task.name})
+        public_list = public_task_manager.get_user_list(username, list_id)
+        return render(request, 'tasker/public_task_change.html', {'username': username,
+                                                                  'list_id': list_id,
+                                                                  'task_id': task_id,
+                                                                  'public_list': public_list,
+                                                                  'task_name': task.task.name})
+    if request.method == 'POST' and request.session.get('username') == username:
+        name = request.POST.get('title')
+        date = request.POST.get('date')
+        time = request.POST.get('time')
+        status = request.POST.get('status')
+        if name != '':
+            public_task_manager.change_public_task_name(username, list_id, task_id, name)
+        if date != '':
+            if time == '':
+                time = "00:00"
+            deadline = date + ' ' + time
+            public_task_manager.change_public_task_deadline(username, list_id, task_id, deadline)
+        if status != '':
+            public_task_manager.change_public_task_status(username, list_id, task_id, status)
     return redirect('/profiles/{}/lists/{}/tasks/{}'.format(username, list_id, task_id))
 
 
 @csrf_exempt
-def delete_task(request, username, list_id, task_id):
+def delete_public_task(request, username, list_id, task_id):
     if request.method == 'POST' and request.session.get('username') == username:
         public_task_manager.delete_public_task(username, list_id, task_id)
     return redirect('/profiles/{}'.format(username))
 
 
 @csrf_exempt
-def add_subtask(request, username, list_id, task_id):
+def add_public_subtask(request, username, list_id, task_id):
     subtask_name = request.POST.get('title')
     if request.method == 'POST' and request.session.get('username') == username and subtask_name is not None:
         public_task_manager.add_public_task_subtask(username, list_id, task_id, subtask_name)
@@ -370,7 +423,7 @@ def add_subtask(request, username, list_id, task_id):
 
 
 @csrf_exempt
-def change_subtask(request, username, list_id, task_id, subtask_id):
+def change_public_subtask(request, username, list_id, task_id, subtask_id):
     subtask_status = request.POST.get('subtask_status')
     if request.method == 'POST' and request.session.get('username') == username:
         if subtask_status is None:
@@ -381,14 +434,14 @@ def change_subtask(request, username, list_id, task_id, subtask_id):
 
 
 @csrf_exempt
-def delete_subtask(request, username, list_id, task_id, subtask_id):
+def delete_public_subtask(request, username, list_id, task_id, subtask_id):
     if request.method == 'POST' and request.session.get('username') == username:
         public_task_manager.delete_public_task_subtask(username, list_id, task_id, subtask_id)
     return redirect('/profiles/{}/lists/{}/tasks/{}'.format(username, list_id, task_id))
 
 
 @csrf_exempt
-def add_comment(request, username, list_id, task_id):
+def add_public_comment(request, username, list_id, task_id):
     comment = request.POST.get('text')
     if request.method == 'POST' and request.session.get('username') == username and comment is not None:
         public_task_manager.add_public_task_comment(username, list_id, task_id, comment)
@@ -396,7 +449,7 @@ def add_comment(request, username, list_id, task_id):
 
 
 @csrf_exempt
-def delete_comment(request, username, task_id, list_id, comment_id):
+def delete_public_comment(request, username, task_id, list_id, comment_id):
     if request.method == 'POST' and request.session.get('username') == username:
         public_task_manager.delete_public_task_comment(username, list_id, task_id, comment_id)
         return redirect('/profiles/{}/lists/{}/tasks/{}'.format(username, list_id, task_id))
