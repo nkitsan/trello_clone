@@ -1,9 +1,11 @@
 import datetime
+import os
+from pathlib import Path
 
 
 HOST = 'http://127.0.0.1:8000/'
-api = 'qmMry28x9fYFcarKCKEhR4taUYVnIm6Z'
 TIME_PATTERN = '%Y-%m-%d %H:%M'
+TASKER_PATH = os.path.join(str(Path.home()))
 
 
 def date_validation(date):

@@ -19,8 +19,14 @@ def change_habit_timeline(username, habit_id, timeline):
 
 def change_habit_status(username, habit_id, status):
     habit = find_user_habit(username, habit_id)
-    habit.status = status
-    habit.save()
+    if status == 'F' and habit.status == 'NS' and habit.count < habit.timeline:
+        habit.status = status
+        habit.count += 1
+        habit.save()
+    elif status == 'NS' and habit.status == 'F' and habit.count < habit.timeline:
+        habit.status = status
+        habit.count -= 1
+        habit.save()
 
 
 def change_habit_name(username, habit_id, new_name):

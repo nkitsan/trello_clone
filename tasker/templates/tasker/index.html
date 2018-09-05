@@ -27,13 +27,15 @@
 	    <div class="content">
 	    	<div class="list">
 	        	<h2 class="list-title">Weekly Tasks</h2>
-	          	{%for task in tasks%}
-	            	<a class="card" href="{% url 'task_info' username task.id %}">
-	                	<h3 class="card-title">
-	                    	{{ task.task.name }}
-	                	</h3>
-						<i class="edit-icon fas fa-pen"></i>
-	            	</a>
+	          	{% for task in tasks %}
+	            	{% if task.display %}
+						<a class="card" href="{% url 'task_info' username task.id %}">
+	                		<h3 class="card-title">
+	                    		{{ task.task.name }}
+	                		</h3>
+							<i class="edit-icon fas fa-pen"></i>
+	            		</a>
+					{% endif %}
 	        	{% endfor %}
 
 	        	<div class="new-card-actions">

@@ -1,7 +1,8 @@
 import requests
 import click
 import string
-from .helper import HOST
+import os
+from .helper import HOST, TASKER_PATH
 
 
 @click.group()
@@ -84,7 +85,8 @@ def delete_user(list_id, task_id, username):
 def login(api):
     allowed = string.digits + string.ascii_letters
     if all(c in allowed for c in api):
-        with open("api.txt", "w+") as api_file:
+        path = os.path.join(TASKER_PATH, 'api.txt')
+        with open(path, 'w+') as api_file:
             api_file.write(api)
         click.echo('api key was successfully added')
     else:
@@ -94,7 +96,8 @@ def login(api):
 
 def read_api():
     try:
-        api_file = open("api.txt", "r+")
+        path = os.path.join(TASKER_PATH, 'api.txt')
+        api_file = open(path, 'r+')
     except IOError:
         return None
     else:

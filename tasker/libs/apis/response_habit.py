@@ -35,7 +35,7 @@ def get_habit(api, habit_id):
     habit = habit_tracker_manager.find_user_habit(username, habit_id)
     if habit is None:
         return {'error': 'user does not have this habit'}
-    return {habit.id: {'name': habit.name, 'status': habit.status, 'timeline': habit.timeline}}
+    return {habit.id: {'name': habit.name, 'status': habit.status, 'timeline': habit.timeline, 'count': habit.count}}
 
 
 def put_habit(api, habit_id, habit_name, status, timeline):

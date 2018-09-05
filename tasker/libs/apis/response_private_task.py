@@ -11,7 +11,8 @@ def get_tasks(api):
     if not tasks.exists():
         return {'error': 'user have no weekly tasks'}
     for task in tasks:
-        response_tasks[task.id] = {'name': task.task.name}
+        if task.display:
+            response_tasks[task.id] = {'name': task.task.name}
     return response_tasks
 
 

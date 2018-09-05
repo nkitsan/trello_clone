@@ -55,8 +55,9 @@ def change_habit(habit_id, name, status, timeline):
     if 'error' in habit_response:
         click.echo(habit_response['error'])
         return
-    habit_info = (habit_id + habit_response[habit_id]['name'] + '\nstatus: ' + habit_response[habit_id]['status']
-                  + '\ntimeline: ' + habit_response[habit_id ]['timeline'])
+    habit_info = (habit_id + ': ' + habit_response[habit_id]['name'] + '\nstatus: '
+                  + habit_response[habit_id]['status'] + '\n' + str(habit_response[habit_id]['count']) + ' days out of ' +
+                  str(habit_response[habit_id]['timeline']))
     click.echo(habit_info)
     return
 
@@ -116,8 +117,7 @@ def show_habit(habit_id):
         click.echo(habit_response['error'])
         return
     habit_info = (habit_id + ': ' + habit_response[habit_id]['name'] + '\nstatus: '
-                  + habit_response[habit_id]['status'])
-    if habit_response[habit_id]['timeline'] is not None:
-        habit_info += '\ntimeline: ' + habit_response[habit_id]['timeline']
+                  + habit_response[habit_id]['status'] + '\n' + str(habit_response[habit_id]['count']) + ' days out of ' +
+                  str(habit_response[habit_id]['timeline']))
     click.echo(habit_info)
     return

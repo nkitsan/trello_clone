@@ -21,7 +21,7 @@ class Habit(models.Model):
     )
     name = models.CharField(max_length=200)
     status = models.CharField(max_length=200, choices=STATUS, default='NS')
-    timeline = models.IntegerField(blank=True, null=True)
+    timeline = models.IntegerField(default=21)
     count = models.IntegerField(default=0)
 
 
