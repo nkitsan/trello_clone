@@ -2,6 +2,7 @@
 This library provide JSON responses from client requests for habit
 """
 from tasker.libs.managers import user_manager, weekly_task_manager
+import datetime
 
 
 def get_tasks(api):
@@ -95,3 +96,15 @@ def delete_task_params(api, task_id, comment_id, subtask_id, repeat_id, remember
     if remember_id is not None:
         weekly_task_manager.delete_weeklytask_remember(username, task_id, remember_id)
     return get_task(api, task_id)
+
+
+def check_remembers(api):
+    username = user_manager.get_username(api)
+    tasks = weekly_task_manager.get_weekly_tasks(username)
+    tasks_response = {}
+    for task in tasks:
+        for remember in task.remember.all():
+            if remember.repeat_date <= datetime.datetime.now(datetime.timezone.utc):
+                tasks_response.update({task.id: {'name': task.task.name, 'remember': remember.repeat_date}})
+                break
+    return tasks_response

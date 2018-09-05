@@ -108,3 +108,25 @@ def show_remembers(event_id, task_id):
         return
     click.echo(result.rstrip('\n'))
     return
+
+
+@remember_operations.command(short_help='Check all remembers')
+def check():
+    api = read_api()
+    if api is None:
+        click.echo('Use login --api to register your api key and work further')
+        return
+    url = HOST + api + '/remembers'
+    remembers = requests.get(url).json()
+    if len(remembers['events']) == 0 and len(remembers['tasks']) == 0:
+        click.echo('No remembers')
+    if len(remembers['events']) != 0:
+        click.echo('remember of events')
+        for event_id in remembers['events']:
+            click.echo('id: ' + event_id + ' - ' + ' '.join(remembers['events'][event_id]['remember'][0:-1].split('T'))
+                       + ' - ' + remembers['events'][event_id]['name'])
+    if len(remembers['tasks']) != 0:
+        click.echo('remember of tasks')
+        for task_id in remembers['tasks']:
+            click.echo('id: ' + task_id + ' - ' + ' '.join(remembers['tasks'][task_id]['remember'][0:-1].split('T'))
+                       + ' - ' + remembers['tasks'][task_id]['name'])

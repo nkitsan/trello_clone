@@ -2,6 +2,7 @@
 This library provide JSON responses from client requests for habit
 """
 from tasker.libs.managers import user_manager, calendar_manager
+import datetime
 
 
 def get_events(api):
@@ -77,3 +78,15 @@ def delete_event_params(api, event_id, comment_id, remember_id):
     if remember_id is not None:
         calendar_manager.delete_event_remember(username, event_id, remember_id)
     return get_event(api, event_id)
+
+
+def check_remembers(api):
+    username = user_manager.get_username(api)
+    events = calendar_manager.get_events(username)
+    events_response = {}
+    for event in events:
+        for remember in event.remember.all():
+            if remember.repeat_date <= datetime.datetime.now(datetime.timezone.utc):
+                events_response.update({event.id: {'name': event.name, 'remember': remember.repeat_date}})
+                break
+    return events_response

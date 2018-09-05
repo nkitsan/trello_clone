@@ -237,6 +237,15 @@ def lists_api(request, api):
         return JsonResponse(response_list.delete_list(api, list_id))
 
 
+def remembers_api(request, api):
+    if not User.objects.filter(api_key=api).exists():
+        return JsonResponse({'error': 'wrong api key'})
+    if request.method == 'GET':
+        remembers_events = response_event.check_remembers(api)
+        remembers_tasks = response_private_task.check_remembers(api)
+        return JsonResponse({'events': remembers_events, 'tasks': remembers_tasks})
+
+
 @csrf_exempt
 def task_info(request, username, task_id):
     task = weekly_task_manager.find_user_task(username, task_id)
