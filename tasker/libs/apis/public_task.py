@@ -1,10 +1,17 @@
 """
-This library provide JSON responses from client requests for habit
+This code provide responses in a dict format
+for client requests about tasks in different
+lists
 """
 from tasker.libs.managers import user_manager, public_task_manager
 
 
 def get_public_tasks(api, list_id):
+    """
+    Returns a short info about tasks in list
+     with id list_id in the format
+    {id_1: {'name':name_1}, id_2: {'name':name_2}, ...}
+    """
     username = user_manager.get_username(api)
     tasks = public_task_manager.get_list_tasks(username, list_id)
     response_tasks = {}
@@ -16,12 +23,22 @@ def get_public_tasks(api, list_id):
 
 
 def post_public_tasks(api, list_id, task_name):
+    """
+    Creates a new task with a name task_name
+    in the list with id list_id and
+    returns an info about task in the format
+    {id: {'name':name}}
+    """
     username = user_manager.get_username(api)
     public_task = public_task_manager.create_public_task(username, list_id, task_name)
     return {public_task.id: {'name': public_task.task.name}}
 
 
 def delete_public_task(api, list_id, task_id):
+    """
+    Deletes the task from the list with the id task_id
+    and returns empty dict
+    """
     username = user_manager.get_username(api)
     task = public_task_manager.get_list_task(username, list_id, task_id)
     if task is None:
@@ -31,6 +48,11 @@ def delete_public_task(api, list_id, task_id):
 
 
 def get_public_task(api, list_id, task_id):
+    """
+    Returns a full info in dict about task such as
+    id, name, status, deadline, comments, subtasks
+    and executors
+    """
     username = user_manager.get_username(api)
     task = public_task_manager.get_list_task(username, list_id, task_id)
     if task is None:
@@ -47,6 +69,11 @@ def get_public_task(api, list_id, task_id):
 
 
 def post_public_task_params(api, list_id, task_id, comment, subtask, executor):
+    """
+    Creates a new repeat, subtask, comment or add
+    an existing executor for task with task_id and
+    returns full info about the modified task
+    """
     username = user_manager.get_username(api)
     task = public_task_manager.get_list_task(username, list_id, task_id)
     if task is None:
@@ -61,6 +88,10 @@ def post_public_task_params(api, list_id, task_id, comment, subtask, executor):
 
 
 def put_public_task(api, list_id, task_id, name, status, deadline, subtask_id, subtask_status):
+    """
+    Updates task name, status, deadline and subtask status
+    and returns a full modified data about the task
+    """
     username = user_manager.get_username(api)
     task = public_task_manager.get_list_task(username, list_id, task_id)
     if task is None:
@@ -77,6 +108,10 @@ def put_public_task(api, list_id, task_id, name, status, deadline, subtask_id, s
 
 
 def delete_public_task_params(api, list_id, task_id, comment_id, subtask_id, executor):
+    """
+    Deletes comment, subtask or executor from the task
+    and returns a full modified info about the task
+    """
     username = user_manager.get_username(api)
     task = public_task_manager.get_list_task(username, list_id, task_id)
     if task is None:

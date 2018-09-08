@@ -1,11 +1,16 @@
 """
-This library provide JSON responses from client requests for habit
+This code provide responses in a dict format
+for client requests about tasks in weekly list
 """
 from tasker.libs.managers import user_manager, weekly_task_manager
 import datetime
 
 
 def get_tasks(api):
+    """
+    Returns a short info about tasks in the format
+    {id_1: {'name':name_1}, id_2: {'name':name_2}, ...}
+    """
     username = user_manager.get_username(api)
     tasks = weekly_task_manager.get_weekly_tasks(username)
     response_tasks = {}
@@ -18,12 +23,21 @@ def get_tasks(api):
 
 
 def post_task(api, task_name):
+    """
+    Creates a new task with a name task_name and
+    returns an info about task in the format
+    {id: {'name':name}}
+    """
     username = user_manager.get_username(api)
     task = weekly_task_manager.add_weeklytask(username, task_name)
     return {task.id: {'name': task.task.name}}
 
 
 def delete_task(api, task_id):
+    """
+    Deletes the task with the id task_id and
+    returns empty dict
+    """
     username = user_manager.get_username(api)
     task = weekly_task_manager.find_user_task(username, task_id)
     if task is None:
@@ -33,6 +47,11 @@ def delete_task(api, task_id):
 
 
 def get_task(api, task_id):
+    """
+    Returns a full info in dict about task such as
+    id, name, status, deadline, comments, repeats,
+    remembers, subtsks
+    """
     username = user_manager.get_username(api)
     task = weekly_task_manager.find_user_task(username, task_id)
     if task is None:
@@ -51,6 +70,11 @@ def get_task(api, task_id):
 
 
 def post_task_params(api, task_id, repeat, remember, subtask, comment):
+    """
+    Creates a new repeat, or remember, or subtask,
+    or comment for task with task_id and
+    returns full info about the task
+    """
     username = user_manager.get_username(api)
     task = weekly_task_manager.find_user_task(username, task_id)
     if task is None:
@@ -67,6 +91,10 @@ def post_task_params(api, task_id, repeat, remember, subtask, comment):
 
 
 def put_task(api, task_id, name, status, deadline, subtask_id, subtask_status):
+    """
+    Updates task name, status, deadline and subtask status
+    and returns a full modified data about the task
+    """
     username = user_manager.get_username(api)
     task = weekly_task_manager.find_user_task(username, task_id)
     if task is None:
@@ -83,6 +111,10 @@ def put_task(api, task_id, name, status, deadline, subtask_id, subtask_status):
 
 
 def delete_task_params(api, task_id, comment_id, subtask_id, repeat_id, remember_id):
+    """
+    Deletes comment, subtask, repeat or remember from the task
+    and returns a full modified info about the task
+    """
     username = user_manager.get_username(api)
     task = weekly_task_manager.find_user_task(username, task_id)
     if task is None:
@@ -99,6 +131,12 @@ def delete_task_params(api, task_id, comment_id, subtask_id, repeat_id, remember
 
 
 def check_remembers(api):
+    """
+    Makes a dictionary with remembers which should be shown
+    to users and returns it in the format
+    {id_1: {'name': name_1, 'remember': remember_1},
+    id_2: {'name': name_2, 'remember': remember_2}}
+    """
     username = user_manager.get_username(api)
     tasks = weekly_task_manager.get_weekly_tasks(username)
     tasks_response = {}

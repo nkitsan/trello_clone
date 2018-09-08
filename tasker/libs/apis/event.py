@@ -1,11 +1,16 @@
 """
-This library provide JSON responses from client requests for habit
+This code provide responses in a dict format
+for client requests about events
 """
 from tasker.libs.managers import user_manager, calendar_manager
 import datetime
 
 
 def get_events(api):
+    """
+    Returns all events of user with provided api-key in the format
+    {id_1: {'name': name_1, 'date': date_1}, id_2: {'name': name_2, 'date': date_2}...}
+    """
     username = user_manager.get_username(api)
     events = calendar_manager.get_events(username)
     response_event = {}
@@ -17,12 +22,21 @@ def get_events(api):
 
 
 def post_event(api, event_name, event_date):
+    """
+    Create new event with name - event_name and to the date
+    - event_date and returns a new event in the format
+    {id_1: {'name': name_1, 'date': date_1}}
+    """
     username = user_manager.get_username(api)
     event = calendar_manager.create_event(username, event_name, event_date)
     return {event.id: {'name': event.name, 'date': event.event_date}}
 
 
 def delete_event(api, event_id):
+    """
+    Deletes the user event with provided event_id
+    and returns empty dict
+    """
     username = user_manager.get_username(api)
     event = calendar_manager.find_user_event(username, event_id)
     if event is None:
@@ -32,6 +46,7 @@ def delete_event(api, event_id):
 
 
 def get_event(api, event_id):
+    """Returns the event full info such as name, date, remembers and comments"""
     username = user_manager.get_username(api)
     event = calendar_manager.find_user_event(username, event_id)
     if event is None:
@@ -45,6 +60,10 @@ def get_event(api, event_id):
 
 
 def post_event_params(api, event_id, text_comment, remember):
+    """
+    Adds a new comment and/or remember to event and
+    returns a full info about event
+    """
     username = user_manager.get_username(api)
     event = calendar_manager.find_user_event(username, event_id)
     if event is None:
@@ -57,6 +76,10 @@ def post_event_params(api, event_id, text_comment, remember):
 
 
 def put_event(api, event_id, event_name, event_date):
+    """
+    Changes event name and/or date and
+    returns modified event in the full format
+    """
     username = user_manager.get_username(api)
     event = calendar_manager.find_user_event(username, event_id)
     if event is None:
@@ -69,6 +92,10 @@ def put_event(api, event_id, event_name, event_date):
 
 
 def delete_event_params(api, event_id, comment_id, remember_id):
+    """
+    Deletes the remember and/or the comment of the event
+    and returns a modified event in the full format
+    """
     username = user_manager.get_username(api)
     event = calendar_manager.find_user_event(username, event_id)
     if event is None:
@@ -81,6 +108,12 @@ def delete_event_params(api, event_id, comment_id, remember_id):
 
 
 def check_remembers(api):
+    """
+    Makes a dictionary with remembers which should be shown
+    to users and returns it in the format
+    {id_1: {'name': name_1, 'remember': remember_1},
+    id_2: {'name': name_2, 'remember': remember_2}}
+    """
     username = user_manager.get_username(api)
     events = calendar_manager.get_events(username)
     events_response = {}
