@@ -30,14 +30,11 @@ def add_habit(name):
 
 
 @habit_operations.command(short_help='Change the habit')
-@click.option('--habit_id', default=None, type=click.INT, help='ID of habit which you want to change')
+@click.option('--habit_id', required=True, type=click.INT, help='ID of habit which you want to change')
 @click.option('--name', default=None, help='New name of the habit')
 @click.option('--status', default=None, type=click.Choice(['NS', 'F']), help='New status of the habit')
 @click.option('--timeline', default=None, type=click.IntRange(1, 500), help='New timeline of the habit')
 def change_habit(habit_id, name, status, timeline):
-    if habit_id is None:
-        click.echo('Sorry, i am not so smart to predict which habit you want to change')
-        return
     api = read_api()
     if api is None:
         click.echo('Use login --api to register your api key and work further')
@@ -63,11 +60,8 @@ def change_habit(habit_id, name, status, timeline):
 
 
 @habit_operations.command(short_help='Change the habit')
-@click.option('--habit_id', default=None, type=click.INT, help='ID of habit which you want to delete')
+@click.option('--habit_id', required=True, type=click.INT, help='ID of habit which you want to delete')
 def delete_habit(habit_id):
-    if habit_id is None:
-        click.echo('Sorry, i am not so smart to predict which habit you want to delete')
-        return
     api = read_api()
     if api is None:
         click.echo('Use login --api to register your api key and work further')
@@ -101,7 +95,7 @@ def show_habits():
 
 
 @habit_operations.command(short_help='Show the habit')
-@click.option('--habit_id', default=None, type=click.INT, help='ID of habit which you want to see')
+@click.option('--habit_id', required=True, type=click.INT, help='ID of habit which you want to see')
 def show_habit(habit_id):
     api = read_api()
     if api is None:

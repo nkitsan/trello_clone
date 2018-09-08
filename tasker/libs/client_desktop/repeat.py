@@ -10,15 +10,10 @@ def repeat_operations():
 
 
 @repeat_operations.command(short_help='Create a new repeat for the task')
-@click.option('--task_id', default=None, type=click.INT,
+@click.option('--task_id', required=True, type=click.INT,
               help='ID of the task to add a repeat')
-@click.option('--repeat', default=None, type=click.IntRange(0, 6), help='Repeat of task in week')
+@click.option('--repeat', required=True, type=click.IntRange(0, 6), help='Repeat of task in week')
 def add_repeat(task_id, repeat):
-    if task_id is None:
-        click.echo('You missed ID of task, to which you want to add a repeat')
-        return
-    if repeat is None:
-        click.echo('You forgot repeat. We are not Vanga please add it')
     api = read_api()
     if api is None:
         click.echo('Use login --api to register your api key and work further')
@@ -34,14 +29,9 @@ def add_repeat(task_id, repeat):
 
 
 @repeat_operations.command(short_help='Delete the repeat from the task')
-@click.option('--task_id', default=None, type=click.INT, help='ID of the task to delete a repeat')
-@click.option('--repeat_id', default=None, type=click.INT, help='ID of the repeat to delete')
+@click.option('--task_id', required=True, type=click.INT, help='ID of the task to delete a repeat')
+@click.option('--repeat_id', required=True, type=click.INT, help='ID of the repeat to delete')
 def delete_repeat(task_id, repeat_id):
-    if task_id is None:
-        click.echo('You missed ID of task, in which you want to delete the repeat')
-        return
-    if repeat_id is None:
-        click.echo('You forgot a repeat ID. We are not Vanga please add it')
     api = read_api()
     if api is None:
         click.echo('Use login --api to register your api key and work further')
@@ -57,11 +47,8 @@ def delete_repeat(task_id, repeat_id):
 
 
 @repeat_operations.command(short_help='Show repeats of the task')
-@click.option('--task_id', default=None, type=click.INT, help='ID of the task to show repeats')
+@click.option('--task_id', required=True, type=click.INT, help='ID of the task to show repeats')
 def show_repeats(task_id):
-    if task_id is None:
-        click.echo('You missed ID of task, in which you want to delete the repeat')
-        return
     api = read_api()
     if api is None:
         click.echo('Use login --api to register your api key and work further')

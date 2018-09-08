@@ -15,13 +15,10 @@ def access_operations():
               help='ID of the list, in which you are going to add the executor.')
 @click.option('--task_id', default=None, type=click.INT,
               help='ID of the task in which you want to add executor. Skip: add access to list')
-@click.option('--username', default=None, help='Username of user which you want to add')
+@click.option('--username', required=True, help='Username of user which you want to add')
 def add_user(list_id, task_id, username):
     if list_id is None and list_id is None:
         click.echo('You missed the ID of a task or a list to which you want to add user')
-        return
-    if username is None:
-        click.echo('No username to add user')
         return
     api = read_api()
     if api is None:
@@ -50,13 +47,10 @@ def add_user(list_id, task_id, username):
               help='ID of the list, in which you are going to delete the executor.')
 @click.option('--task_id', default=None, type=click.INT,
               help='ID of the task in which you want to delete executor. Skip: delete access to list')
-@click.option('--username', default=None, help='Username of user whose access should be limited')
+@click.option('--username', required=True, help='Username of user whose access should be limited')
 def delete_user(list_id, task_id, username):
     if list_id is None and list_id is None:
         click.echo('You missed the ID of a task or a list in which you want to delete user')
-        return
-    if username is None:
-        click.echo('No username to delete user')
         return
     api = read_api()
     if api is None:
@@ -81,7 +75,7 @@ def delete_user(list_id, task_id, username):
 
 
 @access_operations.command(short_help='Add api key from account to begin')
-@click.option('--api', default=None, help='Api key from account')
+@click.option('--api', required=True, help='Api key from account')
 def login(api):
     allowed = string.digits + string.ascii_letters
     if all(c in allowed for c in api):

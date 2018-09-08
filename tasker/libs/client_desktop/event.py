@@ -11,11 +11,8 @@ def event_operations():
 
 @event_operations.command(short_help='Add the event to the calendar')
 @click.option('--name', default='', help='Name of the event which will be added')
-@click.option('--date', default=None, help='Date of event')
+@click.option('--date', required=True, help='Date of event')
 def add_event(name, date):
-    if date is None:
-        click.echo('Whoops! Choose date of event')
-        return
     if not date_validation(date):
         click.echo('Format of date should be Y-M-D H:M')
         return
@@ -36,12 +33,10 @@ def add_event(name, date):
 
 
 @event_operations.command(short_help='Change the event to the calendar')
-@click.option('--event_id', default=None, type=click.INT, help='ID of the event to change')
+@click.option('--event_id', required=True, type=click.INT, help='ID of the event to change')
 @click.option('--name', default=None, help='Name of the event on which will be renewed')
 @click.option('--date', default=None, help='Date of event on which will be renewed')
 def change_event(event_id, name, date):
-    if event_id is None:
-        click.echo('You missed ID of the event, which you want to change')
     api = read_api()
     if api is None:
         click.echo('Use login --api to register your api key and work further')
@@ -63,10 +58,8 @@ def change_event(event_id, name, date):
 
 
 @event_operations.command(short_help='Delete the event from the calendar')
-@click.option('--event_id', default=None, type=click.INT, help='ID of the event to delete')
+@click.option('--event_id', required=True, type=click.INT, help='ID of the event to delete')
 def delete_event(event_id):
-    if event_id is None:
-        click.echo('You missed ID of the event, which you want to delete')
     api = read_api()
     if api is None:
         click.echo('Use login --api to register your api key and work further')
@@ -101,11 +94,8 @@ def show_events():
 
 
 @event_operations.command(short_help='Show the event from the calendar')
-@click.option('--event_id', default=None, type=click.INT, help='ID of the event to see')
+@click.option('--event_id', required=True, type=click.INT, help='ID of the event to see')
 def show_event(event_id):
-    if event_id is None:
-        click.echo('You missed ID of the event, which you want to see')
-        return
     api = read_api()
     if api is None:
         click.echo('Use login --api to register your api key and work further')

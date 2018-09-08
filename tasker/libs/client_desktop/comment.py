@@ -16,7 +16,7 @@ def comment_operations():
 @click.option('--task_id', default=None, type=click.INT, help='ID of task to which you want to add the comment')
 @click.option('--text', default='', help='Text of comment')
 def add_comment(event_id, list_id, task_id, text):
-    if event_id and task_id is None:
+    if event_id is None and task_id is None:
         click.echo('You forget to choose event or task id')
         return
     api = read_api()
@@ -53,9 +53,9 @@ def add_comment(event_id, list_id, task_id, text):
 @click.option('--list_id', default=None, type=click.INT,
               help='ID of the list in which you want to delete the comment. Skip: change in the weekly tasks list')
 @click.option('--task_id', default=None, type=click.INT, help='ID of the task in which you want to delete the comment')
-@click.option('--comment_id', default=None, type=click.INT, help='ID of the comment which you want to delete')
+@click.option('--comment_id', required=True, type=click.INT, help='ID of the comment which you want to delete')
 def delete_comment(event_id, list_id, task_id, comment_id):
-    if event_id and task_id is None:
+    if event_id is None and task_id is None:
         click.echo('You forget to choose event or task id')
         return
     api = read_api()
@@ -87,7 +87,7 @@ def delete_comment(event_id, list_id, task_id, comment_id):
               help='ID of the list in which you want to see the comment. Skip: change in the weekly tasks list')
 @click.option('--task_id', default=None, type=click.INT, help='ID of the task in which you want to see the comment')
 def show_comments(event_id, list_id, task_id):
-    if event_id and task_id is None:
+    if event_id is None and task_id is None:
         click.echo('You forget to choose event or task id')
         return
     api = read_api()

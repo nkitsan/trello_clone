@@ -38,14 +38,11 @@ def add_task(list_id, name):
 @task_operations.command(short_help='Change the task in the list')
 @click.option('--list_id', default=None, type=click.INT,
               help='ID of the list in which you want to change the task. Skip: change in the weekly tasks list')
-@click.option('--task_id', default=None, type=click.INT, help='ID of task in which you want to change')
+@click.option('--task_id', required=True, type=click.INT, help='ID of task in which you want to change')
 @click.option('--name', default=None, help='New name of the task')
 @click.option('--status', default=None, type=click.Choice(['NS', 'IP', 'F']), help='New status of the task')
 @click.option('--deadline', default=None, help='New deadline of the task')
 def change_task(list_id, task_id, name, status, deadline):
-    if task_id is None:
-        click.echo('You missed ID of task, which you want to change')
-        return
     api = read_api()
     if api is None:
         click.echo('Use login --api to register your api key and work further')
@@ -76,11 +73,8 @@ def change_task(list_id, task_id, name, status, deadline):
 @task_operations.command(short_help='delete task from list')
 @click.option('--list_id', default=None, type=click.INT,
               help='ID of the list, in which you are going to delete the task. Skip: delete in the weekly tasks list')
-@click.option('--task_id', default=None, type=click.INT, help='ID of the task, which you want to delete')
+@click.option('--task_id', required=True, type=click.INT, help='ID of the task, which you want to delete')
 def delete_task(list_id, task_id):
-    if task_id is None:
-        click.echo('You missed the ID of the task, which you want to delete')
-        return
     api = read_api()
     if api is None:
         click.echo('Use login --api to register your api key and work further')
@@ -127,11 +121,8 @@ def show_tasks(list_id):
 @task_operations.command(short_help='Show the task from the list')
 @click.option('--list_id', default=None, type=click.INT,
               help='ID of list in which you want to see the task. Skip: see the task from the weekly tasks list')
-@click.option('--task_id', default=None, type=click.INT, help='ID of the task, which you want to see')
+@click.option('--task_id', required=True, type=click.INT, help='ID of the task, which you want to see')
 def show_task(list_id, task_id):
-    if task_id is None:
-        click.echo('You missed the ID of the task, which you want to delete')
-        return
     api = read_api()
     if api is None:
         click.echo('Use login --api to register your api key and work further')

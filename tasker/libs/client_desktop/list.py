@@ -30,12 +30,9 @@ def add_list(name):
 
 
 @list_operations.command(short_help='Change a list name')
-@click.option('--list_id', default=None, type=click.INT, help='ID of the list in which you want to change a name')
+@click.option('--list_id', required=True, type=click.INT, help='ID of the list in which you want to change a name')
 @click.option('--name', default='', help='Name to change a list name')
 def change_list(list_id, name):
-    if list_id is None:
-        click.echo('Ups! You forget to choose list id')
-        return
     api = read_api()
     if api is None:
         click.echo('Use login --api to register your api key and work further')
@@ -52,11 +49,8 @@ def change_list(list_id, name):
 
 
 @list_operations.command(short_help='Delete a list')
-@click.option('--list_id', default=None, type=click.INT, help='ID of the list which you want to delete')
+@click.option('--list_id', required=True, type=click.INT, help='ID of the list which you want to delete')
 def delete_list(list_id):
-    if list_id is None:
-        click.echo('Ups! You forget to choose list id')
-        return
     api = read_api()
     if api is None:
         click.echo('Use login --api to register your api key and work further')

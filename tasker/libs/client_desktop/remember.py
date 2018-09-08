@@ -15,11 +15,8 @@ def remember_operations():
               help='ID of the event to add a remember')
 @click.option('--task_id', default=None, type=click.INT,
               help='ID of the task to add a remember')
-@click.option('--remember', default=None, help='Remeber of the task or the event')
+@click.option('--remember', required=True, help='Remeber of the task or the event')
 def add_remember(event_id, task_id, remember):
-    if remember is None:
-        click.echo('You forget to enter date to remember')
-        return
     if event_id is None and task_id is None:
         click.echo('You forget to add a task or an event id to add a remember')
         return
@@ -44,11 +41,9 @@ def add_remember(event_id, task_id, remember):
 
 
 @remember_operations.command(short_help='Delete a remember for a task or an event')
-@click.option('--event_id', default=None, type=click.INT,
-              help='ID of the event to delete the remember')
-@click.option('--task_id', default=None, type=click.INT,
-              help='ID of the task to delete the remember')
-@click.option('--remember_id', default=None, help='Remeber ID of the task or the event')
+@click.option('--event_id', default=None, type=click.INT, help='ID of the event to delete the remember')
+@click.option('--task_id', default=None, type=click.INT, help='ID of the task to delete the remember')
+@click.option('--remember_id', required=True, help='Remember ID of the task or the event')
 def delete_remember(event_id, task_id, remember_id):
     if event_id is None and task_id is None:
         click.echo('You forget to add a task or an event id to delete the remember')
@@ -72,10 +67,8 @@ def delete_remember(event_id, task_id, remember_id):
 
 
 @remember_operations.command(short_help='Show remembers for a task or an event')
-@click.option('--event_id', default=None, type=click.INT,
-              help='ID of the event to show its remembers')
-@click.option('--task_id', default=None, type=click.INT,
-              help='ID of the task to show the remembers')
+@click.option('--event_id', default=None, type=click.INT, help='ID of the event to show its remembers')
+@click.option('--task_id', default=None, type=click.INT, help='ID of the task to show the remembers')
 def show_remembers(event_id, task_id):
     if event_id is None and task_id is None:
         click.echo('You forget to add a task or an event id to delete the remember')
