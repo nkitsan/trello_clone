@@ -9,7 +9,9 @@ from tasker.libs.apis import (habit,
                               list)
 from tasker.libs.managers import (user_manager,
                                   weekly_task_manager,
-                                  public_task_manager)
+                                  public_task_manager,
+                                  habit_tracker_manager,
+                                  calendar_manager)
 from tasker.libs.client_web import task_helper
 
 
@@ -389,7 +391,7 @@ def create_list(request, username):
 
 @csrf_exempt
 def change_list(request, username, list_id):
-    if request.method == 'GET':
+    if request.method == 'GET' and request.session.get('username') == username:
         public_list = public_task_manager.get_user_list(username, list_id)
         return render(request, 'tasker/list_change.html', {'public_list': public_list, 'username': username})
     if request.method == 'POST' and request.session.get('username') == username:
@@ -514,3 +516,53 @@ def delete_task_executor(request, username, list_id, task_id, new_user):
     if request.method == 'POST' and request.session.get('username') == username:
         public_task_manager.delete_task_executor(username, new_user, list_id, task_id)
     return redirect('/profiles/{}/lists/{}/tasks/{}'.format(username, list_id, task_id))
+
+
+@csrf_exempt
+def habits_info(request, username):
+    habits = habit_tracker_manager.get_user_habits(username)
+    return render(request, 'tasker/habit_tracker.html', {'habits': habits,
+                                                         'username': username})
+
+
+@csrf_exempt
+def add_habit(request, username):
+    habit_name = request.POST.get('title')
+    if request.method == 'POST' and request.session.get('username') == username and habit_name != '':
+        habit_tracker_manager.create_habit(username, habit_name)
+    return redirect('/profiles/{}/habits'.format(username))
+
+
+@csrf_exempt
+def change_habit(request, username, habit_id):
+    habit_name = request.POST.get('title')
+    habit_timeline = request.POST.get('timeline')
+    if request.method == 'GET' and request.session.get('username') == username:
+        habit = habit_tracker_manager.get_user_habit(username, habit_id)
+        return render(request, 'tasker/habit_change.html', {'habit': habit,
+                                                            'username': username})
+    if request.method == 'POST' and request.session.get('username') == username:
+        habit = habit_tracker_manager.get_user_habit(username, habit_id)
+        if habit_name != '':
+            habit_tracker_manager.change_habit_name(username, habit_id, habit_name)
+        if habit_timeline != '' and habit_timeline.isdigit() and int(habit_timeline) >= habit.count:
+            habit_tracker_manager.change_habit_timeline(username, habit_id, habit_timeline)
+    return redirect('/profiles/{}/habits'.format(username))
+
+
+@csrf_exempt
+def delete_habit(request, username, habit_id):
+    if request.method == 'POST' and request.session.get('username') == username:
+        habit_tracker_manager.delete_habit(username, habit_id)
+    return redirect('/profiles/{}/habits'.format(username))
+
+
+@csrf_exempt
+def change_habit_status(request, username, habit_id):
+    habit_status = request.POST.get('habit_status')
+    if request.method == 'POST' and request.session.get('username') == username:
+        if habit_status is None:
+            habit_tracker_manager.change_habit_status(username, habit_id, 'NS')
+        else:
+            habit_tracker_manager.change_habit_status(username, habit_id, 'F')
+    return redirect('/profiles/{}/habits'.format(username))

@@ -1,20 +1,18 @@
 {% load static %}
-<html>
+<html lang="en">
 	<head>
-		<meta charset="UTF-8">
+	    <meta charset="UTF-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 	    <title>Daily Tracker</title>
 
-	    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
-	          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 	    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
-	    <link rel="stylesheet" href="{% static 'css/change_task.css' %}">
+	    <link rel="stylesheet" href="{% static 'css/habits.css' %}">
 		<link rel="stylesheet" href="{% static 'css/header.css' %}">
 	</head>
-  	<body>
+	<body>
 		<header>
-	    	<div class="logo">
+			<div class="logo">
 	    		<a href="{% url 'user_board' username %}">Daily Tracker</a>
 	    	</div>
 			<div class="navigation">
@@ -29,41 +27,27 @@
 	    		</div>
 			</div>
 		</header>
-    	<div class="container">
-			<span class="task-name">Changing task "{{ task_name }}" in "Weekly List"</span>
-            <form action="{% url 'change_task' username task_id %}" method="POST" class="change-task-form">
+	    <div class="content">
+			<span class="habit-name">Changing habit "{{ habit.name }}"</span>
+            <form action="{% url 'change_habit' username habit.id %}" method="POST" class="change-habit-form">
 				<span>New name: </span>
                 <textarea
                         class="new-title"
                         name="title"
-                        placeholder="Enter a new title for task..."
+                        placeholder="Enter a new title for a habit.."
                         rows="1"
                         cols="100"
                 ></textarea>
 				<span>Deadline: </span>
-				<div class="deadline">
-					<input
-							name="date"
-							type="date"
-					/>
-					<input
-							name="time"
-							type="time"
-					/>
+				<div class="timeline">
+					 <input type="number" name="timeline" min="{{ habit.count }}">
 				</div>
-				<span>Status: </span>
-				<select id="dropdown" name="status">
-					<option value="">---</option>
-          			<option value="NS">Not Started</option>
-          			<option value="IP">In process</option>
-          			<option value="F">Finished</option>
-        		</select>
                 <input
-                        class="change-btn"
+                        class="change-habit-btn"
                         type="submit"
                         value="Change"
                 />
             </form>
-      	</div>
+	    </div>
 	</body>
 </html>

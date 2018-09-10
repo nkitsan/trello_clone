@@ -15,11 +15,19 @@
   	<body>
 		<header>
 	    	<div class="logo">
-	    		Daily Tracker
+	    		<a href="{% url 'user_board' username %}">Daily Tracker</a>
 	    	</div>
-	    	<div class="logout">
-	        	<a href="{% url 'logout' %}">Log Out</a>
-	    	</div>
+			<div class="navigation">
+				<div class="habit-tracker">
+	        		<a href="{% url 'habits_info' username %}">Habits</a>
+	    		</div>
+				<div class="calendar">
+	        		<a href="">Calendar</a>
+	    		</div>
+				<div class="logout">
+	        		<a href="{% url 'logout' %}">Log Out</a>
+	    		</div>
+			</div>
 		</header>
     	<div class="container">
 			<span class="task-name">Changing task "{{ task_name }}" in "{{ public_list.name }}" List</span>

@@ -1,0 +1,14 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.habits {
+    width: 60%;
+    padding: 30px 70px;
+    margin: 40px 150px;
+}
+
+.habit-title {
+    display: flex;
+    flex-direction: row;
+}

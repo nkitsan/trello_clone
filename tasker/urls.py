@@ -68,4 +68,12 @@ urlpatterns = [
         views.delete_public_comment, name='delete_public_comment'),
     url(r'^profiles/(?P<username>[\w.@+-]+)/lists/(?P<list_id>\d+)/tasks/(?P<task_id>\d+)/executors/(?P<new_user>[\w.@+-]+)$',
         views.delete_task_executor, name='delete_task_executor'),
+
+    url(r'^profiles/(?P<username>[\w.@+-]+)/habits$', views.habits_info, name='habits_info'),
+    url(r'^profiles/(?P<username>[\w.@+-]+)/habits/create$', views.add_habit, name='add_habit'),
+    url(r'^profiles/(?P<username>[\w.@+-]+)/habits/(?P<habit_id>\d+)/change$', views.change_habit, name='change_habit'),
+    url(r'^profiles/(?P<username>[\w.@+-]+)/habits/(?P<habit_id>\d+)/delete$', views.delete_habit, name='delete_habit'),
+    url(r'^profiles/(?P<username>[\w.@+-]+)/habits/(?P<habit_id>\d+)/status$', views.change_habit_status,
+        name='change_habit_status'),
+
 ]

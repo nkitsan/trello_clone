@@ -100,3 +100,11 @@ def find_user_habit(username, habit_id):
 def get_user_habits(username):
     user = User.objects.get(username=username)
     return user.habit_tracker.all()
+
+
+@get_logs
+def get_user_habit(username, habit_id):
+    user = User.objects.get(username=username)
+    if user.habit_tracker.filter(id=habit_id).exists():
+        return user.habit_tracker.get(id=habit_id)
+    return None

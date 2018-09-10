@@ -1,0 +1,82 @@
+{% load static %}
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <title>Daily Tracker</title>
+
+	    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+	    <link rel="stylesheet" href="{% static 'css/habits.css' %}">
+		<link rel="stylesheet" href="{% static 'css/header.css' %}">
+	</head>
+	<body>
+		<header>
+			<div class="logo">
+	    		<a href="{% url 'user_board' username %}">Daily Tracker</a>
+	    	</div>
+			<div class="navigation">
+				<div class="habit-tracker">
+	        		<a href="{% url 'habits_info' username %}">Habits</a>
+	    		</div>
+				<div class="calendar">
+	        		<a href="">Calendar</a>
+	    		</div>
+				<div class="logout">
+	        		<a href="{% url 'logout' %}">Log Out</a>
+	    		</div>
+			</div>
+		</header>
+	    <div class="content">
+            <div class="habits">
+                {% for habit in habits %}
+					<div class="habit-title">
+						<span>{{ habit.name }}</span>
+						<form action="{% url 'change_habit' username habit.id %}" method="GET">
+                        	<input
+                                class="change-habit-btn"
+                                type="submit"
+                                value="Edit"
+                        	/>
+                    	</form>
+						<form action="{% url 'delete_habit' username habit.id %}" method="POST">
+                        	<input
+                                class="delete-habit-btn"
+                                type="submit"
+                                value="Delete"
+                        	/>
+                    	</form>
+					</div>
+                    <form class="habit-status" action="{% url 'change_habit_status' username habit.id %}" method="POST">
+						<span>Status: </span>
+                        {% if habit.status == 'NS' %}
+                            <input name="habit_status" type="checkbox" value="F"/>
+                        {% else %}
+                            <input name="habit_status" type="checkbox" value="F" checked/>
+                        {% endif %}
+						<input
+                                class="change-status-btn"
+                                type="submit"
+                                value="Edit"
+                        />
+                    </form>
+					<div class="habit-progress">{{ habit.count }} out of {{ habit.timeline }}</div>
+                {% endfor %}
+				<form action="{% url 'add_habit' username %}" method="POST" class="new-habit-form">
+					<textarea
+	              			class="new-habit-title"
+	              			name="title"
+	              			placeholder="Enter a title for new habit..."
+	              			rows="1"
+							cols="70"
+					></textarea>
+					<input
+	               				class="new-habit-btn"
+	                			type="submit"
+	                			value="Add"
+					/>
+				</form>
+            </div>
+	    </div>
+	</body>
+</html>

@@ -193,7 +193,9 @@ def add_weeklytask_repeat(username, task_id, repeat):
     :return: an essence of a repeat
     """
     task = find_user_task(username, task_id)
-    return task.repeat.create(repeat=repeat)
+    if not task.repeat.filter(repeat=repeat).exists() and 0 <= int(repeat) < 7:
+        return task.repeat.create(repeat=repeat)
+    return None
 
 
 @get_logs

@@ -130,7 +130,7 @@ form > input {
   color: #ffffff;
 }
 
-.delete-subtask-btn, .delete-remember-btn , .delete-repeat-btn{
+.delete-subtask-btn, .delete-remember-btn , .delete-repeat-btn,.delete-executor-btn {
   padding: 5px 10px;
   margin-right: 5px;
   background-color: #f33636;
