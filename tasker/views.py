@@ -10,8 +10,7 @@ from tasker.libs.apis import (habit,
 from tasker.libs.managers import (user_manager,
                                   weekly_task_manager,
                                   public_task_manager,
-                                  habit_tracker_manager,
-                                  calendar_manager)
+                                  habit_tracker_manager)
 from tasker.libs.client_web import task_helper
 
 

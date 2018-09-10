@@ -1,7 +1,7 @@
 from tasker.libs.managers import weekly_task_manager, public_task_manager
 
 
-weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 
 def task_repeats(username, task_id):
