@@ -33,6 +33,14 @@ urlpatterns = [
     url(r'^profiles/(?P<username>[\w.@+-]+)/tasks/(?P<task_id>\d+)/comments$', views.add_comment, name='add_comment'),
     url(r'^profiles/(?P<username>[\w.@+-]+)/tasks/(?P<task_id>\d+)/comments/(?P<comment_id>\d+)/delete$',
         views.delete_comment, name='delete_comment'),
+    url(r'^profiles/(?P<username>[\w.@+-]+)/tasks/(?P<task_id>\d+)/remembers$', views.add_remember, name='add_remember'),
+    url(r'^profiles/(?P<username>[\w.@+-]+)/tasks/(?P<task_id>\d+)/remembers/(?P<remember_id>\d+)/delete$',
+        views.delete_remember, name='delete_remember'),
+    url(r'^profiles/(?P<username>[\w.@+-]+)/tasks/(?P<task_id>\d+)/repeats$', views.add_repeat,
+        name='add_repeat'),
+    url(r'^profiles/(?P<username>[\w.@+-]+)/tasks/(?P<task_id>\d+)/repeats/(?P<repeat_id>\d+)/delete$',
+        views.delete_repeat, name='delete_repeat'),
+
 
     url(r'^profiles/(?P<username>[\w.@+-]+)/lists/(?P<list_id>\d+)/tasks/(?P<task_id>\d+)$', views.public_task_info,
         name='public_task_info'),
@@ -58,4 +66,6 @@ urlpatterns = [
         views.add_public_comment, name='add_public_comment'),
     url(r'^profiles/(?P<username>[\w.@+-]+)/lists/(?P<list_id>\d+)/tasks/(?P<task_id>\d+)/comments/(?P<comment_id>\d+)/delete$',
         views.delete_public_comment, name='delete_public_comment'),
+    url(r'^profiles/(?P<username>[\w.@+-]+)/lists/(?P<list_id>\d+)/tasks/(?P<task_id>\d+)/executors/(?P<new_user>[\w.@+-]+)$',
+        views.delete_task_executor, name='delete_task_executor'),
 ]

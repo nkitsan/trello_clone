@@ -48,6 +48,24 @@
 				{%if deadline%}
 					<div class="task-deadline">Deadline: {{ deadline }}</div>
 				{% endif %}
+				<div class="task-executors">
+					{% if executors %}
+						<span>Executors: </span>
+					{% endif %}
+					{% for executor in executors %}
+						<div class="executor">
+							<form action="{% url 'delete_task_executor' username list_id task_id executor.username %}"
+								  method="POST">
+								<input
+										class="delete-executor-btn"
+										type="submit"
+										value="Delete"
+								/>
+								<span>{{ executor.username }}</span>
+							</form>
+						</div>
+					{% endfor %}
+				</div>
 				<div class="task-status">Status: {{ status }}</div>
 				<div class="task-subtasks">
 					<div>Subtasks: </div>

@@ -5,7 +5,7 @@ body {
 .container {
   width: 60%;
   padding: 30px 70px;
-  margin: auto;
+  margin: 40px 150px;
   border-radius: 4px;
   background-color: #eaeaea;
 }
@@ -82,7 +82,7 @@ body {
   margin-left: 30px;
 }
 
-.new-subtask-btn {
+.new-subtask-btn, .new-remember-btn, .new-repeat-btn {
   padding: 5px 10px;
   background-color: #459328;
   border: 0px;
@@ -130,7 +130,7 @@ form > input {
   color: #ffffff;
 }
 
-.delete-subtask-btn {
+.delete-subtask-btn, .delete-remember-btn , .delete-repeat-btn{
   padding: 5px 10px;
   margin-right: 5px;
   background-color: #f33636;
@@ -138,4 +138,16 @@ form > input {
   border-radius: 4px;
   cursor: pointer;
   color: #ffffff;
+}
+
+.executor > form {
+  margin-left: 30px;
+}
+
+.new-remember-form, .new-repeat-form{
+  margin-left: 30px;
+}
+
+.remember, .repeat {
+  margin-left: 30px;
 }

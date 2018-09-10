@@ -120,6 +120,7 @@ def check_remembers(api):
     for event in events:
         for remember in event.remember.all():
             if remember.repeat_date <= datetime.datetime.now(datetime.timezone.utc):
-                events_response.update({event.id: {'name': event.name, 'remember': remember.repeat_date}})
-                break
+                events_response.update({remember.id: {'name': event.name, 
+                                                      'event_id': event.id, 
+                                                      'remember': remember.repeat_date}})
     return events_response

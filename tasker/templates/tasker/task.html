@@ -90,6 +90,68 @@
 						/>
 	          		</form>
 				</div>
+				<div class="repeats">
+					<div>Repeats: </div>
+					{% for repeat in repeats %}
+						<div class="repeat">
+							<form action="{% url 'delete_repeat' username task_id repeat.id %}" method="POST">
+								<input
+										class="delete-repeat-btn"
+										type="submit"
+										value="Delete"
+								/>
+								<span>{{ repeat.day }}</span>
+							</form>
+						</div>
+					{% endfor %}
+					<form action="{% url 'add_repeat' username task_id %}" method="POST" class="new-repeat-form">
+						<select name="repeat">
+							<option value="">--</option>
+							<option value="0">Sunday</option>
+							<option value="1">Monday</option>
+							<option value="2">Tuesday</option>
+							<option value="3">Wednesday</option>
+							<option value="4">Thursday</option>
+							<option value="5">Friday</option>
+							<option value="6">Saturday</option>
+						</select>
+						<input
+	               				class="new-repeat-btn"
+	                			type="submit"
+	                			value="Add"
+						/>
+	          		</form>
+				</div>
+				<div class="remembers">
+					<div>Remembers: </div>
+					{% for remember in remembers %}
+						<div class="remember">
+							<form action="{% url 'delete_remember' username task_id remember.id %}" method="POST">
+								<input
+										class="delete-remember-btn"
+										type="submit"
+										value="Delete"
+								/>
+								<span>{{ remember.repeat_date }}</span>
+							</form>
+						</div>
+					{% endfor %}
+					<form action="{% url 'add_remember' username task_id %}" method="POST" class="new-remember-form">
+						<input
+							name="date"
+							type="date"
+						/>
+						<input
+							name="time"
+							type="time"
+						/>
+						<input
+	               				class="new-remember-btn"
+	                			type="submit"
+	                			value="Add"
+						/>
+	          		</form>
+				</div>
 				<div class="task-comments">
 					<div>Comments: </div>
 					{% for comment in comments%}

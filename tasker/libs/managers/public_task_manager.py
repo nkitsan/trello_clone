@@ -270,8 +270,9 @@ def add_public_list_user(username, new_username, list_id):
     """
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
-    new_user = User.objects.get(username=new_username)
-    new_user.lists.add(public_list)
+    if User.objects.filter(username=new_username).exists():
+        new_user = User.objects.get(username=new_username)
+        new_user.lists.add(public_list)
 
 
 @get_logs
@@ -285,8 +286,9 @@ def delete_public_list_user(username, remove_username, list_id):
     """
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
-    remove_user = User.objects.get(username=remove_username)
-    remove_user.lists.remove(public_list)
+    if User.objects.filter(username=remove_username).exists():
+        remove_user = User.objects.get(username=remove_username)
+        remove_user.lists.remove(public_list)
 
 
 @get_logs
@@ -302,8 +304,9 @@ def add_task_executor(username, executor_username, list_id, task_id):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    executor_user = User.objects.get(username=executor_username)
-    task.executors.add(executor_user)
+    if User.objects.filter(username=executor_username).exists() and not task.executors.filter(username=executor_username).exists():
+        executor_user = User.objects.get(username=executor_username)
+        task.executors.add(executor_user)
 
 
 @get_logs
@@ -319,8 +322,9 @@ def delete_task_executor(username, executor_username, list_id, task_id):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    remove_user = User.objects.get(username=executor_username)
-    task.executors.remove(remove_user)
+    if task.executors.filter(username=executor_username).exists():
+        remove_user = User.objects.get(username=executor_username)
+        task.executors.remove(remove_user)
 
 
 @get_logs
@@ -382,20 +386,3 @@ def get_list_task(username, list_id, task_id):
     if not tasks.filter(id=task_id).exists():
         return None
     return tasks.get(id=task_id)
-
-
-@get_logs
-def tasks_to_dict(username):
-    """
-    Transforms tasks from lists in a dictionary form
-
-    :param username: an username of an user
-    :return: lists and tasks in a format
-    {list_name_1: {'id': list_id_1, 'tasks':[task_1, task_2...]},
-    list_name_2: {'id': list_id_2, 'tasks':[task_1, task_2...]}}
-    """
-    lists = get_user_lists(username)
-    tasks_dict = {}
-    for li in lists:
-        tasks_dict.update({li.name: {'id': li.id, 'tasks': li.tasks.all()}})
-    return tasks_dict

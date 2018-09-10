@@ -115,11 +115,15 @@ def check():
         click.echo('No remembers')
     if len(remembers['events']) != 0:
         click.echo('remember of events')
-        for event_id in remembers['events']:
-            click.echo('id: ' + event_id + ' - ' + ' '.join(remembers['events'][event_id]['remember'][0:-1].split('T'))
-                       + ' - ' + remembers['events'][event_id]['name'])
+        for remember_id in remembers['events']:
+            remember_id = str(remember_id)
+            click.echo('id: ' + str(remembers['events'][remember_id]['event_id']) + ' - '
+                       + ' '.join(remembers['events'][remember_id]['remember'][0:-1].split('T'))
+                       + ' - ' + remembers['events'][remember_id]['name'])
     if len(remembers['tasks']) != 0:
         click.echo('remember of tasks')
-        for task_id in remembers['tasks']:
-            click.echo('id: ' + task_id + ' - ' + ' '.join(remembers['tasks'][task_id]['remember'][0:-1].split('T'))
-                       + ' - ' + remembers['tasks'][task_id]['name'])
+        for remember_id in remembers['tasks']:
+            remember_id = str(remember_id)
+            click.echo('id: ' + str(remembers['tasks'][remember_id]['task_id']) + ' - '
+                       + ' '.join(remembers['tasks'][remember_id]['remember'][0:-1].split('T'))
+                       + ' - ' + remembers['tasks'][remember_id]['name'])
