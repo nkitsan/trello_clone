@@ -11,7 +11,7 @@ from tasker.libs.managers import (user_manager,
                                   weekly_task_manager,
                                   public_task_manager,
                                   habit_tracker_manager)
-from tasker.libs.client_web import task_helper
+from tasker.libs.helpers import task_helper, schedule_helper
 
 
 def login(request):
@@ -55,6 +55,7 @@ def logout(request):
 @csrf_exempt
 def user_board(request, username):
     user = User.objects.get(username=username)
+    schedule_helper.check_updates(username)
     return render(request, 'tasker/index.html', {'api_key': user.api_key,
                                                  'tasks': user.week_list.all(),
                                                  'lists': user.lists.all(),
@@ -66,6 +67,8 @@ def user_board(request, username):
 def habit_api(request, api, habit_id):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
+    username = user_manager.get_username(api)
+    schedule_helper.check_updates(username)
     if request.method == 'GET':
         return JsonResponse(habit.get_habit(api, habit_id))
     if request.method == 'PUT':
@@ -99,6 +102,8 @@ def event_api(request, api, event_id):
 def private_task_api(request, api, task_id):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
+    username = user_manager.get_username(api)
+    schedule_helper.check_updates(username)
     if request.method == 'GET':
         return JsonResponse(private_task.get_task(api, task_id))
     if request.method == 'POST':
@@ -172,6 +177,8 @@ def list_api(request, api, list_id):
 def habits_api(request, api):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
+    username = user_manager.get_username(api)
+    schedule_helper.check_updates(username)
     if request.method == 'POST':
         habit_name = request.POST.get('habit_name')
         return JsonResponse(habit.post_habit(api, habit_name))
@@ -201,6 +208,8 @@ def events_api(request, api):
 def private_tasks_api(request, api):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
+    username = user_manager.get_username(api)
+    schedule_helper.check_updates(username)
     if request.method == 'POST':
         task_name = request.POST.get('task_name')
         return JsonResponse(private_task.post_task(api, task_name))
@@ -242,6 +251,8 @@ def lists_api(request, api):
 def remembers_api(request, api):
     if not User.objects.filter(api_key=api).exists():
         return JsonResponse({'error': 'wrong api key'})
+    username = user_manager.get_username(api)
+    schedule_helper.check_updates(username)
     if request.method == 'GET':
         remembers_events = event.check_remembers(api)
         remembers_tasks = private_task.check_remembers(api)
@@ -519,6 +530,7 @@ def delete_task_executor(request, username, list_id, task_id, new_user):
 
 @csrf_exempt
 def habits_info(request, username):
+    schedule_helper.check_updates(username)
     habits = habit_tracker_manager.get_user_habits(username)
     return render(request, 'tasker/habit_tracker.html', {'habits': habits,
                                                          'username': username})

@@ -70,6 +70,7 @@ class User(models.Model):
     lists = models.ManyToManyField('List')
     habit_tracker = models.ManyToManyField(Habit)
     calendar = models.ManyToManyField(Event)
+    update = models.DateTimeField(default=None, null=True)
 
     def generate_api_key(self):
         self.api_key = get_random_string(length=32)
