@@ -7,7 +7,7 @@
 	    <title>Daily Tracker</title>
 
 	    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
-	    <link rel="stylesheet" href="{% static 'css/habits.css' %}">
+	    <link rel="stylesheet" href="{% static 'css/remembers.css' %}">
 		<link rel="stylesheet" href="{% static 'css/header.css' %}">
 	</head>
 	<body>
@@ -19,7 +19,7 @@
 				<div class="habit-tracker">
 	        		<a href="{% url 'habits_info' username %}">Habits</a>
 	    		</div>
-				<div class="remembers">
+				<div class="remebers">
 	        		<a href="{% url 'remember_info' username %}">Remembers</a>
 	    		</div>
 				<div class="logout">
@@ -28,26 +28,16 @@
 			</div>
 		</header>
 	    <div class="content">
-			<span class="habit-name">Changing habit "{{ habit.name }}"</span>
-            <form action="{% url 'change_habit' username habit.id %}" method="POST" class="change-habit-form">
-				<span>New name: </span>
-                <textarea
-                        class="new-title"
-                        name="title"
-                        placeholder="Enter a new title for a habit.."
-                        rows="1"
-                        cols="100"
-                ></textarea>
-				<span>Deadline: </span>
-				<div class="timeline">
-					 <input type="number" name="timeline" min="{{ habit.count }}">
-				</div>
-                <input
-                        class="change-habit-btn"
-                        type="submit"
-                        value="Change"
-                />
-            </form>
+            <div class="remembers">
+                {% for remember in remembers %}
+					<div class="remember-title">
+                        <a href="{% url 'task_info' username remember.id %}">
+                            <span>{{ remember.date }}</span>
+                            <span>{{ remember.name }}</span>
+                        </a>
+					</div>
+                {% endfor %}
+            </div>
 	    </div>
 	</body>
 </html>

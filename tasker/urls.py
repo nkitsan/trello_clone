@@ -76,4 +76,6 @@ urlpatterns = [
     url(r'^profiles/(?P<username>[\w.@+-]+)/habits/(?P<habit_id>\d+)/status$', views.change_habit_status,
         name='change_habit_status'),
 
+    url(r'^profiles/(?P<username>[\w.@+-]+)/remembers$', views.remember_info, name='remember_info'),
+
 ]

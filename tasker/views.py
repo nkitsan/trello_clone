@@ -11,7 +11,9 @@ from tasker.libs.managers import (user_manager,
                                   weekly_task_manager,
                                   public_task_manager,
                                   habit_tracker_manager)
-from tasker.libs.helpers import task_helper, schedule_helper
+from tasker.libs.helpers import (task_helper,
+                                 schedule_helper,
+                                 remembers_helper)
 
 
 def login(request):
@@ -577,3 +579,10 @@ def change_habit_status(request, username, habit_id):
         else:
             habit_tracker_manager.change_habit_status(username, habit_id, 'F')
     return redirect('/profiles/{}/habits'.format(username))
+
+
+@csrf_exempt
+def remember_info(request, username):
+    remembers = remembers_helper.check_remembers(username)
+    return render(request, 'tasker/remembers.html', {'remembers': remembers,
+                                                         'username': username})

@@ -142,7 +142,7 @@ def check_remembers(api):
     tasks_response = {}
     for task in tasks:
         for remember in task.remember.all():
-            if remember.repeat_date <= datetime.datetime.now(datetime.timezone.utc):
+            if remember.repeat_date <= datetime.datetime.now(datetime.timezone.utc) and task.display:
 
                 tasks_response.update({remember.id: {'name': task.task.name, 
                                                      'task_id': task.id, 
