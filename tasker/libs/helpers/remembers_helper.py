@@ -3,6 +3,12 @@ import datetime
 
 
 def check_remembers(username):
+    """
+    Transforms uniterable remembers in an array
+
+    :param username: username of an user to check remembers
+    :return: array of remembers in displayable tasks
+    """
     tasks = weekly_task_manager.get_weekly_tasks(username)
     remembers = []
     for task in tasks:

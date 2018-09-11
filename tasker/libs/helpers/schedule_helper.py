@@ -4,6 +4,11 @@ import datetime
 
 
 def check_updates(username):
+    """
+    Checks data to reset habits and tasks
+
+    :param username: username of an user to reset tasks and habits
+    """
     user = user_manager.get_user(username)
     date = datetime.datetime.now(tz=timezone.utc)
     day = date.day
@@ -27,23 +32,33 @@ def check_updates(username):
 
 
 def restart_habit(user):
-        for habit in user.habit_tracker.all():
-            if habit.count < habit.timeline:
-                habit.status = 'NS'
-                habit.save()
+    """
+    Turns an unfinished habit status to Not Started
+
+    :param user: username of an user
+    """
+    for habit in user.habit_tracker.all():
+        if habit.count < habit.timeline:
+            habit.status = 'NS'
+            habit.save()
 
 
 def on_display(user):
-        for task in user.week_list.all():
-            repeat_exists = False
-            count = 0
-            for repeat in task.repeat.all():
-                count += 1
-                if repeat.repeat == datetime.datetime.now(tz=timezone.utc).weekday():
-                    repeat_exists = True
-            if not repeat_exists and count != 0:
-                task.display = False
-                task.save()
-            if repeat_exists:
-                task.display = True
-                task.save()
+    """
+    Turns on tasks with display of a current day of the week
+
+    :param user: username of an user
+    """
+    for task in user.week_list.all():
+        repeat_exists = False
+        count = 0
+        for repeat in task.repeat.all():
+            count += 1
+            if repeat.repeat == datetime.datetime.now(tz=timezone.utc).weekday():
+                repeat_exists = True
+        if not repeat_exists and count != 0:
+            task.display = False
+            task.save()
+        if repeat_exists:
+            task.display = True
+            task.save()
