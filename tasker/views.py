@@ -16,6 +16,12 @@ from tasker.libs.helpers import (task_helper,
                                  remembers_helper)
 
 
+def home(request):
+    if request.session.get('username') is not None:
+        return redirect('/profiles/{}'.format(request.session.get('username')))
+    return redirect(request, '/login')
+
+
 def login(request):
     if request.session.get('username') is not None:
         return redirect('/profiles/{}'.format(request.session.get('username')))
