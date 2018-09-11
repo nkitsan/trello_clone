@@ -51,14 +51,12 @@ def on_display(user):
     """
     for task in user.week_list.all():
         repeat_exists = False
-        count = 0
         for repeat in task.repeat.all():
-            count += 1
             if repeat.repeat == datetime.datetime.now(tz=timezone.utc).weekday():
                 repeat_exists = True
-        if not repeat_exists and count != 0:
+        if not repeat_exists and len(task.repeat.all()) != 0:
             task.display = False
             task.save()
-        if repeat_exists:
+        else:
             task.display = True
             task.save()

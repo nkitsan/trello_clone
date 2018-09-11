@@ -179,3 +179,7 @@ body {
   font-size: 18px;
   margin-left: 15px;
 }
+
+a {
+    color: inherit;
+}

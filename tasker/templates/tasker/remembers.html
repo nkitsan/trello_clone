@@ -29,6 +29,7 @@
 		</header>
 	    <div class="content">
             <div class="remembers">
+				<div class="remember-group">Remembers about tasks</div>
                 {% for remember in remembers %}
 					<div class="remember-title">
                         <a href="{% url 'task_info' username remember.id %}">

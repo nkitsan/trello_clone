@@ -2,13 +2,88 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+.title, .habit-name {
+    margin-top: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+}
+
 .habits {
     width: 60%;
     padding: 30px 70px;
-    margin: 40px 150px;
+    margin: auto;
+}
+
+.habit {
+    padding: 30px 70px;
+    margin: 30px 30px;
+    border-radius: 4px;
+    background-color: #eaeaea;
 }
 
 .habit-title {
     display: flex;
     flex-direction: row;
+}
+
+.delete-habit-btn {
+    padding: 5px 10px;
+    margin-right: 10px;
+    background-color: #f33636;
+    border: 0px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.change-habit-btn, .change-status-btn, .new-habit-btn {
+    padding: 5px 10px;
+    margin-right: 10px;
+    background-color: #459328;
+    border: 0px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+
+.new-habit-btn {
+    padding: 5px 10px;
+    margin-left: 20px;
+    background-color: #459328;
+    border: 0px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.new-habit-form, .habit-status {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+
+.change-habit-form {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin: 20px 200px;
+}
+
+.change-habit-form > span {
+    margin-top: 20px;
+}
+
+.change-habit-form > .change-habit-btn {
+    margin: 20px 350px;
+}
+
+a {
+    color: inherit;
 }

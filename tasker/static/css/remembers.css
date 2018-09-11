@@ -1,0 +1,30 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.remember-group {
+    margin-top: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.remembers {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 60%;
+    margin: auto;
+}
+
+.remember-title {
+    padding: 30px 70px;
+    margin: 30px 30px;
+    border-radius: 4px;
+    background-color: #f33636;
+    color: #ffffff;
+}
+
+a {
+    color: inherit;
+}

@@ -28,7 +28,7 @@
 			</div>
 		</header>
 	    <div class="content">
-			<span class="habit-name">Changing habit "{{ habit.name }}"</span>
+			<div class="habit-name">Changing habit "{{ habit.name }}"</div>
             <form action="{% url 'change_habit' username habit.id %}" method="POST" class="change-habit-form">
 				<span>New name: </span>
                 <textarea
@@ -38,7 +38,7 @@
                         rows="1"
                         cols="100"
                 ></textarea>
-				<span>Deadline: </span>
+				<span>Timeline: </span>
 				<div class="timeline">
 					 <input type="number" name="timeline" min="{{ habit.count }}">
 				</div>

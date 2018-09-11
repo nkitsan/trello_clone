@@ -151,3 +151,7 @@ form > input {
 .remember, .repeat {
   margin-left: 30px;
 }
+
+a {
+    color: inherit;
+} 

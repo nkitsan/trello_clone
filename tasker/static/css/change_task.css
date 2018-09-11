@@ -70,3 +70,7 @@ body {
 .change-task-form > span {
     margin-top: 10px;
 }
+
+a {
+    color: inherit;
+}
