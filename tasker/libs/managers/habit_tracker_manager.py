@@ -3,7 +3,7 @@ Manager for adding, deleting and changing habits in the habit tracker
 """
 
 
-from tasker.models import User, Habit
+from tasker.models import User
 from tasker.libs.logger.logger import get_logs
 
 

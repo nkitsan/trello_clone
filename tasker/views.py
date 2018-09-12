@@ -591,4 +591,4 @@ def change_habit_status(request, username, habit_id):
 def remember_info(request, username):
     remembers = remembers_helper.check_remembers(username)
     return render(request, 'tasker/remembers.html', {'remembers': remembers,
-                                                         'username': username})
+                                                     'username': username})

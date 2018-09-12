@@ -1,7 +1,7 @@
 import requests
 import click
-from .helper import HOST, date_validation
-from .access import read_api
+from tasker.libs.client_desktop.helper import HOST, date_validation
+from tasker.libs.client_desktop.access import read_api
 
 
 @click.group()

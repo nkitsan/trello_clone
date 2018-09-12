@@ -2,7 +2,7 @@ import requests
 import click
 import string
 import os
-from .helper import HOST, TASKER_PATH
+from tasker.libs.client_desktop.helper import HOST, TASKER_PATH
 
 
 @click.group()

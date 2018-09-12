@@ -4,7 +4,7 @@ Manager for adding, deleting and changing tasks in weekly tasks list
 
 
 from tasker.models import User
-from .task_manager import *
+from tasker.libs.managers import task_manager
 from tasker.libs.logger.logger import get_logs
 
 
@@ -18,7 +18,7 @@ def add_weeklytask(username, task_name):
     :return: an essence of a task
     """
     user = User.objects.get(username=username)
-    task = create_task(task_name)
+    task = task_manager.create_task(task_name)
     return user.week_list.create(task=task)
 
 
@@ -32,7 +32,7 @@ def change_weeklytask_name(username, task_id, new_name):
     :param new_name: a new value of a task name
     """
     task = find_user_task(username, task_id)
-    edit_task_name(task.task, new_name)
+    task_manager.edit_task_name(task.task, new_name)
 
 
 @get_logs
@@ -44,7 +44,7 @@ def delete_weeklytask(username, task_id):
     :param task_id: an id of a task to delete
     """
     task = find_user_task(username, task_id)
-    delete_task(task.task)
+    task_manager.delete_task(task.task)
     task.delete()
 
 
@@ -58,7 +58,7 @@ def change_weeklytask_status(username, task_id, status):
     :param status: a new value of a status
     """
     task = find_user_task(username, task_id)
-    change_status(task.task, status)
+    task_manager.change_status(task.task, status)
 
 
 @get_logs
@@ -72,7 +72,7 @@ def add_weeklytask_comment(username, task_id, comment):
     :return: an essence of a comment
     """
     task = find_user_task(username, task_id)
-    return add_comment(task.task, comment)
+    return task_manager.add_comment(task.task, comment)
 
 
 @get_logs
@@ -86,7 +86,7 @@ def change_weeklytask_comment(username, task_id, comment_id, new_text):
     :param new_text: a text of a changed comment
     """
     task = find_user_task(username, task_id)
-    change_comment(task.task, comment_id, new_text)
+    task_manager.change_comment(task.task, comment_id, new_text)
 
 
 @get_logs
@@ -99,7 +99,7 @@ def delete_weeklytask_comment(username, task_id, comment_id):
     :param comment_id: an id of a comment to delete
     """
     task = find_user_task(username, task_id)
-    delete_comment(task.task, comment_id)
+    task_manager.delete_comment(task.task, comment_id)
 
 
 @get_logs
@@ -113,7 +113,7 @@ def add_weeklytask_subtask(username, task_id, subtask_name):
     :return: an essence of a subtask
     """
     task = find_user_task(username, task_id)
-    return add_subtask(task.task, subtask_name)
+    return task_manager.add_subtask(task.task, subtask_name)
 
 
 @get_logs
@@ -127,7 +127,7 @@ def change_weeklytask_subtask(username, task_id, subtask_id, new_name):
     :param new_name: a value of a new subtask name
     """
     task = find_user_task(username, task_id)
-    change_subtask(task.task, subtask_id, new_name)
+    task_manager.change_subtask(task.task, subtask_id, new_name)
 
 
 @get_logs
@@ -141,7 +141,7 @@ def change_weeklytask_subtask_status(username, task_id, subtask_id, status):
     :param status: a new value of status
     """
     task = find_user_task(username, task_id)
-    change_subtask_status(task.task, subtask_id, status)
+    task_manager.change_subtask_status(task.task, subtask_id, status)
 
 
 @get_logs
@@ -154,7 +154,7 @@ def delete_weeklytask_subtask(username, task_id, subtask_id):
     :param subtask_id: an id of a subtask to delete
     """
     task = find_user_task(username, task_id)
-    delete_subtask(task.task, subtask_id)
+    task_manager.delete_subtask(task.task, subtask_id)
 
 
 @get_logs
@@ -167,7 +167,7 @@ def change_weeklytask_deadline(username, task_id, deadline):
     :param deadline: a new value of a deadline
     """
     task = find_user_task(username, task_id)
-    change_deadline(task.task, deadline)
+    task_manager.change_deadline(task.task, deadline)
 
 
 @get_logs
@@ -179,7 +179,7 @@ def delete_weeklytask_deadline(username, task_id):
     :param task_id: an id of a task to delete a deadline
     """
     task = find_user_task(username, task_id)
-    delete_deadline(task.task)
+    task_manager.delete_deadline(task.task)
 
 
 @get_logs

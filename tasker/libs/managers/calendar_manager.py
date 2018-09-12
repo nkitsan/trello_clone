@@ -3,7 +3,7 @@ Manager for adding, deleting and changing events in the calendar
 """
 
 
-from tasker.models import User, Event
+from tasker.models import User
 from tasker.libs.logger.logger import get_logs
 
 

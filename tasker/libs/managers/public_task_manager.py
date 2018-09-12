@@ -3,8 +3,8 @@ This manager controls server-side work with a data and responsible for changing 
 """
 
 
-from tasker.models import User, List, PublicTask, Task
-from .task_manager import *
+from tasker.models import User
+from tasker.libs.managers import task_manager
 from tasker.libs.logger.logger import get_logs, configure_logging
 
 
@@ -33,7 +33,7 @@ def create_public_task(username, list_id, task_name):
     """
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
-    return public_list.tasks.create(task=create_task(task_name))
+    return public_list.tasks.create(task=task_manager.create_task(task_name))
 
 
 @get_logs
@@ -60,7 +60,7 @@ def delete_public_task(username, list_id, task_id):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    delete_task(task.task)
+    task_manager.delete_task(task.task)
     task.delete()
 
 
@@ -92,7 +92,7 @@ def change_public_task_name(username, list_id, task_id, new_name):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    edit_task_name(task.task, new_name)
+    task_manager.edit_task_name(task.task, new_name)
 
 
 @get_logs
@@ -108,7 +108,7 @@ def change_public_task_status(username, list_id, task_id, status):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    change_status(task.task, status)
+    task_manager.change_status(task.task, status)
 
 
 @get_logs
@@ -125,7 +125,7 @@ def add_public_task_comment(username, list_id, task_id, comment):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    return add_comment(task.task, comment)
+    return task_manager.add_comment(task.task, comment)
 
 
 @get_logs
@@ -141,7 +141,7 @@ def delete_public_task_comment(username, list_id, task_id, comment_id):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    delete_comment(task.task, comment_id)
+    task_manager.delete_comment(task.task, comment_id)
 
 
 @get_logs
@@ -158,7 +158,7 @@ def change_public_task_comment(username, list_id, task_id, comment_id, new_text)
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    change_comment(task.task, comment_id, new_text)
+    task_manager.change_comment(task.task, comment_id, new_text)
 
 
 @get_logs
@@ -175,7 +175,7 @@ def add_public_task_subtask(username, list_id, task_id, subtask):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    return add_subtask(task.task, subtask)
+    return task_manager.add_subtask(task.task, subtask)
 
 
 @get_logs
@@ -191,7 +191,7 @@ def delete_public_task_subtask(username, list_id, task_id, subtask_id):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    delete_subtask(task.task, subtask_id)
+    task_manager.delete_subtask(task.task, subtask_id)
 
 
 @get_logs
@@ -208,7 +208,7 @@ def change_public_task_subtask(username, list_id, task_id, subtask_id, new_subta
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    change_subtask(task.task, subtask_id, new_subtask)
+    task_manager.change_subtask(task.task, subtask_id, new_subtask)
 
 
 @get_logs
@@ -225,7 +225,7 @@ def change_public_task_subtask_status(username, list_id, task_id, subtask_id, st
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    change_subtask_status(task.task, subtask_id, status)
+    task_manager.change_subtask_status(task.task, subtask_id, status)
 
 
 @get_logs
@@ -241,7 +241,7 @@ def change_public_task_deadline(username, list_id, task_id, deadline):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    change_deadline(task.task, deadline)
+    task_manager.change_deadline(task.task, deadline)
 
 
 @get_logs
@@ -256,7 +256,7 @@ def delete_public_task_deadline(username, list_id, task_id):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    delete_deadline(task.task)
+    task_manager.delete_deadline(task.task)
 
 
 @get_logs
@@ -304,7 +304,8 @@ def add_task_executor(username, executor_username, list_id, task_id):
     user = User.objects.get(username=username)
     public_list = user.lists.get(id=list_id)
     task = public_list.tasks.get(id=task_id)
-    if User.objects.filter(username=executor_username).exists() and not task.executors.filter(username=executor_username).exists():
+    if (User.objects.filter(username=executor_username).exists()
+            and not task.executors.filter(username=executor_username).exists()):
         executor_user = User.objects.get(username=executor_username)
         task.executors.add(executor_user)
 
