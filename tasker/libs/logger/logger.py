@@ -38,7 +38,7 @@ def configure_logging(logger_name=LOGGER_NAME,
     if not os.path.exists(log_directory):
         os.makedirs(log_directory, exist_ok=True)
     if not os.path.exists(log_directory + log_filename):
-        open(log_directory + "/" + log_filename, "w+")
+        open(log_directory + "/" + log_filename, "a+")
 
     handler = logging.FileHandler(filename=log_directory + "/" + log_filename)
     handler.setLevel(level)
@@ -50,7 +50,6 @@ def get_logs(func):
     """
     This decorator provides logging activities for calling functions
     """
-    @wraps(func)
     def wrapper(*args, **kwargs):
         configure_logging()
         logger = get_logger(LOGGER_NAME)

@@ -1,7 +1,7 @@
-#Daily Tracker
+# Daily Tracker
 Are you crazy fan of git? Or maybe you fan of geeky stuff, which you can make with your console or terminal? Daily Tracker is thing, which make your dreams come true. It helps you to plan the most important projects and events of your life in the style of geeks from Silicon Valley.
 
-###Installation
+### Installation
 To install the program, firstly you should download the repository. Change the directory to some folder, that will contain the project and enter the following:
 
 	git clone https://bitbucket.org/nkitsan/lab02
@@ -12,17 +12,17 @@ Than type:
 
 After that, you will be able to use Daily Tracker from any directory by the keyword 'tasker'.
 
-###Usage
+### Usage
 You can learn more about operations on each of entities type by typing --help, for example:
 
 	tasker --help
 
-###Start working
+### Start working
 First of all you need to create a new user on the website, get your api-key and connect it to your console app:
 
 	tasker login --api='the value of your api key'
 
-###Working with tasker:
+### Working with tasker:
 In Daily Tracker you can add tasks to the private list called 'Weekly Task', create public lists and share it with friends or teammates. Also you can create calendar events and establish your habits.
 
 	tasker add_task --name='My first task in Daily Traker'
